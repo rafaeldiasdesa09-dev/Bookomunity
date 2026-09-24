@@ -22,7 +22,7 @@ app.use(express.json());
 
 // Permitir POST pelo navegador
 app.use(express.urlencoded({ extended: true })); 
-
+app.use(express.static("public"));
 app.use(pageRoutes);
 
 export default app;
