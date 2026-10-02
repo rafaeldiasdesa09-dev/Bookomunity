@@ -48,7 +48,7 @@ nav {
 
 nav a {
      text-decoration: none;
-    color: #fff8ed;
+    color: #2b2b2b;
     font-weight: bold;
     transition: 0.3s;
 }
@@ -58,38 +58,60 @@ nav a:hover {
 }
 
 /* HERO */
+/* =========================
+   HERO
+========================= */
 
 .hero {
-    max-width: 1200px;
-    margin: 60px auto;
-
+    width: 100%;
+    min-height: 500px;
+background-color: #d5dfec;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    align-items: stretch;
 
-    gap: 50px;
-    padding: 0 40px;
+    margin: 0;
+    padding: 0;
+
+    gap: 0;
 }
 
+/* =========================
+   TEXTO DO HERO
+========================= */
+
 .hero-text {
-    flex: 1;
+    width: 50%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 60px 70px;
 }
 
 .hero-text h1 {
     font-size: 48px;
     line-height: 1.1;
+
     color: #4c3d31;
+
     margin-bottom: 20px;
 }
 
 .hero-text p {
     font-size: 18px;
     line-height: 1.6;
+
     color: #6b7280;
+
+    max-width: 600px;
+
     margin-bottom: 30px;
 }
 
-/* BOTÕES */
+/* =========================
+   BOTÕES
+========================= */
 
 .buttons {
     display: flex;
@@ -98,6 +120,7 @@ nav a:hover {
 
 .buttons a {
     padding: 13px 24px;
+
     border-radius: 8px;
 
     text-decoration: none;
@@ -125,21 +148,29 @@ nav a:hover {
     color: white;
 }
 
-/* IMAGEM */
+/* =========================
+   IMAGEM DO HERO
+========================= */
 
 .hero-image {
-    flex: 1;
-    display: flex;
-    justify-content: center;
+    width: 50%;
+    min-height: 500px;
+
+    overflow: hidden;
 }
 
 .hero-image img {
     width: 100%;
-    max-width: 450px;
-    border-radius: 15px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
+    height: 100%;
 
+    display: block;
+
+    object-fit: cover;
+    object-position: center;
+
+    border-radius: 0;
+    box-shadow: none;
+}
 /* SOBRE */
 
 .about {
