@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - GabeSlop</title>
+    <link rel="stylesheet" href="/css/registro.css">
+</head>
+<body>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/">Início</a></li>
+                <li><a href="/login">Entrar</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container" style="margin-top: 60px;">
+        <h2>Crie sua conta para continuar</h2>
+
+        <% if (typeof flash !== 'undefined' && flash) { %>
+            <div class="flash"><%= flash %></div>
+        <% } %>
+
+        <div class="card">
+            <h2>Criar Conta</h2>
+            <form method="POST" action="/api/registro" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" name="nome" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="senha">Senha (mín. 6 caracteres)</label>
+                    <input type="password" id="senha" name="senha" minlength="6" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="foto">Foto de usuário (opcional)</label>
+                    <input type="file" id="foto" name="foto" accept="image/*">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Criar Conta</button>
+            </form>
+
+            <div class="link">
+                Já tem conta? <a href="/login">Fazer login</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
