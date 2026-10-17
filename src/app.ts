@@ -7,32 +7,25 @@ import path from "path";
 // Importar rotas
 import { pageRoutes } from "./routes/pageRoutes";
 
-
-// Facilitar a vida
+// Inicializar o express
 const app = express();
 
-// Renderizar páginas EJS
+// Segurança e Sessão (caso vá utilizar)
+app.use(helmet());
+// app.use(session({ ... })); // Configure sua sessão aqui se precisar
+
+// Configuração do motor de visualização (EJS)
 app.set("view engine", "ejs"); 
+app.set("views", path.join(__dirname, "views")); // Aponta de forma segura para a pasta src/views
 
-// Apontar automaticamente para a pasta views
-app.set("views", "./src/views"); 
-
-// Permitir POST via JSON nn lembro direito
+// Middleware para leitura de dados de formulários e JSON
 app.use(express.json()); 
-
-// Permitir POST pelo navegador
 app.use(express.urlencoded({ extended: true })); 
-app.use(express.static("public"));
-app.use(pageRoutes);
 
-app.set("view engine", "ejs");
-app.set("views", "./src/views");
+// Servir arquivos estáticos (CSS, imagens, JS do frontend) da pasta public na raiz
+app.use(express.static(path.join(__dirname, "../public")));
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-app.use(express.static("public"));
-
+// Registrar as rotas na raiz da aplicação
 app.use("/", pageRoutes);
 
 export default app;
