@@ -1,31 +1,31 @@
-// Importar módulos
+
 import express from "express";
-import session from "express-session";
 import helmet from "helmet";
 import path from "path";
 
-// Importar rotas
 import { pageRoutes } from "./routes/pageRoutes";
+import registroRoutes from "./routes/registroRoutes";
 
-// Inicializar o express
 const app = express();
 
-// Segurança e Sessão (caso vá utilizar)
+// Segurança
 app.use(helmet());
-// app.use(session({ ... })); // Configure sua sessão aqui se precisar
 
-// Configuração do motor de visualização (EJS)
-app.set("view engine", "ejs"); 
-app.set("views", path.join(__dirname, "views")); // Aponta de forma segura para a pasta src/views
+// Configuração do EJS
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
-// Middleware para leitura de dados de formulários e JSON
-app.use(express.json()); 
-app.use(express.urlencoded({ extended: true })); 
+// Leitura de formulários
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Servir arquivos estáticos (CSS, imagens, JS do frontend) da pasta public na raiz
+// Arquivos públicos e fotos de perfil
 app.use(express.static(path.join(__dirname, "../public")));
 
-// Registrar as rotas na raiz da aplicação
+// Rotas das páginas
 app.use("/", pageRoutes);
+
+// Rota POST /api/registro
+app.use("/api", registroRoutes);
 
 export default app;
