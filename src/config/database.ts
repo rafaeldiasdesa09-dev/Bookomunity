@@ -10,19 +10,32 @@ const pool = mysql.createPool({
     user: process.env.DB_USER || "root",
     password: process.env.DB_PASSWORD || "",
     database: process.env.DB_NAME || "bookomunity_db",
-
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
 });
 
-export default pool;
+// Testar a conexão e exibir o erro completo
+async function testarConexao() {
+    let connection;
 
-pool.getConnection()
-    .then((connection) => {
+    try {
+        connection = await pool.getConnection();
         console.log("MySQL conectado com sucesso!");
-        connection.release();
-    })
-    .catch((erro) => {
-        console.error("Erro ao conectar ao MySQL:", erro.message);
-    });
+    } catch (erro: unknown) {
+        console.error("Falha ao conectar ao MySQL:");
+
+        if (erro instanceof Error) {
+            console.error(erro.message);
+            console.error("Código:", (erro as NodeJS.ErrnoException).code);
+        } else {
+            console.error(erro);
+        }
+    } finally {
+        connection?.release();
+    }
+}
+
+testarConexao();
+
+export default pool;
