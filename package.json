@@ -20,8 +20,9 @@
     "homepage": "https://github.com/rafaeldiasdesa09-dev/Bookomuinity#readme",
     "dependencies": {
         "dotenv": "^18.0.5",
-        "express": "^5.2.1",
-        "helmet": "^8.3.0"
+        "express": "^5.3.0",
+        "helmet": "^8.3.0",
+        "multer": "^2.4.0"
     },
     "devDependencies": {
         "@types/ejs": "^3.1.5",
