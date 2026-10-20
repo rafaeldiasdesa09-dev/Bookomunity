@@ -183,3 +183,78 @@ nav a:hover {
         display: none; 
     }
 }
+/* Fundo do céu noturno */
+.sky {
+    position: fixed; /* Fica fixo cobrindo a tela inteira mesmo se rolar a página */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom, #0b0d19, #1a1c2e, #050508);
+    overflow: hidden;
+    z-index: -1; /* Joga o fundo para trás de todos os outros elementos */
+  }
+  
+  /* Função para gerar múltiplos pontos de luz usando box-shadow */
+  @mixin generate-stars($n) {
+    /* O CSS puro não tem loop, então simulamos várias estrelas com sombras repetidas */
+  }
+  
+  .stars, .stars2, .stars3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    border-radius: 50%;
+  }
+  
+  /* Camada 1: Estrelas pequenas e lentas */
+  .stars {
+    width: 2px;
+    height: 2px;
+    background: #ffffff;
+    box-shadow: 
+      150vw 20vh #fff, 40vw 80vh #fff, 120vw 50vh #fff, 
+      20vw 10vh #fff, 90vw 70vh #fff, 170vw 90vh #fff,
+      10vw 40vh #fff, 130vw 10vh #fff, 60vw 60vh #fff,
+      200vw 30vh #fff, 80vw 20vh #fff, 110vw 85vh #fff;
+    animation: twinkle 4s infinite ease-in-out;
+  }
+  
+  /* Camada 2: Estrelas médias com velocidade diferente */
+  .stars2 {
+    width: 2.5px;
+    height: 2.5px;
+    background: #ffffff;
+    box-shadow: 
+      30vw 30vh #fff, 160vw 15vh #fff, 70vw 70vh #fff, 
+      110vw 40vh #fff, 10vw 90vh #fff, 180vw 60vh #fff,
+      50vw 10vh #fff, 140vw 80vh #fff, 95vw 35vh #fff;
+    animation: twinkle 3s infinite ease-in-out reverse;
+  }
+  
+  /* Camada 3: Estrelas menores e mais rápidas */
+  .stars3 {
+    width: 1.5px;
+    height: 1.5px;
+    background: #ffffff;
+    box-shadow: 
+      80vw 50vh #fff, 20vw 20vh #fff, 150vw 70vh #fff, 
+      100vw 10vh #fff, 40vw 60vh #fff, 170vw 30vh #fff,
+      130vw 90vh #fff, 60vw 40vh #fff;
+    animation: twinkle 2s infinite ease-in-out;
+  }
+  
+  /* Animação de piscar (cintilação) */
+  @keyframes twinkle {
+    0%, 100% {
+      opacity: 0.2;
+      transform: scale(0.8);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+  }
