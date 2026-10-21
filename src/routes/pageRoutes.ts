@@ -3,24 +3,17 @@ import * as pgC from "../controllers/pageController";
 
 export const pageRoutes = Router();
 
-// Rota principal
-pageRoutes.get("/", pgC.startPage);
+// --- Páginas Principais e Autenticação ---
+pageRoutes.get("/", pgC.startPage); // página inicial
+pageRoutes.get("/login", pgC.loginPage); // login
+pageRoutes.get("/registro", pgC.registroPage); // registro
 
-// Rota de login no mesmo router
-pageRoutes.get("/login", (req, res) => {
-    res.render("login"); // Renderiza views/login.ejs
-});
-// Rota de registro
-pageRoutes.get("/registro", (req, res) => {
-    res.render("registro"); // Certifique-se de que o arquivo views/registro.ejs (ou o nome correto) existe
-});
+// --- Navegação / Outras Páginas ---
+pageRoutes.get("/explore", pgC.explorePage); // explore (página principal)
+pageRoutes.get("/amizades", pgC.amizadesPage); // amizades
+pageRoutes.get("/user", pgC.userPage); // perfil
 
-// Rota de EXPLORE no mesmo router
-pageRoutes.get("/explore", (req, res) => {
-    res.render("explore");
-});
+// --- Tratamento de Erro / Páginas Especiais ---
+pageRoutes.get("/lol", pgC.naoEncontradaPage); // pq rafa fez isso eu não sei
 
-// Rota de EXPLORE no mesmo router
-pageRoutes.get("/lol", (req, res) => {
-    res.render("naoEncontrada");
-});
+export default pageRoutes;
