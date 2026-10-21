@@ -156,7 +156,7 @@ router.post(
                 .toLowerCase();
 
             const senha = String(req.body.senha || "");
-
+    
             if (!email || !senha) {
                 res.status(400).json({
                     mensagem: "Informe o e-mail e a senha."
@@ -186,6 +186,8 @@ router.post(
                 });
                 return;
             }
+
+            console.log(usuarios)
 
 
         } catch (erro) {
