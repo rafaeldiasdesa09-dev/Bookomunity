@@ -14,3 +14,8 @@ pageRoutes.get("/login", (req, res) => {
 pageRoutes.get("/registro", (req, res) => {
     res.render("registro"); // Certifique-se de que o arquivo views/registro.ejs (ou o nome correto) existe
 });
+
+// Rota de EXPLORE no mesmo router
+pageRoutes.get("/explore", (req, res) => {
+    res.render("explore");
+});
