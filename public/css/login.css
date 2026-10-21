@@ -258,3 +258,75 @@ nav a:hover {
       transform: scale(1.2);
     }
   }
+
+  
+body {
+    background-color: #050508;
+    color: var(--text-color);
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 40px 8%;
+}
+
+/* Formulário localizado à direita */
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    z-index: 1;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+/* Card do formulário */
+.card {
+    width: 100%;
+    max-width: none;
+    padding: 40px 30px;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+}
+
+/* Fundo estrelado ocupando a tela inteira */
+.sky {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        #0b0d19,
+        #1a1c2e,
+        #050508
+    );
+    overflow: hidden;
+    z-index: -1;
+}
+
+/* Ajuste para celulares */
+@media (max-width: 768px) {
+    body {
+        align-items: center;
+        padding: 20px;
+    }
+
+    .login-container {
+        max-width: 400px;
+        margin: auto;
+    }
+
+    .card {
+        padding: 30px 24px;
+    }
+}

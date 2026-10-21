@@ -19,3 +19,8 @@ pageRoutes.get("/registro", (req, res) => {
 pageRoutes.get("/explore", (req, res) => {
     res.render("explore");
 });
+
+// Rota de EXPLORE no mesmo router
+pageRoutes.get("/lol", (req, res) => {
+    res.render("naoEncontrada");
+});
