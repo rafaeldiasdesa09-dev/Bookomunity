@@ -146,5 +146,58 @@ router.post(
     }
 );
 
+
+router.post(
+    "/login",
+    async (req: Request, res: Response): Promise<void> => {
+        try {
+            const email = String(req.body.email || "")
+                .trim()
+                .toLowerCase();
+
+            const senha = String(req.body.senha || "");
+
+            if (!email || !senha) {
+                res.status(400).json({
+                    mensagem: "Informe o e-mail e a senha."
+                });
+                return;
+            }
+
+            const [resultado] = await pool.execute(
+                `SELECT id, nome, email, senha, perms
+                 FROM usuarios
+                 WHERE email = ?
+                 LIMIT 1`,
+                [email]
+            );
+
+            const usuarios = resultado as Array<{
+                id: number;
+                nome: string;
+                email: string;
+                senha: string;
+                perms: string;
+            }>;
+
+            if (usuarios.length === 0) {
+                res.status(401).json({
+                    mensagem: "E-mail ou senha inválidos."
+                });
+                return;
+            }
+
+
+        } catch (erro) {
+            console.error("Erro no login:", erro);
+
+            res.status(500).json({
+                mensagem: "Erro interno ao realizar login."
+            });
+        }
+    }
+);
+
+
 // Exportar o roteador corretamente
 export default router;

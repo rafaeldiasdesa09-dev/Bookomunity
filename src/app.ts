@@ -3,6 +3,7 @@ import express from "express";
 import helmet from "helmet";
 import path from "path";
 
+import {logger} from "./middlewares/logger"
 import { pageRoutes } from "./routes/pageRoutes";
 import registroRoutes from "./routes/registroRoutes";
 
@@ -10,6 +11,7 @@ const app = express();
 
 // Segurança
 app.use(helmet());
+app.use(logger)
 
 // Configuração do EJS
 app.set("view engine", "ejs");
@@ -27,5 +29,6 @@ app.use("/", pageRoutes);
 
 // Rota POST /api/registro
 app.use("/api", registroRoutes);
+
 
 export default app;
