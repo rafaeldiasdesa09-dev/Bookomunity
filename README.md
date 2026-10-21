@@ -18,3 +18,22 @@ Testes: Victor Gabriel
 ### Dependências:
 
 - NodeJS
+-MySql
+
+## Estrutura de pastas
+O projeto foi feito tendo em mente o padrão MVC de estrutura de pastas.
+
+## Executando o código:
+1. Primeiramente na pasta raiz do projeto, execute este comando para instalar os módulos requeridos pela API
+```
+npm install
+```
+
+2. Execute este comando para executar o servidor com TSX watch.
+```
+npm run dev
+```
+
+### Acessando o website
+
+Você pode acessar o site digitando "http://localhost:35000" no seu navegador.
