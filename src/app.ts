@@ -1,16 +1,41 @@
 
 import express from "express";
+import session from "express-session";
 import helmet from "helmet";
 import path from "path";
 
 import {logger} from "./middlewares/logger"
+
 import { pageRoutes } from "./routes/pageRoutes";
 import registroRoutes from "./routes/registroRoutes";
 
 const app = express();
 
-// Segurança
-app.use(helmet());
+// Cookie e sessão
+app.use(
+    session({
+      secret: "segredo-senac-2026-rafavicnajonasmarvin",
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+          maxAge: 60 * 60 * 1000,
+          httpOnly: true,
+          secure: false
+      }
+  }));
+  
+  
+  // Middleware de segurança
+  app.use(helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        scriptSrcElem: ["'self'", "'unsafe-inline'"],
+      }
+    }
+  })) 
+
 app.use(logger)
 
 // Configuração do EJS
@@ -26,7 +51,6 @@ app.use(express.static(path.join(__dirname, "../public")));
 
 // Rotas das páginas
 app.use("/", pageRoutes);
-
 // Rota POST /api/registro
 app.use("/api", registroRoutes);
 

@@ -156,7 +156,7 @@ router.post(
                 .toLowerCase();
 
             const senha = String(req.body.senha || "");
-
+    
             if (!email || !senha) {
                 res.status(400).json({
                     mensagem: "Informe o e-mail e a senha."
@@ -165,7 +165,7 @@ router.post(
             }
 
             const [resultado] = await pool.execute(
-                `SELECT id, nome, email, senha, perms
+                `SELECT id, nome, email, senha, perms, foto_perfil
                  FROM usuarios
                  WHERE email = ?
                  LIMIT 1`,
@@ -178,6 +178,7 @@ router.post(
                 email: string;
                 senha: string;
                 perms: string;
+                foto_perfil: string;
             }>;
 
             if (usuarios.length === 0) {
@@ -186,7 +187,22 @@ router.post(
                 });
                 return;
             }
+            const usuario = usuarios[0]
 
+            if (usuario !== undefined) {
+                if (usuario.perms === "USER") {req.session.admin = false} else {req.session.admin = true}
+                req.session.userId = usuario.id
+                req.session.userName = usuario.nome
+                req.session.email = usuario.email
+                req.session.photo = usuario.foto_perfil
+            }
+
+    
+            if (req.session.admin === true) {
+                res.redirect("/admin")
+            } else {
+                res.redirect("/store")
+            }
 
         } catch (erro) {
             console.error("Erro no login:", erro);
