@@ -4,7 +4,7 @@ use bookomunity_db;
 
 -- 1. Tabela de usuarios
 create table usuarios (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
     email VARCHAR(254) UNIQUE,
     senha VARCHAR(255),
@@ -16,7 +16,7 @@ create table usuarios (
 
 -- 2. Tabela de livros
 create table livros (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     titulo VARCHAR(200),
     autor VARCHAR(150),
     isbn VARCHAR(17),
@@ -28,7 +28,7 @@ create table livros (
 
 -- 3. Tabela de clubes
 create table clubes (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
     descricao TEXT,
     imagem VARCHAR(255),
@@ -39,7 +39,7 @@ create table clubes (
 
 -- 4. Tabela de postagens (FKs = usuarios, clubes e livros)
 create table postagens (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     tipo VARCHAR(20),
     titulo VARCHAR(200),
     conteudo TEXT,
@@ -56,7 +56,7 @@ create table postagens (
 
 -- 5. Tabela para postagem do tipo Recomendação (FKs = postagens, usuarios e livros)
 create table recomendacao_livros (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     postagem_id INT,
     usuario_id INT,
     livro_id INT,
@@ -79,7 +79,7 @@ create table membros_clube (
 
 -- 7. Tabela de comentarios (FKs = usuarios e postagens)
 create table comentarios (
-    id INT PRIMARY KEY,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     conteudo TEXT,
     usuario_id INT,
     postagem_id INT,
