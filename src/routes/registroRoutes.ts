@@ -201,7 +201,7 @@ router.post(
             if (req.session.admin === true) {
                 res.redirect("/admin")
             } else {
-                res.redirect("/store")
+                res.redirect("/explore")
             }
 
         } catch (erro) {
