@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EXPLORE-CONCEITO</title>
-    <link rel="stylesheet" href="explore.css">    
+    <link rel="stylesheet" href="css/explore.css">    
 </head>
 
     <header>
@@ -31,5 +31,29 @@
             <div class="row-posts">
                 </div> 
         </section>
+
+        <% if (typeof nome !== 'undefined' && nome) { %>
+            <div class="user-info">
+          
+              <a href="/logoff"
+                 style="color: #E74C3C; margin-left: .5rem;">
+                Sair
+              </a>
+          
+              <a href="/profile"
+                 class="user"
+                 style="margin-left: 1rem; font-weight: 700;">
+                <%= nome %>
+              </a>
+          
+              <img
+                id="avatar-header"
+                alt="Foto de perfil de: <%= nome %>"
+                class="user-avatar"
+                src="<%= typeof foto !== 'undefined' && foto ? foto : '/img/avatar-padrao.png' %>"
+              >
+          
+            </div>
+          <% } %>
 </body>
 </html>
