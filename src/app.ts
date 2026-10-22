@@ -7,7 +7,8 @@ import path from "path";
 import {logger} from "./middlewares/logger"
 
 import { pageRoutes } from "./routes/pageRoutes";
-import registroRoutes from "./routes/registroRoutes";
+import registroRoutes from "./routes/authRoutes";
+import authRoutes from "./routes/authRoutes";
 
 const app = express();
 
@@ -52,7 +53,7 @@ app.use(express.static(path.join(__dirname, "../public")));
 // Rotas das páginas
 app.use("/", pageRoutes);
 // Rota POST /api/registro
-app.use("/api", registroRoutes);
+app.use("/api", authRoutes);
 
 
 export default app;
