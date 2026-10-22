@@ -330,3 +330,25 @@ body {
         padding: 30px 24px;
     }
 }
+
+
+.bg-image-left {
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    
+    width: 600px;
+    height: 750px;
+    
+    object-fit: cover;
+    
+    /* Combina o degradê horizontal (lados) com o vertical (topo e base) */
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%), 
+                        linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+    -webkit-mask-composite: intersect;
+    
+    mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%), 
+                linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+    mask-composite: intersect;
+}
