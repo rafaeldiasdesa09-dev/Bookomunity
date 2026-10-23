@@ -20,7 +20,9 @@
         <nav>
             <a href="/">Início</a>
             <a href="/explore">Explorar</a>
+            <% if (logado === false) {%>
             <a href="/login">Entrar</a>        </nav>
+            <% } %>
     </header>
 
 <div class="sky">

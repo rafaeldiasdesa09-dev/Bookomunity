@@ -6,7 +6,7 @@ import path from "path";
 
 import {logger} from "./middlewares/logger"
 
-import { pageRoutes } from "./routes/pageRoutes";
+import pageRoutes from "./routes/pageRoutes";
 import registroRoutes from "./routes/authRoutes";
 import authRoutes from "./routes/authRoutes";
 
@@ -49,11 +49,13 @@ app.use(express.urlencoded({ extended: true }));
 
 // Arquivos públicos e fotos de perfil
 app.use(express.static(path.join(__dirname, "../public")));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Rotas das páginas
 app.use("/", pageRoutes);
-// Rota POST /api/registro
-app.use("/api", authRoutes);
+
+// Rotas envolvendo login e sessão /auth/*
+app.use("/auth", authRoutes);
 
 
 export default app;

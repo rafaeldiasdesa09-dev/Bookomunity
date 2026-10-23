@@ -152,3 +152,24 @@ export const loginUsuario = async (req: Request, res: Response): Promise<void> =
         });
     }
 };
+
+export const sairDoUsuario = async (req: Request, res: Response): Promise<void> => {
+    try {
+        req.session.destroy((err) => {
+            if (err) {
+                console.log("Erro ao sair da sessão:", err);
+                return res.status(500).json({ mensagem: "Erro ao realizar logoff." });
+            }
+        })
+        console.log("Sessão limpa")
+
+        res.clearCookie('connect.sid')
+        return res.redirect('/explore')
+    } catch (erro) {
+        console.error("Erro no login:", erro);
+
+        res.status(500).json({
+            mensagem: "Erro interno ao realizar logoff."
+        });
+    }
+}

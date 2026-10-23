@@ -1,7 +1,7 @@
 import { Router } from "express";
 import * as pgC from "../controllers/pageController";
 
-export const pageRoutes = Router();
+const pageRoutes = Router();
 
 // --- Páginas Principais e Autenticação ---
 pageRoutes.get("/", pgC.startPage); // página inicial
