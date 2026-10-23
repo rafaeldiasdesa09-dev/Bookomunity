@@ -1,59 +1,115 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EXPLORE-CONCEITO</title>
-    <link rel="stylesheet" href="css/explore.css">    
+
+    <title>Explore - Bookomunity</title>
+
+    <link rel="stylesheet" href="/css/explore.css">
 </head>
+
+<body>
 
     <header>
         <div class="logo">
-            <img src="/img/logoBookomunity2.png" alt="Logo Bookomunity">
+            <a href="/">
+                <img src="/img/logoBookomunity2.png" alt="Logo Bookomunity">
+            </a>
         </div>
 
         <nav>
             <a href="/">Início</a>
             <a href="/explore">Explorar</a>
-            <a href="/login">Entrar</a>        </nav>
+
+            <% if (typeof nome !== 'undefined' && nome) { %>
+
+                <div class="user-info">
+                    <a href="/profile" class="user">
+                        <%= nome %>
+                    </a>
+
+                    <img
+                        id="avatar-header"
+                        class="user-avatar"
+                        src="<%= typeof foto !== 'undefined' && foto ? foto : '/img/avatar-padrao.png' %>"
+                        alt="Foto de perfil de <%= nome %>"
+                    >
+
+                    <a href="/logoff" class="logout">
+                        Sair
+                    </a>
+                </div>
+
+            <% } else { %>
+
+                <a href="/login">Entrar</a>
+                <a href="/registro">Cadastrar</a>
+
+            <% } %>
+        </nav>
     </header>
 
+    <main>
 
-<body>
-    <section class="row">
+        <!-- Postagens do usuário logado -->
+        <section class="row">
             <h2 class="row-title">SUAS POSTAGENS</h2>
+
             <div class="row-posts">
-                </div> 
+
+                <% if (typeof minhasPostagens !== 'undefined' && minhasPostagens.length > 0) { %>
+
+                    <% minhasPostagens.forEach(postagem => { %>
+
+                        <article class="post-card">
+                            <h3><%= postagem.titulo %></h3>
+                            <p><%= postagem.conteudo %></p>
+                        </article>
+
+                    <% }) %>
+
+                <% } else { %>
+
+                    <p class="empty-message">
+                        Você ainda não tem postagens.
+                    </p>
+
+                <% } %>
+
+            </div>
         </section>
 
+        <!-- Postagens de outros usuários -->
         <section class="row">
             <h2 class="row-title">POSTAGENS DE AMIGOS</h2>
+
             <div class="row-posts">
-                </div> 
+
+                <% if (typeof postagensAmigos !== 'undefined' && postagensAmigos.length > 0) { %>
+
+                    <% postagensAmigos.forEach(postagem => { %>
+
+                        <article class="post-card">
+                            <h3><%= postagem.titulo %></h3>
+                            <p><%= postagem.conteudo %></p>
+                        </article>
+
+                    <% }) %>
+
+                <% } else { %>
+
+                    <p class="empty-message">
+                        Ainda não existem postagens de amigos para mostrar.
+                    </p>
+
+                <% } %>
+
+            </div>
         </section>
 
-        <% if (typeof nome !== 'undefined' && nome) { %>
-            <div class="user-info">
-          
-              <a href="/logoff"
-                 style="color: #E74C3C; margin-left: .5rem;">
-                Sair
-              </a>
-          
-              <a href="/profile"
-                 class="user"
-                 style="margin-left: 1rem; font-weight: 700;">
-                <%= nome %>
-              </a>
-          
-              <img
-                id="avatar-header"
-                alt="Foto de perfil de: <%= nome %>"
-                class="user-avatar"
-                src="<%= typeof foto !== 'undefined' && foto ? foto : '/img/avatar-padrao.png' %>"
-              >
-          
-            </div>
-          <% } %>
+    </main>
+
 </body>
 </html>
