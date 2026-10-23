@@ -1,64 +1,130 @@
-import { Request, Response } from "express";
 
-export const startPage = async (_req: Request, res: Response): Promise<void> => {
+import type { Request, Response } from "express";
+import type { RowDataPacket } from "mysql2";
+import pool from "../config/database";
+
+// Dados do usuário retornados pelo banco
+interface Usuario extends RowDataPacket {
+    id: number;
+    nome: string | null;
+    foto_perfil: string | null;
+}
+
+// Recupera o ID do usuário salvo na sessão
+function obterUsuarioId(req: Request): number | undefined {
+    const id = (req.session as any)?.usuarioId;
+
+    if (id === undefined || id === null || id === "") {
+        return undefined;
+    }
+
+    const usuarioId = Number(id);
+
+    if (!Number.isSafeInteger(usuarioId) || usuarioId <= 0) {
+        return undefined;
+    }
+
+    return usuarioId;
+}
+
+// Página inicial
+export const startPage = (
+    _req: Request,
+    res: Response
+): void => {
+    res.render("index");
+};
+
+// Página de login
+export const loginPage = (
+    _req: Request,
+    res: Response
+): void => {
+    res.render("login");
+};
+
+// Página de registro
+export const registroPage = (
+    _req: Request,
+    res: Response
+): void => {
+    res.render("registro");
+};
+
+// Página Explore
+export const explorePage = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
     try {
-        res.render("index");
-    } catch (erro) {
-        console.error("Erro ao renderizar a página inicial:", erro);
-        res.status(500).send("Erro interno ao carregar a página.");
+        const usuarioId = obterUsuarioId(req);
+
+        // A página também pode ser acessada sem login
+        if (!usuarioId) {
+            res.render("explore", {
+                nome: null,
+                foto: null,
+                minhasPostagens: [],
+                postagensAmigos: []
+            });
+            return;
+        }
+
+        // Busca os dados do usuário no MySQL
+        const [linhas] = await pool.execute<Usuario[]>(
+            `SELECT id, nome, foto_perfil
+             FROM usuarios
+             WHERE id = ?
+             LIMIT 1`,
+            [usuarioId]
+        );
+
+        // Se a conta não existir, limpa os dados da sessão
+        if (linhas.length === 0) {
+            (req.session as any).usuarioId = undefined;
+
+            res.redirect("/login");
+            return;
+        }
+
+        const usuario = linhas[0];
+
+        // Disponibiliza os dados para o arquivo explore.ejs
+        res.render("explore", {
+            nome: req.session.userName,
+            foto:req.session.photo,
+            minhasPostagens: [],
+            postagensAmigos: []
+        });
+    } catch (erro: unknown) {
+        console.error("Erro ao carregar a página Explore:", erro);
+
+        res.status(500).send(
+            "Erro interno ao carregar a página Explore."
+        );
     }
 };
 
-export const loginPage = async (_req: Request, res: Response): Promise<void> => {
-    try {
-        res.render("login");
-    } catch (erro) {
-        console.error("Erro ao renderizar a página de login:", erro);
-        res.status(500).send("Erro interno ao carregar a página.");
-    }
+// Página 404
+export const naoEncontradaPage = (
+    _req: Request,
+    res: Response
+): void => {
+    res.status(404).render("naoEncontrada");
 };
 
-export const registroPage = async (_req: Request, res: Response): Promise<void> => {
-    try {
-        res.render("registro");
-    } catch (erro) {
-        console.error("Erro ao renderizar a página de registro:", erro);
-        res.status(500).send("Erro interno ao carregar a página.");
-    }
+// Página de amizades
+export const amizadesPage = (
+    _req: Request,
+    res: Response
+): void => {
+    res.render("friends");
 };
 
-export const explorePage = async (_req: Request, res: Response): Promise<void> => {
-    try {
-        res.render("explore");
-    } catch (erro) {
-        console.error("Erro ao renderizar a página explore:", erro);
-        res.status(500).send("Erro interno ao carregar a página.");
-    }
-};
-
-export const naoEncontradaPage = async (_req: Request, res: Response): Promise<void> => {
-    try {
-        res.render("naoEncontrada");
-    } catch (erro) {
-        console.error("Erro ao renderizar a página 404:", erro);
-        res.status(500).send("Erro interno ao carregar a página.");
-    }
-};
-
-export const amizadesPage = async (_req: Request, res: Response): Promise<void> => {
-    try {
-        res.render("friends");
-    } catch (erro) {
-        console.error("Erro ao renderizar a página de amizades:", erro);
-        res.status(500).send("Erro interno ao carregar a página.");
-    }
-};
-
-export const userPage = async (_req: Request, res: Response): Promise<void> => {
-    try {
-        res.render("user");
-    } catch (erro) {
-        console.error("Erro ao renderizar a página de usuário:", erro);
-        res.status(500).send("Erro interno ao carregar a página.");
-    }
+// Página de perfil do usuário
+export const userPage = (
+    _req: Request,
+    res: Response
+): void => {
+    res.render("user");
 };

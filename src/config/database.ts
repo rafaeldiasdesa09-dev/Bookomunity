@@ -1,39 +1,45 @@
-import mysql from "mysql2/promise";
-import dotenv from "dotenv";
 
-// Carrega as variáveis do arquivo .env
-dotenv.config();
+import "dotenv/config";
+import mysql, { Pool, PoolConnection, RowDataPacket } from "mysql2/promise";
 
-// Configuração do pool de conexões com o MySQL
-const pool = mysql.createPool({
-    host: process.env.DB_HOST || "localhost",
-    port: Number(process.env.DB_PORT || 3306),
-    user: process.env.DB_USER || "root",
-    password: process.env.DB_PASSWORD || "",
-    database: process.env.DB_NAME || "bookomunity_db",
+export class Conexao {
+    private static pool: Pool | null = null;
 
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0,
+    // Cria o pool uma única vez e reutiliza nas consultas
+    static obterPool(): Pool {
+        if (this.pool === null) {
+            this.pool = mysql.createPool({
+                host: process.env.DB_HOST || "localhost",
+                port: Number(process.env.DB_PORT || 3306),
+                user: process.env.DB_USER || "root",
+                password: process.env.DB_PASSWORD || "",
+                database: process.env.DB_NAME || "bookomunity_db",
+                waitForConnections: true,
+                connectionLimit: 10,
+                queueLimit: 0,
+                charset: "utf8mb4"
+            });
+        }
 
-    charset: "utf8mb4"
-});
+        return this.pool;
+    }
+}
 
 // Testa a conexão com o banco de dados
 export async function testarConexao(): Promise<boolean> {
-    let connection: mysql.PoolConnection | undefined;
+    let connection: PoolConnection | undefined;
 
     try {
+        const pool = Conexao.obterPool();
         connection = await pool.getConnection();
 
-        // Confirma qual banco está sendo utilizado
-        const [resultado] = await connection.query(
+        const [resultado] = await connection.query<RowDataPacket[]>(
             "SELECT DATABASE() AS banco"
         );
 
         console.log("==================================");
         console.log("MySQL conectado com sucesso!");
-        console.log("Banco de dados:", resultado);
+        console.log("Banco de dados:", resultado[0]?.banco);
         console.log("==================================");
 
         return true;
@@ -62,8 +68,10 @@ export async function testarConexao(): Promise<boolean> {
     }
 }
 
-// Exporta o pool para ser utilizado nas rotas da API
+// Exportação padrão para compatibilidade com arquivos que importam pool
+const pool = Conexao.obterPool();
+
 export default pool;
 
-// Executa o teste de conexão ao carregar este módulo
+// Testa a conexão ao carregar o módulo
 void testarConexao();
