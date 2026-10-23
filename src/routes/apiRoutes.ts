@@ -10,32 +10,36 @@ import * as recomendacaoController from "../controllers/entity/postRecomendacaoC
 import * as comentarioController from "../controllers/entity/comentarioController";
 import * as likeController from "../controllers/entity/likeController";
 
-const router = Router();
+const apiRoutes = Router();
 
 // --- Usuários ---
-router.get("/usuarios", userController.listarUsuarios);
-router.get("/usuarios/:id", userController.buscarUsuarioPorId);
+apiRoutes.get("/usuarios", userController.listarUsuarios);
+apiRoutes.get("/usuarios/:id", userController.buscarUsuarioPorId);
 
 // --- Livros ---
-router.get("/livros", livroController.listarLivros);
-router.get("/livro/:id", livroController.buscarLivroPorId);
+apiRoutes.get("/livros", livroController.listarLivros);
+apiRoutes.get("/livro/:id", livroController.buscarLivroPorId);
 
 // --- Clubes ---
-router.get("/clubes", clubeController.listarClubes);
-router.get("/clubes/:id", clubeController.buscarClubePorId);
-router.get("/clubes/:id/membros", membroController.listarMembrosClube);
+apiRoutes.get("/clubes", clubeController.listarClubes);
+apiRoutes.get("/clubes/:id", clubeController.buscarClubePorId);
+apiRoutes.get("/clubes/:id/membros", membroController.listarMembrosClube);
 
 // --- Postagens ---
-router.get("/postagens", postagemController.listarPostagens);
-router.get("/postagens/:id", postagemController.buscarPostagemPorId);
+apiRoutes.get("/postagens", postagemController.listarPostagens);
+apiRoutes.get("/postagens/:id", postagemController.buscarPostagemPorId);
+
+apiRoutes.post("/postagens", postagemController.criarPostagem);
+apiRoutes.delete("/postagens/:id", postagemController.deletarPostagem);
+apiRoutes.put("/postagens/:id", postagemController.atualizarPostagem);
 
 // --- Recomendações de Livros ---
-router.get("/recomendacoes", recomendacaoController.listarPedidos);
+apiRoutes.get("/recomendacoes", recomendacaoController.listarPedidos);
 
 // --- Comentários ---
-router.get("/postagens/:id/comentarios", comentarioController.listarComentariosPorPostagem);
+apiRoutes.get("/postagens/:id/comentarios", comentarioController.listarComentariosPorPostagem);
 
 // --- Curtidas ---
-router.get("/postagens/:id/curtidas", likeController.contarLikesPorPostagem);
+apiRoutes.get("/postagens/:id/curtidas", likeController.contarLikesPorPostagem);
 
-export default router;
+export default apiRoutes;

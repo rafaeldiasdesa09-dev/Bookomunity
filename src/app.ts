@@ -9,6 +9,7 @@ import {logger} from "./middlewares/logger"
 import pageRoutes from "./routes/pageRoutes";
 import registroRoutes from "./routes/authRoutes";
 import authRoutes from "./routes/authRoutes";
+import apiRoutes from "./routes/apiRoutes"
 
 const app = express();
 
@@ -56,6 +57,9 @@ app.use("/", pageRoutes);
 
 // Rotas envolvendo login e sessão /auth/*
 app.use("/auth", authRoutes);
+
+// Rotas de enviar informações
+app.use("/api", apiRoutes);
 
 
 export default app;
