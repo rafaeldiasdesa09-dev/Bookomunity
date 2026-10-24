@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     foto_perfil VARCHAR(255),
     bio TEXT,
     perms VARCHAR(20),
-    data_criacao DATETIME
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 -- 2. Tabela de livros
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS livros (
     isbn VARCHAR(17),
     descricao TEXT,
     genero VARCHAR(100),
-    ano_publicacao YEAR,
+    ano_publicacao INT,
     capa VARCHAR(255)
 );
 
