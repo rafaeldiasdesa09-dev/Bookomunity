@@ -7,6 +7,7 @@ export const startPage = (req: Request, res: Response): void => {
     try {
         const logado: boolean = (req.session.userId !== undefined);
         res.render("index", { logado: logado });
+        console.log(req.session)
     } catch (error) {
         console.error("Erro ao carregar a página inicial:", error);
         res.status(500).send("Erro interno no servidor.");

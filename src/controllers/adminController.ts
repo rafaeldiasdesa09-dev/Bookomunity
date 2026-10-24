@@ -1,5 +1,27 @@
 import { Request, Response } from "express";
 import pool from "../config/database";
+import { ResultSetHeader } from "mysql2";
+import bcrypt from "bcrypt";
+
+async function criarAdmin() {
+    try {
+        const senha = await bcrypt.hash("admin123", 10)
+
+        const [usuario] = await pool.query<ResultSetHeader>(`
+            INSERT INTO usuarios (nome, email, senha, perms)
+            VALUES (?, ?, ?, ?)`, ['admin', 'admin@bookomunity.com', senha, 'ADMIN'])
+        
+        const [admin]: any = await pool.query(`SELECT email, senha FROM usuarios WHERE perms='ADMIN'`)
+
+        console.log("Administrador criado, informações:", admin)
+
+    } catch {
+        const [admin]: any = await pool.query(`SELECT email, senha FROM usuarios WHERE perms='ADMIN'`)
+        console.log("Administrador presente:", admin)
+    }
+}
+
+
 
 type UsuarioAdmin = {
     id: number;
@@ -32,7 +54,7 @@ export const carregarPainelAdmin = async (req: Request, res: Response): Promise<
         const totalClubes = (clubesResult[0] as Total[])[0]?.total ?? 0;
 
         res.render("admin", {
-            usuario: req.session.usuario,
+            usuario: req.session.userName,
             usuarios,
             totalUsuarios,
             totalPostagens,
@@ -43,6 +65,8 @@ export const carregarPainelAdmin = async (req: Request, res: Response): Promise<
         res.status(500).send("Não foi possível carregar o painel administrativo.");
     }
 };
+
+
 
 export const listarUsuariosAdmin = async (_req: Request, res: Response): Promise<void> => {
     try {
@@ -59,6 +83,8 @@ export const listarUsuariosAdmin = async (_req: Request, res: Response): Promise
     }
 };
 
+
+
 export const atualizarPermissaoUsuario = async (req: Request, res: Response): Promise<void> => {
     const id = Number(req.params.id);
     const perms = String(req.body?.perms ?? "").trim().toUpperCase();
@@ -73,7 +99,7 @@ export const atualizarPermissaoUsuario = async (req: Request, res: Response): Pr
         return;
     }
 
-    if (req.session.usuario?.id === id && perms !== "ADMIN") {
+    if (req.session.userId === id && perms !== "ADMIN") {
         res.status(400).json({ mensagem: "Não é possível remover sua própria permissão de administrador." });
         return;
     }
@@ -100,3 +126,7 @@ export const atualizarPermissaoUsuario = async (req: Request, res: Response): Pr
         res.status(500).json({ mensagem: "Não foi possível atualizar a permissão." });
     }
 };
+
+
+
+criarAdmin() // Criar usuário de admin no início da execução do código.
