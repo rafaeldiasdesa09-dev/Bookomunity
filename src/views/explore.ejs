@@ -20,11 +20,13 @@
         </div>
 
         <nav>
-            <a href="/">Início</a>
             <a href="/explore">Explorar</a>
 
             <% if (nome !== undefined) { %>
 
+                <a href="/friends">Amizades</a>
+                <a href="/options">Configurações</a>
+                
                 <div class="user-info">
                     <a href="/profile" class="user">
                         <%= nome %>

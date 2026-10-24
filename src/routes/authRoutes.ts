@@ -3,11 +3,11 @@ import { upload } from "../middlewares/upload";
 import * as authController from "../controllers/user/authController";
 
 
-const AUTH = Router();
+const router = Router();
 
 // --- Autenticação / Usuários ---
-AUTH.post("/registro", upload.single("foto"), authController.registrarUsuario);
-AUTH.post("/login", authController.loginUsuario);
-AUTH.post("/logoff", authController.sairDoUsuario)
+router.post("/registro", upload.single("foto"), authController.registrarUsuario);
+router.post("/login", authController.loginUsuario);
+router.post("/logoff", authController.sairDoUsuario)
 
-export default AUTH;
+export default router;

@@ -1,9 +1,9 @@
-create database if not exists bookomunity_db;
+CREATE DATABASE IF NOT EXISTS bookomunity_db;
 
-use bookomunity_db;
+USE bookomunity_db;
 
 -- 1. Tabela de usuarios
-create table usuarios (
+CREATE TABLE IF NOT EXISTS usuarios (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
     email VARCHAR(254) UNIQUE,
@@ -15,7 +15,7 @@ create table usuarios (
 );
 
 -- 2. Tabela de livros
-create table livros (
+CREATE TABLE IF NOT EXISTS livros (
     id INT PRIMARY KEY AUTO_INCREMENT,
     titulo VARCHAR(200),
     autor VARCHAR(150),
@@ -27,7 +27,7 @@ create table livros (
 );
 
 -- 3. Tabela de clubes
-create table clubes (
+CREATE TABLE IF NOT EXISTS clubes (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
     descricao TEXT,
@@ -38,7 +38,7 @@ create table clubes (
 );
 
 -- 4. Tabela de postagens (FKs = usuarios, clubes e livros)
-create table postagens (
+CREATE TABLE IF NOT EXISTS postagens (
     id INT PRIMARY KEY AUTO_INCREMENT,
     tipo VARCHAR(20),
     titulo VARCHAR(200),
@@ -55,7 +55,7 @@ create table postagens (
 );
 
 -- 5. Tabela para postagem do tipo Recomendação (FKs = postagens, usuarios e livros)
-create table recomendacao_livros (
+CREATE TABLE IF NOT EXISTS recomendacao_livros (
     id INT PRIMARY KEY AUTO_INCREMENT,
     postagem_id INT,
     usuario_id INT,
@@ -67,7 +67,7 @@ create table recomendacao_livros (
 );
 
 -- 6. Tabela de MembrosClube (ligação entre usuários e o clube que eles pertnecem) (FKs = usuarios e clubes)
-create table membros_clube (
+CREATE TABLE IF NOT EXISTS membros_clube (
     usuario_id INT,
     clube_id INT,
     papel VARCHAR(20),
@@ -78,7 +78,7 @@ create table membros_clube (
 );
 
 -- 7. Tabela de comentarios (FKs = usuarios e postagens)
-create table comentarios (
+CREATE TABLE IF NOT EXISTS comentarios (
     id INT PRIMARY KEY AUTO_INCREMENT,
     conteudo TEXT,
     usuario_id INT,
@@ -89,11 +89,36 @@ create table comentarios (
 );
 
 -- 8. Tabela de curtidas (FKs = usuarios e postagens)
-create table curtidas (
+CREATE TABLE IF NOT EXISTS curtidas (
     usuario_id INT,
     postagem_id INT,
     data_criacao DATETIME,
     PRIMARY KEY (usuario_id, postagem_id),
     CONSTRAINT fk_curtidas_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
     CONSTRAINT fk_curtidas_postagem FOREIGN KEY (postagem_id) REFERENCES postagens(id)
+);
+
+-- 9. Tabela de amizades
+CREATE TABLE IF NOT EXISTS amizades (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    usuario_id INT,
+    amigo_id INT,
+    status VARCHAR(20) DEFAULT 'pendente', -- 'pendente', 'aceito', 'recusado'
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP(),
+    CONSTRAINT fk_amizades_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    CONSTRAINT fk_amizades_amigo FOREIGN KEY (amigo_id) REFERENCES usuarios(id),
+    -- Garante que não haja pedidos duplicados entre os mesmos usuários
+    CONSTRAINT uc_usuarios_amigos UNIQUE (usuario_id, amigo_id)
+);
+
+-- 10. Tabela de mensagens diretas
+CREATE TABLE IF NOT EXISTS mensagens_diretas (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    remetente_id INT,
+    destinatario_id INT,
+    conteudo TEXT NOT NULL,
+    lida BOOLEAN DEFAULT FALSE, -- para saber se a mensagem foi visualizada
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP(),
+    CONSTRAINT fk_mensagens_remetente FOREIGN KEY (remetente_id) REFERENCES usuarios(id),
+    CONSTRAINT fk_mensagens_destinatario FOREIGN KEY (destinatario_id) REFERENCES usuarios(id)
 );
