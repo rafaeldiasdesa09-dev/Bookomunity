@@ -1,4 +1,3 @@
-
 import "dotenv/config";
 import mysql, { Pool, PoolConnection, RowDataPacket } from "mysql2/promise";
 

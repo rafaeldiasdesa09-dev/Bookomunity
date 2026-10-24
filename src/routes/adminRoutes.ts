@@ -9,6 +9,7 @@ ADMIN.use(adminAuth);
 
 ADMIN.get("/", admin.carregarPainelAdmin);
 ADMIN.get("/usuarios", admin.listarUsuariosAdmin);
+ADMIN.get("/infos", admin.obterEstatisticasPainel)
 ADMIN.patch("/usuarios/:id/perms", admin.atualizarPermissaoUsuario);
 
 export default ADMIN;

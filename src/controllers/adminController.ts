@@ -33,6 +33,30 @@ type UsuarioAdmin = {
 
 type Total = { total: number };
 
+export const obterEstatisticasPainel = async (_req: Request, res: Response): Promise<void> => {
+    try {
+        const [resultado] = await pool.execute(`
+            SELECT 
+                (SELECT COUNT(id) FROM usuarios) AS total_usuarios,
+                (SELECT COUNT(id) FROM livros) AS total_livros,
+                (SELECT COUNT(id) FROM clubes) AS total_clubes,
+                (SELECT COUNT(id) FROM postagens) AS total_postagens,
+                (SELECT COUNT(id) FROM recomendacao_livros) AS total_recomendacoes,
+                (SELECT COUNT(usuario_id) FROM membros_clube) AS total_membros_clube,
+                (SELECT COUNT(id) FROM comentarios) AS total_comentarios,
+                (SELECT COUNT(usuario_id) FROM curtidas) AS total_curtidas,
+                (SELECT COUNT(id) FROM mensagens_diretas) AS total_mensagens
+        `);
+
+        const estatisticas = (resultado as any[])[0];
+
+        res.status(200).json(estatisticas);
+    } catch (erro) {
+        console.error("Erro ao buscar estatísticas do painel:", erro);
+        res.status(500).json({ erro: "Erro ao carregar estatísticas." });
+    }
+};
+
 export const carregarPainelAdmin = async (req: Request, res: Response): Promise<void> => {
     try {
         const [usuariosResult, usuariosTotalResult, postagensResult, clubesResult] =

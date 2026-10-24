@@ -1,1 +1,38 @@
-hi
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Administrador - Bookomunity</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <div class="sidebar">
+        <button class="sidebar-btn" onclick="">Banco de dados</button>
+        <button class="sidebar-btn" onclick="">Console</button>
+        <button class="sidebar-btn" onclick="">Administradores</button>
+        <div class="avatar">
+            <p style="color: var(--sidebar-btn-text);">Admin</p>
+            <form action="/auth/logoff" method="POST" style="display: inline;">
+            <button type="submit" class="logoff">Sair</button>
+        </div>
+    </div>
+
+    <main>
+        <div class="welcome">
+            <div class="welcome-text">
+                <h1>Bem-vindo ao painel de administrador.</h1>
+                <p>Utilize os botões na barra lateral para navegar.</p>
+            </div>
+            <div class="welcome-content-container">
+                <h1 style="align-self: center;">Informações</h1>
+                <div class="welcome-content" id="welcome-content"><p>Carregando...</p></div>
+            </div>
+        </div>
+    </main>
+
+
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>

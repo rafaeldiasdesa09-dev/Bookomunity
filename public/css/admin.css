@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+    --sidebar-btn-color: #7B624E;
+    --sidebar-btn-text: #F7F4EF;
+    --sidebar-btn-color-hover: #977d68;
+    --border-color: #DED0B9
+}
+
+* {
+    box-sizing: 0;
+    margin: 0;
+}
+
+body {
+    font-family: 'Roboto';
+    color: #1f2937;
+    background-color: #f7f4ef;
+    display: flex;
+}
+
+.sidebar {
+    width: fit-content;
+    height: 100vh;
+    background-color: #4c3d31;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-left: .8rem;
+    padding-right: .8rem;
+}
+
+.sidebar-btn {
+    width: 16vw;
+    outline: none;
+    border: 2px solid transparent;
+    height: 3rem;
+    background-color: var(--sidebar-btn-color);
+    color: var(--sidebar-btn-text);
+    cursor: pointer;
+    margin-top: .8rem;
+    border-radius: .4rem;
+    transition: .2s ease;
+}
+.sidebar-btn:hover {
+    background-color: var(--sidebar-btn-color-hover);
+    border: 2px solid rgba(255,255,255,.3);
+}
+
+.avatar {
+    position: absolute;
+    bottom: .8rem;
+
+    width: calc(100% - 3.6rem);
+    display: flex;
+    justify-content: space-between;
+    height: 3rem;
+    background-color: var(--sidebar-btn-color);
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: .4rem;
+}
+
+.logoff {
+    background: none;
+    border: none;
+    outline: none;
+    color: rgb(255, 134, 134);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+
+main {
+    background-color: var(--sidebar-btn-text);
+    width: 100%;
+    margin: 2rem;
+    border: 3px dashed var(--border-color);
+    border-radius: 10px;
+}
+
+.welcome {
+    height: 100%;
+}
+
+.welcome-text {
+    color: #7B624E;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background-color: #fff;
+    padding: 4rem;
+}
+
+.welcome-content-container {
+    color: #7B624E;
+    margin-top: 1.5rem;
+    min-height: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap:.5rem;
+    padding: 1rem;
+    background-color: #f7f4ef;
+    z-index: 3;
+}
+
+.welcome-content {
+    margin-top: 1.5rem;
+    min-height: 3rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:.5rem;
+    padding: 1rem;
+    background-color: #f7f4ef;
+}
+
+.welcome-content-block {
+    background-color: white;
+    border-radius: .6rem;
+    padding: 1.4rem;
+    margin: .5rem;
+}

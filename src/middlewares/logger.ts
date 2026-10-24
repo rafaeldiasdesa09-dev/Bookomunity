@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { consoleContent } from "../types/variables";
 
 export async function logger(req: Request, res: Response, next: NextFunction) {
     const date = `${new Date().toLocaleTimeString()} | ${new Date().toLocaleDateString()}`
@@ -6,5 +7,6 @@ export async function logger(req: Request, res: Response, next: NextFunction) {
     const content = `${date} || ${req.method} ${req.url}`
 
     console.log(content)
+    consoleContent.push(content)
     next()
 }
