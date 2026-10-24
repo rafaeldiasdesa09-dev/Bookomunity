@@ -10,36 +10,36 @@ import * as recomendacaoController from "../controllers/entity/postRecomendacaoC
 import * as comentarioController from "../controllers/entity/comentarioController";
 import * as likeController from "../controllers/entity/likeController";
 
-const apiRoutes = Router();
+const API = Router();
 
 // --- Usuários ---
-apiRoutes.get("/usuarios", userController.listarUsuarios);
-apiRoutes.get("/usuarios/:id", userController.buscarUsuarioPorId);
+API.get("/usuarios", userController.listarUsuarios);
+API.get("/usuarios/:id", userController.buscarUsuarioPorId);
 
 // --- Livros ---
-apiRoutes.get("/livros", livroController.listarLivros);
-apiRoutes.get("/livro/:id", livroController.buscarLivroPorId);
+API.get("/livros", livroController.listarLivros);
+API.get("/livro/:id", livroController.buscarLivroPorId);
 
 // --- Clubes ---
-apiRoutes.get("/clubes", clubeController.listarClubes);
-apiRoutes.get("/clubes/:id", clubeController.buscarClubePorId);
-apiRoutes.get("/clubes/:id/membros", membroController.listarMembrosClube);
+API.get("/clubes", clubeController.listarClubes);
+API.get("/clubes/:id", clubeController.buscarClubePorId);
+API.get("/clubes/:id/membros", membroController.listarMembrosClube);
 
 // --- Postagens ---
-apiRoutes.get("/postagens", postagemController.listarPostagens);
-apiRoutes.get("/postagens/:id", postagemController.buscarPostagemPorId);
+API.get("/postagens", postagemController.listarPostagens);
+API.get("/postagens/:id", postagemController.buscarPostagemPorId);
 
-apiRoutes.post("/postagens", postagemController.criarPostagem);
-apiRoutes.delete("/postagens/:id", postagemController.deletarPostagem);
-apiRoutes.put("/postagens/:id", postagemController.atualizarPostagem);
+API.post("/postagens", postagemController.criarPostagem);
+API.delete("/postagens/:id", postagemController.deletarPostagem);
+API.put("/postagens/:id", postagemController.atualizarPostagem);
 
 // --- Recomendações de Livros ---
-apiRoutes.get("/recomendacoes", recomendacaoController.listarPedidos);
+API.get("/recomendacoes", recomendacaoController.listarPedidos);
 
 // --- Comentários ---
-apiRoutes.get("/postagens/:id/comentarios", comentarioController.listarComentariosPorPostagem);
+API.get("/postagens/:id/comentarios", comentarioController.listarComentariosPorPostagem);
 
 // --- Curtidas ---
-apiRoutes.get("/postagens/:id/curtidas", likeController.contarLikesPorPostagem);
+API.get("/postagens/:id/curtidas", likeController.contarLikesPorPostagem);
 
-export default apiRoutes;
+export default API;

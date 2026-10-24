@@ -6,10 +6,10 @@ import path from "path";
 
 import {logger} from "./middlewares/logger"
 
-import pageRoutes from "./routes/pageRoutes";
-import registroRoutes from "./routes/authRoutes";
-import authRoutes from "./routes/authRoutes";
-import apiRoutes from "./routes/apiRoutes"
+import PAGE from "./routes/pageRoutes";
+import AUTH from "./routes/authRoutes";
+import API from "./routes/apiRoutes"
+import ADMIN from "./routes/adminRoutes"
 
 const app = express();
 
@@ -52,14 +52,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../public")));
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// Rotas das páginas
-app.use("/", pageRoutes);
 
-// Rotas envolvendo login e sessão /auth/*
-app.use("/auth", authRoutes);
 
-// Rotas de enviar informações
-app.use("/api", apiRoutes);
+// Rotas das páginas (/*)
+app.use("/", PAGE);
 
+// Rotas envolvendo login e sessão (/auth/*)
+app.use("/auth", AUTH);
+
+// Rotas para envio de informações (/api/*)
+app.use("/api", API);
+
+// Rotas para administradores (/admin/*)
+app.use("/admin", ADMIN)
 
 export default app;
