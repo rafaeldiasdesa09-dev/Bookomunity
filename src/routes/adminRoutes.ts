@@ -15,13 +15,13 @@ declare module "express-session" {
     }
 }
 
-export const adminRoutes = Router();
+export const ADMIN = Router();
 
 // Aplica o middleware de proteção em todas as rotas deste router
-adminRoutes.use(adminAuth);
+ADMIN.use(adminAuth);
 
-adminRoutes.get("/", adminController.carregarPainelAdmin);
-adminRoutes.get("/usuarios", adminController.listarUsuariosAdmin);
-adminRoutes.patch("/usuarios/:id/perms", adminController.atualizarPermissaoUsuario);
+ADMIN.get("/", adminController.carregarPainelAdmin);
+ADMIN.get("/usuarios", adminController.listarUsuariosAdmin);
+ADMIN.patch("/usuarios/:id/perms", adminController.atualizarPermissaoUsuario);
 
-export default adminRoutes;
+export default ADMIN;
