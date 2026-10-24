@@ -1,4 +1,6 @@
-CREATE DATABASE IF NOT EXISTS bookomunity_db;
+DROP DATABASE bookomunity_db;
+
+CREATE DATABASE bookomunity_db;
 
 USE bookomunity_db;
 
