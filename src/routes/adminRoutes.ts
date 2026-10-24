@@ -12,4 +12,6 @@ ADMIN.get("/usuarios", admin.listarUsuariosAdmin);
 ADMIN.get("/infos", admin.obterEstatisticasPainel)
 ADMIN.patch("/usuarios/:id/perms", admin.atualizarPermissaoUsuario);
 
+ADMIN.get('/console', admin.obterConsole)
+
 export default ADMIN;

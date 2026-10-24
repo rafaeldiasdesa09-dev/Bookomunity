@@ -2,9 +2,11 @@ import { Request, Response } from "express";
 import pool from "../../config/database";
 
 // Listar tudo
-export const listarUsuarios = async (_req: Request, res: Response): Promise<void> => {
+export const listarUsuarios = async (req: Request, res: Response): Promise<void> => {
+    const page = req.query.page
+
     try {
-        const [usuarios] = await pool.execute("SELECT * FROM usuarios");
+        const [usuarios] = await pool.query(`SELECT * FROM usuarios WHERE id > ? ORDER BY id LIMIT 50`, [page]);
         res.status(200).json(usuarios);
     } catch (erro) {
         console.error("Erro ao listar usuários:", erro);
@@ -22,7 +24,7 @@ export const buscarUsuarioPorId = async (req: Request, res: Response): Promise<v
             return;
         }
 
-        const [resultado] = await pool.execute(
+        const [resultado] = await pool.query(
             `SELECT id, nome, email, foto_perfil, bio, perms, data_criacao
              FROM usuarios
              WHERE id = ?`,

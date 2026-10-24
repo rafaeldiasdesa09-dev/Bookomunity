@@ -16,7 +16,7 @@ export const listarAmigos = async (req: Request, res: Response): Promise<void> =
             return;
         }
 
-        const [amigos] = await pool.execute(
+        const [amigos] = await pool.query(
             `SELECT a.id AS amizade_id, a.status, a.data_criacao,
                     u.id AS usuario_id, u.nome, u.email, u.foto_perfil, u.bio
              FROM amizades a
@@ -45,7 +45,7 @@ export const listarPedidosAmizadePendentes = async (req: Request, res: Response)
             return;
         }
 
-        const [pedidos] = await pool.execute(
+        const [pedidos] = await pool.query(
             `SELECT a.id AS amizade_id, a.data_criacao,
                     u.id AS remetente_id, u.nome, u.email, u.foto_perfil
              FROM amizades a
@@ -80,7 +80,7 @@ export const enviarPedidoAmizade = async (req: Request, res: Response): Promise<
             return;
         }
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             `INSERT INTO amizades (usuario_id, amigo_id, status) 
              VALUES (?, ?, 'pendente')`,
             [usuario_id, amigo_id]
@@ -114,7 +114,7 @@ export const aceitarPedidoAmizade = async (req: Request, res: Response): Promise
             return;
         }
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             `UPDATE amizades 
              SET status = 'aceito' 
              WHERE id = ? AND status = 'pendente'`,
@@ -147,7 +147,7 @@ export const removerAmizade = async (req: Request, res: Response): Promise<void>
             return;
         }
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             "DELETE FROM amizades WHERE id = ?",
             [id]
         );

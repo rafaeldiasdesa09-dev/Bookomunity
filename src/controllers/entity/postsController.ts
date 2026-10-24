@@ -86,7 +86,7 @@ export const criarPostagem = async (req: Request, res: Response): Promise<void> 
 // Listar tudo
 export const listarPostagens = async (_req: Request, res: Response): Promise<void> => {
     try {
-        const [postagens] = await pool.execute(
+        const [postagens] = await pool.query(
             `SELECT
                 p.*,
                 u.nome AS nome_usuario,
@@ -116,7 +116,7 @@ export const buscarPostagemPorId = async (req: Request, res: Response): Promise<
             return;
         }
 
-        const [resultado] = await pool.execute(
+        const [resultado] = await pool.query(
             `SELECT
                 p.*,
                 u.nome AS nome_usuario,

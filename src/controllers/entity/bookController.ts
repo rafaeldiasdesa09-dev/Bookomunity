@@ -7,9 +7,11 @@ import { ResultSetHeader } from "mysql2";
 // -------------------- GET -------------------- //
 
 // Listar tudo
-export const listarLivros = async (_req: Request, res: Response): Promise<void> => {
+export const listarLivros = async (req: Request, res: Response): Promise<void> => {
+    const page = req.query.page
+
     try {
-        const [livros] = await pool.execute("SELECT * FROM livros");
+        const [livros] = await pool.query(`SELECT * FROM livros WHERE id > ? ORDER BY id LIMIT 50`, [page]);
         res.status(200).json(livros);
     } catch (erro) {
         console.error("Erro ao listar livros:", erro);
@@ -29,7 +31,7 @@ export const buscarLivroPorId = async (req: Request, res: Response): Promise<voi
             return;
         }
 
-        const [resultado] = await pool.execute(
+        const [resultado] = await pool.query(
             "SELECT * FROM livros WHERE id = ?",
             [id]
         );
@@ -63,7 +65,7 @@ export const criarLivro = async (req: Request, res: Response): Promise<void> => 
             return;
         }
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             `INSERT INTO livros (titulo, autor, isbn, descricao, genero, ano_publicacao, capa) 
              VALUES (?, ?, ?, ?, ?, ?, ?)`,
             [titulo, autor, isbn || null, descricao || null, genero || null, ano_publicacao || null, capa || null]
@@ -102,7 +104,7 @@ export const atualizarLivro = async (req: Request, res: Response): Promise<void>
             return;
         }
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             `UPDATE livros 
              SET titulo = ?, autor = ?, isbn = ?, descricao = ?, genero = ?, ano_publicacao = ?, capa = ? 
              WHERE id = ?`,
@@ -135,7 +137,7 @@ export const deletarLivro = async (req: Request, res: Response): Promise<void> =
             return;
         }
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             "DELETE FROM livros WHERE id = ?",
             [id]
         );

@@ -17,7 +17,7 @@ export const listarMensagensEntreUsuarios = async (req: Request, res: Response):
             return;
         }
 
-        const [mensagens] = await pool.execute(
+        const [mensagens] = await pool.query(
             `SELECT m.*, 
                     r.nome AS nome_remetente, 
                     d.nome AS nome_destinatario
@@ -58,7 +58,7 @@ export const enviarMensagem = async (req: Request, res: Response): Promise<void>
 
         const data_criacao = new Date();
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             `INSERT INTO mensagens_diretas (remetente_id, destinatario_id, conteudo, lida, data_criacao) 
              VALUES (?, ?, ?, FALSE, ?)`,
             [remetente_id, destinatario_id, conteudo, data_criacao]
@@ -93,7 +93,7 @@ export const marcarMensagemComoLida = async (req: Request, res: Response): Promi
             return;
         }
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             `UPDATE mensagens_diretas 
              SET lida = TRUE 
              WHERE id = ?`,
@@ -126,7 +126,7 @@ export const deletarMensagem = async (req: Request, res: Response): Promise<void
             return;
         }
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             "DELETE FROM mensagens_diretas WHERE id = ?",
             [id]
         );

@@ -30,7 +30,7 @@ export const registrarUsuario = async (req: Request, res: Response): Promise<voi
             return;
         }
 
-        const [resultado] = await pool.execute(
+        const [resultado] = await pool.query(
             "SELECT id FROM usuarios WHERE email = ? LIMIT 1",
             [email]
         );
@@ -48,7 +48,7 @@ export const registrarUsuario = async (req: Request, res: Response): Promise<voi
             ? `/uploads/${req.file.filename}`
             : null;
 
-        await pool.execute(
+        await pool.query(
             `INSERT INTO usuarios
                 (nome, email, senha, foto_perfil, bio, perms, data_criacao)
              VALUES (?, ?, ?, ?, NULL, 'USER', CURRENT_TIMESTAMP)`,
@@ -90,7 +90,7 @@ export const loginUsuario = async (req: Request, res: Response): Promise<void> =
             return;
         }
 
-        const [resultado] = await pool.execute(
+        const [resultado] = await pool.query(
             `SELECT id, nome, email, senha, perms, foto_perfil
              FROM usuarios
              WHERE email = ?

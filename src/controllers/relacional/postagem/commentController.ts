@@ -16,7 +16,7 @@ export const listarComentariosPorPostagem = async (req: Request, res: Response):
             return;
         }
 
-        const [comentarios] = await pool.execute(
+        const [comentarios] = await pool.query(
             `SELECT
                 c.*,
                 u.nome AS nome_usuario,
@@ -57,7 +57,7 @@ export const criarComentario = async (req: Request, res: Response): Promise<void
 
         const data_criacao = new Date();
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             `INSERT INTO comentarios (conteudo, usuario_id, postagem_id, data_criacao) 
              VALUES (?, ?, ?, ?)`,
             [conteudo, usuario_id, postagem_id, data_criacao]
@@ -98,7 +98,7 @@ export const atualizarComentario = async (req: Request, res: Response): Promise<
             return;
         }
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             `UPDATE comentarios 
              SET conteudo = ? 
              WHERE id = ?`,
@@ -131,7 +131,7 @@ export const deletarComentario = async (req: Request, res: Response): Promise<vo
             return;
         }
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             "DELETE FROM comentarios WHERE id = ?",
             [id]
         );

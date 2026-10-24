@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import pool from "../config/database";
 import { ResultSetHeader } from "mysql2";
 import bcrypt from "bcrypt";
+import { consoleContent } from "../types/variables";
 
 async function criarAdmin() {
     try {
@@ -33,9 +34,18 @@ type UsuarioAdmin = {
 
 type Total = { total: number };
 
+export const obterConsole = async (req: Request, res: Response): Promise<void> => {
+    try {
+        res.status(200).json({'success': true, 'data': consoleContent})
+    } catch(e) {
+        console.error("Erro ao carregar console:", e);
+        res.status(500).json({ erro: "Erro ao carregar console." });        
+    }
+}
+
 export const obterEstatisticasPainel = async (_req: Request, res: Response): Promise<void> => {
     try {
-        const [resultado] = await pool.execute(`
+        const [resultado] = await pool.query(`
             SELECT 
                 (SELECT COUNT(id) FROM usuarios) AS total_usuarios,
                 (SELECT COUNT(id) FROM livros) AS total_livros,
@@ -61,15 +71,15 @@ export const carregarPainelAdmin = async (req: Request, res: Response): Promise<
     try {
         const [usuariosResult, usuariosTotalResult, postagensResult, clubesResult] =
             await Promise.all([
-                pool.execute(
+                pool.query(
                     `SELECT id, nome, email, perms, data_criacao
                      FROM usuarios
                      ORDER BY id DESC
                      LIMIT 100`
                 ),
-                pool.execute("SELECT COUNT(*) AS total FROM usuarios"),
-                pool.execute("SELECT COUNT(*) AS total FROM postagens"),
-                pool.execute("SELECT COUNT(*) AS total FROM clubes")
+                pool.query("SELECT COUNT(*) AS total FROM usuarios"),
+                pool.query("SELECT COUNT(*) AS total FROM postagens"),
+                pool.query("SELECT COUNT(*) AS total FROM clubes")
             ]);
 
         const usuarios = usuariosResult[0] as UsuarioAdmin[];
@@ -94,7 +104,7 @@ export const carregarPainelAdmin = async (req: Request, res: Response): Promise<
 
 export const listarUsuariosAdmin = async (_req: Request, res: Response): Promise<void> => {
     try {
-        const [resultado] = await pool.execute(
+        const [resultado] = await pool.query(
             `SELECT id, nome, email, perms, data_criacao
              FROM usuarios
              ORDER BY id DESC
@@ -129,7 +139,7 @@ export const atualizarPermissaoUsuario = async (req: Request, res: Response): Pr
     }
 
     try {
-        const [usuarioEncontrado] = await pool.execute(
+        const [usuarioEncontrado] = await pool.query(
             "SELECT id FROM usuarios WHERE id = ? LIMIT 1",
             [id]
         );
@@ -139,7 +149,7 @@ export const atualizarPermissaoUsuario = async (req: Request, res: Response): Pr
             return;
         }
 
-        await pool.execute(
+        await pool.query(
             "UPDATE usuarios SET perms = ? WHERE id = ?",
             [perms, id]
         );

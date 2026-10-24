@@ -9,7 +9,7 @@ import { ResultSetHeader } from "mysql2";
 // Listar tudo
 export const listarClubes = async (_req: Request, res: Response): Promise<void> => {
     try {
-        const [clubes] = await pool.execute(
+        const [clubes] = await pool.query(
             `SELECT c.*, u.nome AS nome_criador
              FROM clubes c
              LEFT JOIN usuarios u ON c.criador_id = u.id`
@@ -34,7 +34,7 @@ export const buscarClubePorId = async (req: Request, res: Response): Promise<voi
             return;
         }
 
-        const [resultado] = await pool.execute(
+        const [resultado] = await pool.query(
             `SELECT c.*, u.nome AS nome_criador
              FROM clubes c
              LEFT JOIN usuarios u ON c.criador_id = u.id
@@ -77,7 +77,7 @@ export const criarClube = async (req: Request, res: Response): Promise<void> => 
 
         const data_criacao = new Date();
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             `INSERT INTO clubes (nome, descricao, imagem, criador_id, data_criacao) 
              VALUES (?, ?, ?, ?, ?)`,
             [nome, descricao || null, imagem || null, criador_id, data_criacao]
@@ -117,7 +117,7 @@ export const atualizarClube = async (req: Request, res: Response): Promise<void>
             return;
         }
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             `UPDATE clubes 
              SET nome = ?, descricao = ?, imagem = ? 
              WHERE id = ?`,
@@ -150,7 +150,7 @@ export const deletarClube = async (req: Request, res: Response): Promise<void> =
             return;
         }
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             "DELETE FROM clubes WHERE id = ?",
             [id]
         );

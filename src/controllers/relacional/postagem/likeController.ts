@@ -16,7 +16,7 @@ export const contarLikesPorPostagem = async (req: Request, res: Response): Promi
             return;
         }
 
-        const [resultado] = await pool.execute(
+        const [resultado] = await pool.query(
             `SELECT COUNT(*) AS total
              FROM curtidas
              WHERE postagem_id = ?`,
@@ -47,7 +47,7 @@ export const curtirPostagem = async (req: Request, res: Response): Promise<void>
 
         const data_criacao = new Date();
 
-        await pool.execute<ResultSetHeader>(
+        await pool.query<ResultSetHeader>(
             `INSERT INTO curtidas (usuario_id, postagem_id, data_criacao) 
              VALUES (?, ?, ?)`,
             [usuario_id, postagem_id, data_criacao]
@@ -80,7 +80,7 @@ export const descurtirPostagem = async (req: Request, res: Response): Promise<vo
             return;
         }
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             `DELETE FROM curtidas 
              WHERE postagem_id = ? AND usuario_id = ?`,
             [postagem_id, usuario_id]

@@ -9,7 +9,7 @@ import { ResultSetHeader } from "mysql2";
 // Listar postagens que pedem por recomendações de livros
 export const listarPedidos = async (_req: Request, res: Response): Promise<void> => {
     try {
-        const [recomendacoes] = await pool.execute(
+        const [recomendacoes] = await pool.query(
             `SELECT
                 r.*,
                 u.nome AS nome_usuario,
@@ -41,7 +41,7 @@ export const buscarPedidoPorId = async (req: Request, res: Response): Promise<vo
             return;
         }
 
-        const [resultado] = await pool.execute(
+        const [resultado] = await pool.query(
             `SELECT
                 r.*,
                 u.nome AS nome_usuario,
@@ -90,7 +90,7 @@ export const criarPedido = async (req: Request, res: Response): Promise<void> =>
 
         const data_criacao = new Date();
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             `INSERT INTO recomendacao_livros (postagem_id, usuario_id, livro_id, data_criacao) 
              VALUES (?, ?, ?, ?)`,
             [postagem_id, usuario_id, livro_id, data_criacao]
@@ -131,7 +131,7 @@ export const atualizarPedido = async (req: Request, res: Response): Promise<void
             return;
         }
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             `UPDATE recomendacao_livros 
              SET postagem_id = ?, usuario_id = ?, livro_id = ? 
              WHERE id = ?`,
@@ -164,7 +164,7 @@ export const deletarPedido = async (req: Request, res: Response): Promise<void> 
             return;
         }
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             "DELETE FROM recomendacao_livros WHERE id = ?",
             [id]
         );

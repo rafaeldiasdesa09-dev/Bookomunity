@@ -8,9 +8,9 @@
 </head>
 <body>
     <div class="sidebar">
-        <button class="sidebar-btn" onclick="">Banco de dados</button>
-        <button class="sidebar-btn" onclick="">Console</button>
-        <button class="sidebar-btn" onclick="">Administradores</button>
+        <button class="sidebar-btn" id="sidebar_home">Início</button>
+        <button class="sidebar-btn" id="sidebar_database">Banco de dados</button>
+        <button class="sidebar-btn" id="sidebar_console">Console</button>
         <div class="avatar">
             <p style="color: var(--sidebar-btn-text);">Admin</p>
             <form action="/auth/logoff" method="POST" style="display: inline;">
@@ -19,7 +19,7 @@
     </div>
 
     <main>
-        <div class="welcome">
+        <div class="welcome" id="welcome">
             <div class="welcome-text">
                 <h1>Bem-vindo ao painel de administrador.</h1>
                 <p>Utilize os botões na barra lateral para navegar.</p>
@@ -28,6 +28,27 @@
                 <h1 style="align-self: center;">Informações</h1>
                 <div class="welcome-content" id="welcome-content"><p>Carregando...</p></div>
             </div>
+        </div>
+
+
+        <div class="database" id="database">
+            <div class="guia">
+                <button class="guia-db" id="guia-db-usuarios" disabled>Usuários</button>
+                <button class="guia-db" id="guia-db-livros">Livros</button>
+                <button class="guia-db" id="guia-db-postagens">Postagens</button>
+                <button class="guia-db" id="guia-db-clubes">Clubes</button>
+            </div>
+            <div class="area-tabela">
+                <div id="tabela-container">
+                    <p>Carregando usuários...</p>
+                </div>
+                <button type="button" id="btn-carregar-mais" style="margin-top: 10px; display: none;">Carregar Mais</button>
+            </div>
+        </div>
+
+
+        <div class="console" id="console">
+            <div class="console_div" id="console_div">Carregando console...</div>
         </div>
     </main>
 

@@ -16,7 +16,7 @@ export const listarMembrosClube = async (req: Request, res: Response): Promise<v
             return;
         }
 
-        const [membros] = await pool.execute(
+        const [membros] = await pool.query(
             `SELECT m.usuario_id, m.clube_id, m.papel, m.data_entrada, 
                     u.nome, u.email, u.foto_perfil, u.bio 
              FROM membros_clube m
@@ -50,7 +50,7 @@ export const adicionarMembroClube = async (req: Request, res: Response): Promise
         const cargo = papel || "membro";
         const data_entrada = new Date();
 
-        await pool.execute<ResultSetHeader>(
+        await pool.query<ResultSetHeader>(
             `INSERT INTO membros_clube (usuario_id, clube_id, papel, data_entrada) 
              VALUES (?, ?, ?, ?)`,
             [usuario_id, clube_id, cargo, data_entrada]
@@ -89,7 +89,7 @@ export const atualizarPapelMembro = async (req: Request, res: Response): Promise
             return;
         }
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             `UPDATE membros_clube 
              SET papel = ? 
              WHERE clube_id = ? AND usuario_id = ?`,
@@ -123,7 +123,7 @@ export const removerMembroClube = async (req: Request, res: Response): Promise<v
             return;
         }
 
-        const [resultado] = await pool.execute<ResultSetHeader>(
+        const [resultado] = await pool.query<ResultSetHeader>(
             `DELETE FROM membros_clube 
              WHERE clube_id = ? AND usuario_id = ?`,
             [clube_id, usuario_id]
