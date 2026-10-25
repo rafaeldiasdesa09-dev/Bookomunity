@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
     nome VARCHAR(100),
     email VARCHAR(254) UNIQUE,
     senha VARCHAR(255),
-    foto_perfil VARCHAR(255),
+    foto_perfil TEXT,
     bio TEXT,
     perms VARCHAR(20),
     data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS livros (
     descricao TEXT,
     genero VARCHAR(100),
     ano_publicacao INT,
-    capa VARCHAR(255)
+    capa TEXT
 );
 
 -- 3. Tabela de clubes
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS clubes (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
     descricao TEXT,
-    imagem VARCHAR(255),
+    imagem TEXT,
     criador_id INT,
     data_criacao DATETIME,
     CONSTRAINT fk_clubes_criador FOREIGN KEY (criador_id) REFERENCES usuarios(id)

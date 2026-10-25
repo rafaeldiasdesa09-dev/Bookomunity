@@ -9,8 +9,9 @@ import * as postagens from "../controllers/entity/postsController";
 import * as recomendacoes from "../controllers/relacional/postagem/recomendationController";
 import * as comentarios from "../controllers/relacional/postagem/commentController";
 import * as likes from "../controllers/relacional/postagem/likeController";
-import * as amizades from "../controllers/relacional/user/friendsController"; // Novo
-import * as mensagens from "../controllers/relacional/user/messageController"; // Novo
+import * as amizades from "../controllers/relacional/user/friendsController";
+import * as mensagens from "../controllers/relacional/user/messageController";
+import * as search from "../controllers/searchController"
 
 const API = Router();
 

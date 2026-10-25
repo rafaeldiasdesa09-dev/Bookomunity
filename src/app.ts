@@ -34,6 +34,7 @@ app.use(
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'", "'unsafe-inline'"],
         scriptSrcElem: ["'self'", "'unsafe-inline'"],
+        "img-src": ["'self'", "data:", "https:"]
       }
     }
   })) 
