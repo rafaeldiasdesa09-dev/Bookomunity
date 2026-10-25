@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#49352b">
+    <title>Meu perfil | Bookomunity</title>
+    <link rel="stylesheet" href="/css/user.css">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="/" aria-label="Bookomunity - Início">
+            <img src="/img/logoBookomunity2.png" alt="Bookomunity">
+        </a>
+
+        <nav class="main-nav" aria-label="Navegação principal">
+            <a href="/">Início</a>
+            <a href="/explore">Explorar</a>
+            <a href="/amizades">Amizades</a>
+            <a href="/profile" class="active">Meu perfil</a>
+        </nav>
+    </header>
+
+    <main class="page-container">
+        <section class="profile-card">
+            <div class="profile-cover">
+                <span class="cover-decoration decoration-one">✦</span>
+                <span class="cover-decoration decoration-two">❧</span>
+                <span class="cover-quote">“Entre páginas, encontramos novos mundos.”</span>
+            </div>
+
+            <div class="profile-main">
+                <div class="avatar-wrap">
+                    <img
+                        class="profile-avatar"
+                        src="<%= typeof foto !== 'undefined' && foto ? foto : '/img/avatar-padrao.png' %>"
+                        alt="Foto de perfil"
+                        onerror="this.onerror=null;this.src='/img/logoBookomunity2.png';"
+                    >
+                </div>
+
+                <div class="profile-identity">
+                    <p class="eyebrow">CANTINHO LITERÁRIO</p>
+                    <h1>
+                        <%= typeof nome !== 'undefined' && nome ? nome : 'Leitor do Bookomunity' %>
+                    </h1>
+                    <p class="profile-handle">Membro da comunidade Bookomunity</p>
+
+                    <p class="profile-bio">
+                        <%= typeof bio !== 'undefined' && bio ? bio : 'Cada livro é uma nova aventura esperando para ser descoberta.' %>
+                    </p>
+                </div>
+
+                <a class="edit-profile" href="/user">
+                    Meu perfil
+                </a>
+            </div>
+
+            <div class="profile-stats">
+                <div class="stat">
+                    <strong><%= typeof livrosFavoritos !== 'undefined' && Array.isArray(livrosFavoritos) ? livrosFavoritos.length : 0 %></strong>
+                    <span>Livros favoritos</span>
+                </div>
+                <div class="stat">
+                    <strong><%= typeof minhasPostagens !== 'undefined' && Array.isArray(minhasPostagens) ? minhasPostagens.length : 0 %></strong>
+                    <span>Publicações</span>
+                </div>
+                <div class="stat">
+                    <strong><%= typeof amigos !== 'undefined' && Array.isArray(amigos) ? amigos.length : 0 %></strong>
+                    <span>Amigos</span>
+                </div>
+                <div class="stat">
+                    <strong><%= typeof clubes !== 'undefined' && Array.isArray(clubes) ? clubes.length : 0 %></strong>
+                    <span>Clubes</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="profile-content">
+            <section class="content-section books-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">MINHA ESTANTE</p>
+                        <h2>Livros favoritos</h2>
+                    </div>
+                    <span class="section-symbol" aria-hidden="true">✦</span>
+                </div>
+
+                <div class="book-grid">
+                    <% if (typeof livrosFavoritos !== 'undefined' && Array.isArray(livrosFavoritos) && livrosFavoritos.length > 0) { %>
+                        <% livrosFavoritos.forEach(function(livro) { %>
+                            <article class="book-card">
+                                <% if (livro.capa || livro.imagem) { %>
+                                    <img
+                                        class="book-cover"
+                                        src="<%= livro.capa || livro.imagem %>"
+                                        alt="Capa de <%= livro.titulo || 'livro' %>"
+                                    >
+                                <% } else { %>
+                                    <div class="book-cover book-cover-placeholder" aria-label="Capa não disponível">
+                                        <span>📖</span>
+                                        <span>Minha estante</span>
+                                    </div>
+                                <% } %>
+
+                                <div class="book-info">
+                                    <h3><%= livro.titulo || 'Livro sem título' %></h3>
+                                    <p><%= livro.autor || 'Autor não informado' %></p>
+
+                                    <% if (livro.avaliacao) { %>
+                                        <span class="rating">★ <%= livro.avaliacao %>/5</span>
+                                    <% } %>
+                                </div>
+                            </article>
+                        <% }) %>
+                    <% } else { %>
+                        <div class="empty-state">
+                            <span class="empty-icon" aria-hidden="true">📚</span>
+                            <h3>Sua estante está esperando!</h3>
+                            <p>Quando seus livros favoritos estiverem disponíveis no perfil, eles aparecerão aqui.</p>
+                            <a class="text-link" href="/explore">Explorar a comunidade</a>
+                        </div>
+                    <% } %>
+                </div>
+            </section>
+
+            <section class="content-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">IDEIAS QUE COMPARTILHO</p>
+                        <h2>Publicações e resenhas</h2>
+                    </div>
+                    <span class="section-symbol" aria-hidden="true">✎</span>
+                </div>
+
+                <div class="post-list">
+                    <% if (typeof minhasPostagens !== 'undefined' && Array.isArray(minhasPostagens) && minhasPostagens.length > 0) { %>
+                        <% minhasPostagens.forEach(function(postagem) { %>
+                            <article class="post-card">
+                                <div class="post-card-top">
+                                    <span class="post-type">
+                                        <%= postagem.tipo || 'PUBLICAÇÃO' %>
+                                    </span>
+
+                                    <% if (postagem.avaliacao) { %>
+                                        <span class="rating">★ <%= postagem.avaliacao %>/5</span>
+                                    <% } %>
+                                </div>
+
+                                <h3><%= postagem.titulo || 'Publicação sem título' %></h3>
+                                <p class="post-content"><%= postagem.conteudo || 'Sem conteúdo disponível.' %></p>
+
+                                <% if (postagem.titulo_livro) { %>
+                                    <p class="related-book">Livro: <%= postagem.titulo_livro %></p>
+                                <% } %>
+                            </article>
+                        <% }) %>
+                    <% } else { %>
+                        <div class="empty-state">
+                            <span class="empty-icon" aria-hidden="true">✍️</span>
+                            <h3>Suas histórias começam aqui</h3>
+                            <p>Suas publicações e resenhas aparecerão nesta área quando forem carregadas pelo sistema.</p>
+                        </div>
+                    <% } %>
+                </div>
+            </section>
+
+            <div class="community-grid">
+                <section class="content-section">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">COMPANHIA DE LEITURA</p>
+                            <h2>Meus amigos</h2>
+                        </div>
+                        <span class="section-symbol" aria-hidden="true">♡</span>
+                    </div>
+
+                    <div class="community-list">
+                        <% if (typeof amigos !== 'undefined' && Array.isArray(amigos) && amigos.length > 0) { %>
+                            <% amigos.forEach(function(amigo) { %>
+                                <article class="person-item">
+                                    <img
+                                        src="<%= amigo.foto_perfil || amigo.foto || '/img/avatar-padrao.png' %>"
+                                        alt=""
+                                        class="person-avatar"
+                                        onerror="this.onerror=null;this.src='/img/logoBookomunity2.png';"
+                                    >
+                                    <div>
+                                        <h3><%= amigo.nome || 'Leitor' %></h3>
+                                        <p>Leitor da comunidade</p>
+                                    </div>
+                                </article>
+                            <% }) %>
+                        <% } else { %>
+                            <div class="mini-empty">
+                                <p>Seus amigos leitores aparecerão aqui.</p>
+                                <a class="text-link" href="/amizades">Conhecer a área de amizades</a>
+                            </div>
+                        <% } %>
+                    </div>
+                </section>
+
+                <section class="content-section">
+                    <div class="section-heading">
+                        <div>
+                            <p class="eyebrow">LEITURA EM GRUPO</p>
+                            <h2>Meus clubes</h2>
+                        </div>
+                        <span class="section-symbol" aria-hidden="true">⌂</span>
+                    </div>
+
+                    <div class="community-list">
+                        <% if (typeof clubes !== 'undefined' && Array.isArray(clubes) && clubes.length > 0) { %>
+                            <% clubes.forEach(function(clube) { %>
+                                <article class="club-item">
+                                    <div class="club-icon" aria-hidden="true">📚</div>
+                                    <div>
+                                        <h3><%= clube.nome || 'Clube de leitura' %></h3>
+                                        <p><%= clube.descricao || 'Um espaço para compartilhar leituras.' %></p>
+                                    </div>
+                                </article>
+                            <% }) %>
+                        <% } else { %>
+                            <div class="mini-empty">
+                                <p>Os clubes dos quais você participa aparecerão aqui.</p>
+                                <a class="text-link" href="/amizades">Explorar a comunidade</a>
+                            </div>
+                        <% } %>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <footer class="page-footer">
+            <p>Bookomunity — um mundo inteiro entre páginas.</p>
+        </footer>
+    </main>
+</body>
+</html>
