@@ -84,13 +84,22 @@ export const friendsPage = (req: Request, res: Response): void => {
 
 
 // Página de perfil do usuário
+
+ // Página de perfil do usuário
 export const profilePage = (req: Request, res: Response): void => {
-    const foto = req.session.photo
-    const nome = req.session.userName
+    const foto = req.session.photo;
+    const nome = req.session.userName;
 
     try {
-        res.render("explore", {nome: nome, foto: foto});
-        res.status(200)
+        res.render("user", {
+            nome: nome,
+            foto: foto,
+            bio: "",
+            livrosFavoritos: [],
+            minhasPostagens: [],
+            amigos: [],
+            clubes: []
+        });
     } catch (error) {
         console.error("Erro ao carregar a página de perfil:", error);
         res.status(500).send("Erro interno no servidor.");
