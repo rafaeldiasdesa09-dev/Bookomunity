@@ -17,7 +17,7 @@
         <nav class="main-nav" aria-label="Navegação principal">
             <a href="/">Início</a>
             <a href="/explore">Explorar</a>
-            <a href="/amizades">Amizades</a>
+            <a href="/friends">Amizades</a>
             <a href="/profile" class="active">Meu perfil</a>
         </nav>
     </header>
@@ -42,9 +42,11 @@
 
                 <div class="profile-identity">
                     <p class="eyebrow">CANTINHO LITERÁRIO</p>
+
                     <h1>
                         <%= typeof nome !== 'undefined' && nome ? nome : 'Leitor do Bookomunity' %>
                     </h1>
+
                     <p class="profile-handle">Membro da comunidade Bookomunity</p>
 
                     <p class="profile-bio">
@@ -52,7 +54,7 @@
                     </p>
                 </div>
 
-                <a class="edit-profile" href="/user">
+                <a class="edit-profile" href="/profile">
                     Meu perfil
                 </a>
             </div>
@@ -62,14 +64,17 @@
                     <strong><%= typeof livrosFavoritos !== 'undefined' && Array.isArray(livrosFavoritos) ? livrosFavoritos.length : 0 %></strong>
                     <span>Livros favoritos</span>
                 </div>
+
                 <div class="stat">
                     <strong><%= typeof minhasPostagens !== 'undefined' && Array.isArray(minhasPostagens) ? minhasPostagens.length : 0 %></strong>
                     <span>Publicações</span>
                 </div>
+
                 <div class="stat">
                     <strong><%= typeof amigos !== 'undefined' && Array.isArray(amigos) ? amigos.length : 0 %></strong>
                     <span>Amigos</span>
                 </div>
+
                 <div class="stat">
                     <strong><%= typeof clubes !== 'undefined' && Array.isArray(clubes) ? clubes.length : 0 %></strong>
                     <span>Clubes</span>
@@ -149,7 +154,10 @@
                                 </div>
 
                                 <h3><%= postagem.titulo || 'Publicação sem título' %></h3>
-                                <p class="post-content"><%= postagem.conteudo || 'Sem conteúdo disponível.' %></p>
+
+                                <p class="post-content">
+                                    <%= postagem.conteudo || 'Sem conteúdo disponível.' %>
+                                </p>
 
                                 <% if (postagem.titulo_livro) { %>
                                     <p class="related-book">Livro: <%= postagem.titulo_livro %></p>
@@ -186,6 +194,7 @@
                                         class="person-avatar"
                                         onerror="this.onerror=null;this.src='/img/logoBookomunity2.png';"
                                     >
+
                                     <div>
                                         <h3><%= amigo.nome || 'Leitor' %></h3>
                                         <p>Leitor da comunidade</p>
@@ -195,7 +204,7 @@
                         <% } else { %>
                             <div class="mini-empty">
                                 <p>Seus amigos leitores aparecerão aqui.</p>
-                                <a class="text-link" href="/amizades">Conhecer a área de amizades</a>
+                                <a class="text-link" href="/friends">Conhecer a área de amizades</a>
                             </div>
                         <% } %>
                     </div>
@@ -215,6 +224,7 @@
                             <% clubes.forEach(function(clube) { %>
                                 <article class="club-item">
                                     <div class="club-icon" aria-hidden="true">📚</div>
+
                                     <div>
                                         <h3><%= clube.nome || 'Clube de leitura' %></h3>
                                         <p><%= clube.descricao || 'Um espaço para compartilhar leituras.' %></p>
@@ -224,7 +234,7 @@
                         <% } else { %>
                             <div class="mini-empty">
                                 <p>Os clubes dos quais você participa aparecerão aqui.</p>
-                                <a class="text-link" href="/amizades">Explorar a comunidade</a>
+                                <a class="text-link" href="/friends">Explorar a comunidade</a>
                             </div>
                         <% } %>
                     </div>
