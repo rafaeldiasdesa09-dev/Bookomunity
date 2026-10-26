@@ -1,4 +1,5 @@
 import { Router }  from "express";
+import { isAuth } from "../middlewares/auth";
 
 // Controllers
 import * as users from "../controllers/user/userController";
@@ -42,7 +43,7 @@ API.delete("/clubes/:id/membros/:usuarioId", membros.removerMembroClube);
 // --- Postagens ---
 API.get("/postagens", postagens.listarPostagens);
 API.get("/postagens/:id", postagens.buscarPostagemPorId);
-API.post("/postagens", postagens.criarPostagem);
+API.post("/postagens", isAuth, postagens.criarPostagem);
 API.put("/postagens/:id", postagens.atualizarPostagem);
 API.delete("/postagens/:id", postagens.deletarPostagem);
 
