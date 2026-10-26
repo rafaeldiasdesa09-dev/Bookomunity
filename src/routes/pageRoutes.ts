@@ -1,24 +1,25 @@
 import { Router } from "express";
 import * as pgC from "../controllers/pageController";
-import { isAuth } from "../middlewares/auth";
+import { isAuth, userAuth } from "../middlewares/auth";
 import * as search from "../controllers/searchController"
 
 
 const PAGE = Router();
 
 // --- Páginas Principais e Autenticação ---
-PAGE.get("/", isAuth, pgC.startPage); // página inicial
-PAGE.get("/login", isAuth, pgC.loginPage); // login
-PAGE.get("/register", isAuth, pgC.registerPage); // registro
+PAGE.get("/", isAuth, pgC.startPage);
+PAGE.get("/login", isAuth, pgC.loginPage);
+PAGE.get("/register", isAuth, pgC.registerPage);
 
 // --- Navegação / Outras Páginas ---
-PAGE.get("/explore", pgC.explorePage); // explore (página principal)
-PAGE.get("/friends", isAuth, pgC.friendsPage); // amizades
-PAGE.get("/options", isAuth, pgC.optionsPage); // amizades
-PAGE.get("/profile", pgC.profilePage); // perfil
-PAGE.get("/search", search.pesquisarDB)
+PAGE.get("/explore", pgC.explorePage);
+PAGE.get("/create-post", userAuth, pgC.createPostPage);
+PAGE.get("/friends", isAuth, pgC.friendsPage);
+PAGE.get("/options", isAuth, pgC.optionsPage);
+PAGE.get("/profile", pgC.profilePage);
+PAGE.get("/search", search.pesquisarDB);
 
 // --- Tratamento de Erro / Páginas Especiais ---
-PAGE.get("/lol", pgC.pageNotFound); // pq rafa fez isso eu não sei
+PAGE.get("/lol", pgC.pageNotFound);
 
 export default PAGE;
