@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Criar postagem - Bookomunity</title>
   <link rel="stylesheet" href="/css/createPost.css">
-  <script src="/js/createPost.js" defer></script>
 </head>
 <body>
   <header class="topbar">
@@ -22,7 +20,8 @@
         Compartilhe suas opiniões, converse e indique suas próximas leituras.
       </p>
 
-      <form id="create-post-form">
+      <form id="create-post-form" action="/api/postagens" method="POST">
+        
         <label for="tipo">Tipo de postagem</label>
         <select id="tipo" name="tipo" required>
           <option value="DISCUSSAO">Discussão</option>
@@ -89,5 +88,37 @@
       </form>
     </section>
   </main>
+
+  <!-- Script incorporado apenas para gerenciar a interatividade visual dos campos -->
+  <script>
+    const tipo = document.getElementById("tipo");
+    const bookField = document.getElementById("book-field");
+    const livro = document.getElementById("livro_id");
+    const bookHelp = document.getElementById("book-help");
+    const ratingField = document.getElementById("rating-field");
+    const avaliacao = document.getElementById("avaliacao");
+
+    function atualizarCampos() {
+      const isReview = tipo.value === "REVIEW";
+      const isRecommendation = tipo.value === "RECOMENDAÇAO";
+      const precisaDeLivro = isReview || isRecommendation;
+
+      bookField.hidden = false;
+      livro.required = precisaDeLivro;
+      bookHelp.textContent = precisaDeLivro
+        ? "Selecione o livro relacionado à postagem."
+        : "Opcional para discussões.";
+
+      ratingField.hidden = !isReview;
+      avaliacao.required = isReview;
+
+      if (!isReview) {
+        avaliacao.value = "";
+      }
+    }
+
+    tipo.addEventListener("change", atualizarCampos);
+    atualizarCampos();
+  </script>
 </body>
 </html>
