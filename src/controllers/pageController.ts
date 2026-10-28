@@ -39,19 +39,39 @@ export const registerPage = (req: Request, res: Response): void => {
 
 
 
-// Página Explore
-export const explorePage = async (req: Request, res: Response): Promise<void> => {
-    const foto = req.session.photo
-    const nome = req.session.userName
+
+ // Página Explore
+ export const explorePage = async (
+    req: Request,
+    res: Response
+): Promise<void> => {
+    const foto = req.session.photo;
+    const nome = req.session.userName;
 
     try {
-        res.render("explore", {nome: nome, foto: foto});
-        res.status(200)
+        // Busca os livros cadastrados no banco
+        const [livros] = await pool.query(
+            `SELECT id, titulo, autor, descricao, capa
+             FROM livros
+             ORDER BY titulo ASC
+             LIMIT 20`
+        );
+
+        // Envia os dados para explore.ejs
+        res.status(200).render("explore", {
+            nome,
+            foto,
+            livros
+        });
+
     } catch (error) {
         console.error("Erro ao carregar a página Explore:", error);
-        res.status(500).send("Erro interno ao carregar a página Explore.");
+        res.status(500).send(
+            "Erro interno ao carregar a página Explore."
+        );
     }
 };
+
 
 
 

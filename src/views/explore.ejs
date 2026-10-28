@@ -131,32 +131,51 @@
             </div>
         </section>
 
-        <!-- recomendação de livros -->           
-        <section class="row">
-            <h2 class="row-title">LIVROS PARA VOCÊ</h2>
 
-            <div class="row-posts">
+<!-- Recomendação de livros -->
+<section class="row">
+    <h2 class="row-title">LIVROS PARA VOCÊ</h2>
 
-                <% if (typeof livros !== 'undefined' && livros.length > 0) { %>
+    <div class="row-posts">
 
-                    <% postagensAmigos.forEach(postagem => { %>
+        <% if (typeof livros !== 'undefined' && livros.length > 0) { %>
 
-                        <article class="post-card">
-                            <h3><%= livro.titulo %></h3>
-                        </article>
+            <% livros.forEach(livro => { %>
 
-                    <% }) %>
+                <article class="post-card">
 
-                <% } else { %>
+                    <% if (livro.capa) { %>
+                        <img
+                            src="<%= livro.capa %>"
+                            alt="Capa de <%= livro.titulo %>"
+                        >
+                    <% } %>
 
-                    <p class="empty-message">
-                       Aqui é a sessão de recomendação de livros.
+                    <h3><%= livro.titulo %></h3>
+
+                    <p>
+                        Autor: <%= livro.autor || 'Não informado' %>
                     </p>
 
-                <% } %>
+                    <% if (livro.descricao) { %>
+                        <p><%= livro.descricao %></p>
+                    <% } %>
 
-            </div>
-        </section>
+                </article>
+
+            <% }); %>
+
+        <% } else { %>
+
+            <p class="empty-message">
+                Nenhum livro cadastrado ainda.
+            </p>
+
+        <% } %>
+
+    </div>
+</section>
+
 
     </main>
     <script src="/js/explore.js"></script>
