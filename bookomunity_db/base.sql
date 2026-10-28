@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS clubes (
     descricao TEXT,
     imagem TEXT,
     criador_id INT,
-    data_criacao DATETIME,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_clubes_criador FOREIGN KEY (criador_id) REFERENCES usuarios(id)
 );
 
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS postagens (
     clube_id INT,
     livro_id INT,
     data_criacao DATETIME default CURRENT_TIMESTAMP(),
-    data_atualizacao DATETIME,
+    data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_postagens_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
     CONSTRAINT fk_postagens_clube FOREIGN KEY (clube_id) REFERENCES clubes(id),
     CONSTRAINT fk_postagens_livro FOREIGN KEY (livro_id) REFERENCES livros(id)
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS membros_clube (
     usuario_id INT,
     clube_id INT,
     papel VARCHAR(20),
-    data_entrada DATETIME,
+    data_entrada DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (usuario_id, clube_id),
     CONSTRAINT fk_membros_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
     CONSTRAINT fk_membros_clube FOREIGN KEY (clube_id) REFERENCES clubes(id)
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS comentarios (
     conteudo TEXT,
     usuario_id INT,
     postagem_id INT,
-    data_criacao DATETIME,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_comentarios_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
     CONSTRAINT fk_comentarios_postagem FOREIGN KEY (postagem_id) REFERENCES postagens(id)
 );
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS comentarios (
 CREATE TABLE IF NOT EXISTS curtidas (
     usuario_id INT,
     postagem_id INT,
-    data_criacao DATETIME,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (usuario_id, postagem_id),
     CONSTRAINT fk_curtidas_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
     CONSTRAINT fk_curtidas_postagem FOREIGN KEY (postagem_id) REFERENCES postagens(id)
@@ -109,7 +109,6 @@ CREATE TABLE IF NOT EXISTS amizades (
     data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP(),
     CONSTRAINT fk_amizades_usuario FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
     CONSTRAINT fk_amizades_amigo FOREIGN KEY (amigo_id) REFERENCES usuarios(id),
-    -- Garante que não haja pedidos duplicados entre os mesmos usuários
     CONSTRAINT uc_usuarios_amigos UNIQUE (usuario_id, amigo_id)
 );
 
@@ -119,7 +118,7 @@ CREATE TABLE IF NOT EXISTS mensagens_diretas (
     remetente_id INT,
     destinatario_id INT,
     conteudo TEXT NOT NULL,
-    lida BOOLEAN DEFAULT FALSE, -- para saber se a mensagem foi visualizada
+    lida BOOLEAN DEFAULT FALSE,
     data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP(),
     CONSTRAINT fk_mensagens_remetente FOREIGN KEY (remetente_id) REFERENCES usuarios(id),
     CONSTRAINT fk_mensagens_destinatario FOREIGN KEY (destinatario_id) REFERENCES usuarios(id)

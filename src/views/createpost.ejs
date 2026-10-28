@@ -20,6 +20,7 @@
         Compartilhe suas opiniões, converse e indique suas próximas leituras.
       </p>
 
+      <!-- Formulário com envio tradicional (POST padrão) -->
       <form id="create-post-form" action="/api/postagens" method="POST">
         
         <label for="tipo">Tipo de postagem</label>
@@ -79,8 +80,6 @@
           required
         ></textarea>
 
-        <p id="form-message" role="status" aria-live="polite"></p>
-
         <div class="form-actions">
           <a href="/explore" class="cancel-button">Cancelar</a>
           <button type="submit" id="submit-button">Publicar postagem</button>
@@ -89,7 +88,7 @@
     </section>
   </main>
 
-  <!-- Script incorporado apenas para gerenciar a interatividade visual dos campos -->
+  <!-- Script mantido apenas para a interatividade visual dos campos -->
   <script>
     const tipo = document.getElementById("tipo");
     const bookField = document.getElementById("book-field");
