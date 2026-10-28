@@ -131,6 +131,33 @@
             </div>
         </section>
 
+        <!-- recomendação de livros -->           
+        <section class="row">
+            <h2 class="row-title">LIVROS PARA VOCÊ</h2>
+
+            <div class="row-posts">
+
+                <% if (typeof livros !== 'undefined' && livros.length > 0) { %>
+
+                    <% postagensAmigos.forEach(postagem => { %>
+
+                        <article class="post-card">
+                            <h3><%= livro.titulo %></h3>
+                        </article>
+
+                    <% }) %>
+
+                <% } else { %>
+
+                    <p class="empty-message">
+                       Aqui é a sessão de recomendação de livros.
+                    </p>
+
+                <% } %>
+
+            </div>
+        </section>
+
     </main>
     <script src="/js/explore.js"></script>
 </body>
