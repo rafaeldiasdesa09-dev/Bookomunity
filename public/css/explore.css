@@ -276,3 +276,130 @@ main {
         grid-template-columns: 1fr;
     }
 }
+
+
+/* =====================================
+   LIVROS PARA VOCÊ
+===================================== */
+
+.row:has(.row-posts) {
+    width: 100%;
+}
+
+.row-posts {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 22px;
+
+    width: 100%;
+    padding: 24px;
+
+    background-color: #fff;
+    border: 1px solid #e8dfd3;
+    border-radius: 16px;
+
+    text-align: left;
+    align-self: stretch;
+}
+
+/* CARTÃO INDIVIDUAL */
+.row-posts .post-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    min-width: 0;
+    padding: 16px;
+
+    background-color: #fffdf9;
+    border: 1px solid #e8dfd3;
+    border-radius: 12px;
+
+    box-shadow: 0 3px 10px rgba(76, 61, 49, 0.07);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.row-posts .post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(76, 61, 49, 0.13);
+}
+
+/* CAPA */
+.row-posts .post-card img {
+    display: block;
+    width: 100%;
+    max-width: 170px;
+    height: 230px;
+
+    object-fit: cover;
+    object-position: center;
+
+    border-radius: 8px;
+    margin-bottom: 14px;
+    background-color: #f0e8dc;
+}
+
+/* TÍTULO DO LIVRO */
+.row-posts .post-card h3 {
+    width: 100%;
+    margin: 0 0 10px;
+
+    color: #6b4934;
+    font-size: 17px;
+    line-height: 1.4;
+    text-align: center;
+
+    overflow-wrap: anywhere;
+}
+
+/* AUTOR E DESCRIÇÃO */
+.row-posts .post-card p {
+    width: 100%;
+    margin-bottom: 8px;
+
+    color: #55504b;
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+/* QUANDO NÃO EXISTEM LIVROS */
+.row-posts .empty-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 20px;
+}
+
+/* TABLETS E CELULARES */
+@media (max-width: 700px) {
+    .row-posts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .row-posts .post-card {
+        padding: 10px;
+    }
+
+    .row-posts .post-card img {
+        height: 190px;
+    }
+
+    .row-posts .post-card h3 {
+        font-size: 15px;
+    }
+}
+
+/* CELULARES MUITO PEQUENOS */
+@media (max-width: 360px) {
+    .row-posts {
+        grid-template-columns: 1fr;
+    }
+
+    .row-posts .post-card img {
+        height: 230px;
+    }
+}
