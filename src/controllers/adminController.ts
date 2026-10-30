@@ -3,6 +3,7 @@ import pool from "../config/database";
 import { ResultSetHeader } from "mysql2";
 import bcrypt from "bcrypt";
 import { consoleContent } from "../types/variables";
+import { criarClubeGenerico } from "./entity/clubController";
 
 async function criarAdmin() {
     try {
@@ -162,5 +163,10 @@ export const atualizarPermissaoUsuario = async (req: Request, res: Response): Pr
 };
 
 
+// funciona no início do código
+async function startup() {
+    await criarAdmin();
+    await criarClubeGenerico()
+}
 
-criarAdmin() // Criar usuário de admin no início da execução do código.
+startup()

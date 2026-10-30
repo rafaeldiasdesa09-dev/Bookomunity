@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import pool from "../../config/database";
 import { ResultSetHeader } from "mysql2";
 
-async function criarClubeGenerico() {
+export async function criarClubeGenerico() {
     try {
         const [clubesExistentes]: any = await pool.query(
             `SELECT * FROM clubes WHERE nome = ?`, 
@@ -191,5 +191,3 @@ export const deletarClube = async (req: Request, res: Response): Promise<void> =
         res.status(500).json({ erro: "Erro ao deletar clube." });
     }
 };
-
-criarClubeGenerico()

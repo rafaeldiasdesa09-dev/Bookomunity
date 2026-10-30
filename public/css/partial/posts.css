@@ -1,4 +1,154 @@
+.post-content {
+    margin-left: .5rem;
+}
+
+.post-bottom-left {
+    display: flex;
+    gap: 1rem;
+    padding-left: 1rem;
+}
+
+.post-bottom-right {
+    display: flex;
+    gap: 1rem;
+    padding-right: 1rem;
+}
+
+.photo {
+    background-color: rgb(0, 0, 0);
+    width: 8rem;
+    height: 10.7rem;
+    overflow: hidden;
+    border-radius: .3rem;
+}
+
+.post-type {
+    position: absolute;
+    right: 1.5rem;
+    opacity: .4;
+}
+
+.post-title {
+    margin-top: .5rem;
+}
+
+
+
+
+
 .discussion-post {
     background-color: #baffd7;
     width: 100%;
+    border: 2px dashed #95ddb3;
+    border-radius: .5rem;
+    overflow: hidden;
+}
+
+.discussion-post-top {
+    width: 100%;
+    height: 100%;
+    padding: .5rem;
+    display: flex;
+    gap: 1rem;
+    position: relative;
+}
+
+.discussion-post-bottom {
+    background-color: #e4ffef;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.common-post {
+    background-color: #bae8ff;
+    width: 100%;
+    border: 2px dashed #95c5dd;
+    border-radius: .5rem;
+    overflow: hidden;
+}
+
+.common-post-top {
+    width: 100%;
+    height: 100%;
+    padding: .5rem;
+    display: flex;
+    gap: 1rem;
+    position: relative;
+}
+
+.common-post-bottom {
+    background-color: #e4f6ff;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.recomendation-post {
+    background-color: #ffbaba;
+    width: 100%;
+    border: 2px dashed #dd9595;
+    border-radius: .5rem;
+    overflow: hidden;
+}
+
+.recomendation-post-top {
+    width: 100%;
+    height: 100%;
+    padding: .5rem;
+    display: flex;
+    gap: 1rem;
+    position: relative;
+}
+
+.recomendation-post-bottom {
+    background-color: #ffe4e4;
+}
+
+.bookline {
+    padding: .5rem;
+}
+
+.block {
+    background-color: rgba(255,255,255,.5);
+    width: 4rem;
+    height: 5.33rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: .3rem;
+}
+
+.recomendation-post-bottom-header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: -0.7rem;
+}
+
+
+
+.resenha-post {
+    background-color: #ffe9ba;
+    width: 100%;
+    border: 2px dashed #95c5dd;
+    border-radius: .5rem;
+    overflow: hidden;
+}
+
+.resenha-post-top {
+    width: 100%;
+    height: 100%;
+    padding: .5rem;
+    display: flex;
+    gap: 1rem;
+    position: relative;
+}
+
+.resenha-post-bottom {
+    background-color: #fff6e4;
+    display: flex;
+    justify-content: space-between;
 }
