@@ -2,6 +2,7 @@
 import 'dotenv/config';
 import mysql, { Pool } from 'mysql2/promise';
 
+
 export class Conexao {
     private static pool: Pool | null = null;
 
@@ -42,3 +43,6 @@ export class Conexao {
         }
     }
 }
+
+const pool = Conexao.obterPool();
+export default pool;

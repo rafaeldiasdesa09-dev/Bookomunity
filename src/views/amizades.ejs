@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Bookomunity - Amizades</title>
+
+    <link rel="stylesheet" href="/css/amizades.css">
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <header class="top-header">
+
+        <a href="/explore" class="logo">Bookomunity</a>
+
+        <nav class="nav-icons">
+            <a href="/explore">Início</a>
+            <a href="/search">Pesquisar</a>
+            <a href="/friends" class="active">Amizades</a>
+            <a href="/profile">Perfil</a>
+        </nav>
+
+        <a href="/profile" class="user-avatar">
+            <% if (foto) { %>
+                <img src="<%= foto %>" alt="Foto do usuário">
+            <% } else { %>
+                <div class="avatar-placeholder">
+                    <%= nome ? nome.charAt(0).toUpperCase() : "U" %>
+                </div>
+            <% } %>
+        </a>
+
+    </header>
+
+    <main class="main-container">
+
+        <!-- Apresentação -->
+        <section class="welcome-section">
+
+            <div>
+                <span class="section-tag">COMUNIDADE BOOKOMUNITY</span>
+
+                <h1>Suas amizades</h1>
+
+                <p>
+                    Conheça novos leitores, compartilhe experiências
+                    e encontre pessoas que gostam dos mesmos livros que você.
+                </p>
+            </div>
+
+            <div class="welcome-icon">
+                <span>♧</span>
+            </div>
+
+        </section>
+
+        <!-- Pesquisa -->
+        <section class="search-section">
+
+            <div class="search-box">
+                <span class="search-icon">⌕</span>
+
+                <input
+                    type="text"
+                    id="pesquisaUsuario"
+                    placeholder="Pesquise pelo nome de um leitor..."
+                >
+            </div>
+
+        </section>
+
+        <!-- Navegação das abas -->
+        <nav class="tabs-nav">
+
+            <button class="tab-btn active" data-tab="amigos">
+                Meus amigos
+            </button>
+
+            <button class="tab-btn" data-tab="solicitacoes">
+                Solicitações
+            </button>
+
+            <button class="tab-btn" data-tab="encontrar">
+                Encontrar leitores
+            </button>
+
+        </nav>
+
+        <!-- Meus amigos -->
+        <section class="content-section active" id="amigos">
+
+            <div class="section-header">
+                <div>
+                    <h2>Meus amigos</h2>
+                    <p>Leitores com quem você já está conectado.</p>
+                </div>
+            </div>
+
+            <div class="empty-state" id="listaAmigos">
+                <div class="empty-icon">♧</div>
+
+                <h3>Suas amizades começam aqui!</h3>
+
+                <p>
+                    Você ainda não possui amigos.
+                    Explore a comunidade e conheça novos leitores.
+                </p>
+
+                <button class="primary-btn" data-go-tab="encontrar">
+                    Encontrar leitores
+                </button>
+            </div>
+
+        </section>
+
+        <!-- Solicitações -->
+        <section class="content-section" id="solicitacoes">
+
+            <div class="section-header">
+                <div>
+                    <h2>Solicitações de amizade</h2>
+                    <p>Veja quem deseja se conectar com você.</p>
+                </div>
+            </div>
+
+            <div class="empty-state" id="listaSolicitacoes">
+                <div class="empty-icon">✉</div>
+
+                <h3>Nenhuma solicitação por enquanto</h3>
+
+                <p>
+                    Quando alguém enviar um pedido de amizade,
+                    ele aparecerá nesta seção.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- Encontrar leitores -->
+        <section class="content-section" id="encontrar">
+
+            <div class="section-header">
+                <div>
+                    <h2>Encontrar leitores</h2>
+                    <p>Descubra outros membros da comunidade.</p>
+                </div>
+            </div>
+
+            <div class="empty-state" id="resultadosUsuarios">
+                <div class="empty-icon">⌕</div>
+
+                <h3>Conheça novos leitores</h3>
+
+                <p>
+                    Utilize a barra de pesquisa acima para
+                    encontrar pessoas na comunidade.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

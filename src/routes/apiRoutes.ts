@@ -1,5 +1,5 @@
 import { Router }  from "express";
-import { isAuth } from "../middlewares/auth";
+import { isAuth, userAuth } from "../middlewares/auth";
 
 // Controllers
 import * as users from "../controllers/user/userController";
@@ -66,11 +66,11 @@ API.post("/postagens/:id/curtidas", likes.curtirPostagem);
 API.delete("/postagens/:id/curtidas/:usuarioId", likes.descurtirPostagem);
 
 // --- Amizades ---
-API.get("/usuarios/:id/amigos", amizades.listarAmigos);
-API.get("/usuarios/:id/amigos/pedidos", amizades.listarPedidosAmizadePendentes);
-API.post("/amizades", amizades.enviarPedidoAmizade);
-API.put("/amizades/:id", amizades.aceitarPedidoAmizade);
-API.delete("/amizades/:id", amizades.removerAmizade);
+API.get("/usuarios/:id/amigos", userAuth, amizades.listarAmigos);
+API.get("/usuarios/:id/amigos/pedidos", userAuth, amizades.listarPedidosAmizadePendentes);
+API.post("/amizades", userAuth, amizades.enviarPedidoAmizade);
+API.put("/amizades/:id", userAuth, amizades.aceitarPedidoAmizade);
+API.delete("/amizades/:id", userAuth, amizades.removerAmizade);
 
 // --- Mensagens Diretas ---
 API.get("/mensagens/:usuario1/:usuario2", mensagens.listarMensagensEntreUsuarios);

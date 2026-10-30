@@ -89,19 +89,16 @@ export const pageNotFound = (req: Request, res: Response): void => {
 
 // Página de amizades
 export const friendsPage = (req: Request, res: Response): void => {
-    const foto = req.session.photo
-    const nome = req.session.userName
+    const foto = req.session.photo;
+    const nome = req.session.userName;
 
     try {
-        res.render("explore", {nome: nome, foto: foto});
-        res.status(200)
+        res.status(200).render("amizades", { nome, foto });
     } catch (error) {
         console.error("Erro ao carregar a página de amizades:", error);
-        res.status(500).send("Erro interno no servidor.");
+        res.status(500).send("Erro interno ao carregar a página de amizades.");
     }
 };
-
-
 
 // Página de perfil do usuário
 export const profilePage = async (req: Request, res: Response): Promise<void> => {

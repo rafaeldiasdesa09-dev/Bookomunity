@@ -14,7 +14,7 @@ PAGE.get("/register", isAuth, pgC.registerPage);
 // --- Navegação / Outras Páginas ---
 PAGE.get("/explore", pgC.explorePage);
 PAGE.get("/create-post", userAuth, pgC.createPostPage);
-PAGE.get("/friends", isAuth, pgC.friendsPage);
+PAGE.get("/friends", userAuth, pgC.friendsPage);
 PAGE.get("/options", isAuth, pgC.optionsPage);
 PAGE.get("/profile", pgC.profilePage);
 PAGE.get("/search", search.pesquisarDB);
