@@ -416,4 +416,4 @@ const idParam = {
   } as const;
   
   export default openapi;
-  
+  //porfavor funcione agora
