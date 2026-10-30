@@ -131,6 +131,52 @@
             </div>
         </section>
 
+
+<!-- Recomendação de livros -->
+<section class="row">
+    <h2 class="row-title">LIVROS PARA VOCÊ</h2>
+
+    <div class="row-posts">
+
+        <% if (typeof livros !== 'undefined' && livros.length > 0) { %>
+
+            <% livros.forEach(livro => { %>
+
+                <article class="post-card">
+
+                    <% if (livro.capa) { %>
+                        <img
+                            src="<%= livro.capa %>"
+                            alt="Capa de <%= livro.titulo %>"
+                        >
+                    <% } %>
+
+                    <h3><%= livro.titulo %></h3>
+
+                    <p>
+                        Autor: <%= livro.autor || 'Não informado' %>
+                    </p>
+
+                    <% if (livro.descricao) { %>
+                        <p><%= livro.descricao %></p>
+                    <% } %>
+
+                </article>
+
+            <% }); %>
+
+        <% } else { %>
+
+            <p class="empty-message">
+                Nenhum livro cadastrado ainda.
+            </p>
+
+        <% } %>
+
+    </div>
+</section>
+
+
     </main>
     <script src="/js/explore.js"></script>
 </body>
