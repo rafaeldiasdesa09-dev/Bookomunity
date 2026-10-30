@@ -1,93 +1,42 @@
-
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Criar postagem - Bookomunity</title>
-  <link rel="stylesheet" href="/css/createPost.css">
-  <script src="/js/createPost.js" defer></script>
+  <title>Document</title>
+  <link href="/css/createpost.css" rel="stylesheet">
+  <link href="/css/posts.css" rel="stylesheet">
 </head>
 <body>
-  <header class="topbar">
-    <a href="/explore" class="back-link">← Voltar para Explore</a>
-    <span class="brand">Bookomunity</span>
-  </header>
+  <div class="sidebar">
 
-  <main class="page">
-    <section class="form-card">
-      <p class="eyebrow">COMPARTILHE COM A COMUNIDADE</p>
-      <h1>Criar postagem</h1>
-      <p class="subtitle">
-        Compartilhe suas opiniões, converse e indique suas próximas leituras.
-      </p>
+  </div>
 
-      <form id="create-post-form">
-        <label for="tipo">Tipo de postagem</label>
-        <select id="tipo" name="tipo" required>
-          <option value="DISCUSSAO">Discussão</option>
-          <option value="REVIEW">Avaliação de livro</option>
-          <option value="RECOMENDAÇAO">Recomendação de livro</option>
-        </select>
+  <main>
+    <div class="discussion-post">
 
-        <div id="book-field" class="field">
-          <label for="livro_id">Livro relacionado</label>
-          <select id="livro_id" name="livro_id">
-            <option value="">Selecione um livro</option>
-            <% livros.forEach(livro => { %>
-              <option value="<%= livro.id %>">
-                <%= livro.titulo %><%= livro.autor ? " — " + livro.autor : "" %>
-              </option>
-            <% }) %>
-          </select>
-          <small id="book-help">Opcional para discussões.</small>
+      <div class="post-top">
+        <div class="photo">
         </div>
 
-        <div id="rating-field" class="field" hidden>
-          <label for="avaliacao">Sua nota (de 0 a 5)</label>
-          <select id="avaliacao" name="avaliacao">
-            <option value="">Selecione uma nota</option>
-            <option value="0">0 — Não gostei</option>
-            <option value="0.5">0,5</option>
-            <option value="1">1</option>
-            <option value="1.5">1,5</option>
-            <option value="2">2</option>
-            <option value="2.5">2,5</option>
-            <option value="3">3</option>
-            <option value="3.5">3,5</option>
-            <option value="4">4</option>
-            <option value="4.5">4,5</option>
-            <option value="5">5 — Excelente</option>
-          </select>
+        <div class="post-content">
+          <h1 class="post-book-title">Asdadsad</h1>
+          <h3 class="post-title">trhgdtgfhgdfgfdsfsdfsedf</h3>
+          <p class="post-content">dnfkdngfjkdnfjlksdnflsdnfnlkddnndndlkandanfan andnfas nfdf nafnaskf asnfk</p>
         </div>
+      </div>
 
-        <label for="titulo">Título</label>
-        <input
-          id="titulo"
-          name="titulo"
-          type="text"
-          maxlength="200"
-          placeholder="Dê um título à sua postagem"
-          required
-        >
-
-        <label for="conteudo">Conteúdo</label>
-        <textarea
-          id="conteudo"
-          name="conteudo"
-          rows="7"
-          placeholder="Escreva aqui..."
-          required
-        ></textarea>
-
-        <p id="form-message" role="status" aria-live="polite"></p>
-
-        <div class="form-actions">
-          <a href="/explore" class="cancel-button">Cancelar</a>
-          <button type="submit" id="submit-button">Publicar postagem</button>
+      <div class="post-bottom">
+        <div class="post-bottom-left">
+          <p>324324 curtidas</p><p>1232132141 comentários</p>
         </div>
-      </form>
-    </section>
+        
+        <div class="post-bottom-right">
+          <p>opções</p>
+        </div>
+      </div>
+
+    </div>
   </main>
 </body>
 </html>

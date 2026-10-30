@@ -63,21 +63,26 @@ export const atualizarPostagem = async (req: Request, res: Response) => {
 
 export const criarPostagem = async (req: Request, res: Response): Promise<void> => {
     try {
-        const {tipo, titulo, conteudo, avaliacao} = req.body || null
-        const usuario_id = Number(req.body.usuario_id)
-        const livro_id = Number(req.body.livro_id)
+        const { tipo, titulo, conteudo, avaliacao } = req.body;
+        const usuario_id = Number(req.session.userId);
+        
+        const livro_id = req.body.livro_id ? Number(req.body.livro_id) : null;
+        
+        const notaAvaliacao = (tipo === "REVIEW" && avaliacao) ? avaliacao : null;
 
-
-        const [postagem] = await pool.query(
+        await pool.query(
             `INSERT INTO postagens (tipo, titulo, conteudo, avaliacao, usuario_id, livro_id)
-            values (?, ?, ?, ?, ?, ?)`, [tipo, titulo, conteudo, avaliacao, usuario_id, livro_id]
-        )
-        res.status(200).json(postagem)
-    } catch(e) {
-        console.error("Erro ao criar postagem:", e)
-        res.status(500).json({"success": false, "message": "Erro interno do servidor"})
+             VALUES (?, ?, ?, ?, ?, ?)`, 
+            [tipo, titulo, conteudo, notaAvaliacao, usuario_id, livro_id]
+        );
+
+        return res.redirect('/explore');
+
+    } catch (e) {
+        console.error("Erro ao criar postagem:", e);
+        res.status(500).send("Erro interno ao criar postagem");
     }
-}
+};
 
 
 

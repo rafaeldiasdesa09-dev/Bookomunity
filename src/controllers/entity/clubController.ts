@@ -2,6 +2,31 @@ import { Request, Response } from "express";
 import pool from "../../config/database";
 import { ResultSetHeader } from "mysql2";
 
+async function criarClubeGenerico() {
+    try {
+        const [clubesExistentes]: any = await pool.query(
+            `SELECT * FROM clubes WHERE nome = ?`, 
+            ["all"]
+        );
+
+        if (clubesExistentes.length > 0) {
+            console.log("O clube 'all' já existe:", clubesExistentes[0]);
+            return clubesExistentes[0];
+        }
+
+        const [clube_og] = await pool.query<ResultSetHeader>(
+            `INSERT INTO clubes (nome, descricao, criador_id) VALUES (?, ?, ?)`, 
+            ["all", "grupo comum a todos", 1]
+        );
+
+        console.log("Clube 'all' criado com sucesso!");
+        return clube_og;
+
+    } catch (e) {
+        console.error("Erro ao gerenciar o clube genérico:", e);
+    }
+}
+
 
 
 // -------------------- GET -------------------- //
@@ -166,3 +191,5 @@ export const deletarClube = async (req: Request, res: Response): Promise<void> =
         res.status(500).json({ erro: "Erro ao deletar clube." });
     }
 };
+
+criarClubeGenerico()
