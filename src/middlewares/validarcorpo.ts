@@ -2,7 +2,7 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import Ajv, { AnySchema } from "ajv";
 
-import { schemas } from "../esquemas.ts";
+import { schemas } from "../contratos/esquemas";
 
 const ajv = new Ajv({
     allErrors: true,
