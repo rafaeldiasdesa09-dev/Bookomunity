@@ -67,4 +67,6 @@ app.use("/api", API);
 // Rotas para administradores (/admin/*)
 app.use("/admin", ADMIN)
 
+app.use(express.static(path.join(__dirname, "../public")));
+
 export default app;
