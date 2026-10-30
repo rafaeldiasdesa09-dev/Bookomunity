@@ -7,6 +7,7 @@
     <meta name="theme-color" content="#49352b">
     <title>Meu perfil | Bookomunity</title>
     <link rel="stylesheet" href="/css/user.css">
+
 </head>
 <body>
     <header class="site-header">
@@ -49,15 +50,36 @@
 
                     <p class="profile-handle">Membro da comunidade Bookomunity</p>
 
-                    <p class="profile-bio">
-                        <%= typeof bio !== 'undefined' && bio ? bio : 'Cada livro é uma nova aventura esperando para ser descoberta.' %>
-                    </p>
-                </div>
+                    <div class="profile-bio-container">
 
-                <a class="edit-profile" href="/profile">
-                    Meu perfil
-                </a>
-            </div>
+                        <p class="profile-bio" id="bioTexto">
+                            <%= typeof bio !== 'undefined' && bio
+                                ? bio
+                                : 'Cada livro é uma nova aventura esperando para ser descoberta.' %>
+                        </p>
+                    
+                        <button type="button" id="btnEditarBio">
+                            Editar biografia
+                        </button>
+                    
+                        <form action="/profile/editar-bio" method="PUT" id="formBio" style="display: none;">
+                    
+                            <textarea
+                                name="bio"
+                                id="bioInput"
+                                maxlength="500"
+                                placeholder="Escreva sua biografia..."
+                                required
+                            ><%= typeof bio !== 'undefined' && bio ? bio : '' %></textarea>
+                    
+                            <button type="submit">Salvar</button>
+                    
+                            <button type="button" id="btnCancelarBio">
+                                Cancelar
+                            </button>
+                    
+                        </form>
+                    
 
             <div class="profile-stats">
                 <div class="stat">
@@ -246,5 +268,6 @@
             <p>Bookomunity — um mundo inteiro entre páginas.</p>
         </footer>
     </main>
+    <script src="/js/user.js"></script>
 </body>
 </html>
