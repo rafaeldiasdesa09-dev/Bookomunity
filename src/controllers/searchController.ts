@@ -8,6 +8,7 @@ export const pesquisarDB = async (req: Request, res: Response) => {
     const termo_consult = `%${q}%`;
     const nome = req.session.userName
     const foto = req.session.photo
+    const userId = req.session.userId
 
     try {
 
@@ -28,7 +29,7 @@ export const pesquisarDB = async (req: Request, res: Response) => {
             return res.status(400).json({'success': false, 'message': 'Filtro enviado desconhecido:', filter});
         }
 
-        return res.status(200).render('search', {dados: pesquisa, nome: nome, foto: foto, type: filter})
+        return res.status(200).render('search', {dados: pesquisa, nome: nome, foto: foto, type: filter, userId, isOwner: undefined, page: req.path})
     } catch(e) {
         console.log("Erro ao pesquisar pelo banco de dados:", e);
         return res.status(500).json({"success": false, "message": "Erro interno do servidor"});

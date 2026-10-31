@@ -10,8 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    const userId = 1;
-
     btnEditar.addEventListener("click", () => {
         bioTexto.style.display = "none";
         btnEditar.style.display = "none";
@@ -30,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const novaBio = bioInput.value;
 
         try {
-            const response = await fetch(`/api/usuarios/${userId}/bio`, {
+            const response = await fetch(`/api/usuarios/bio`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

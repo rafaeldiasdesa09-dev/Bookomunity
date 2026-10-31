@@ -49,6 +49,7 @@ input {
     border: 1px solid var(--border);
     border-radius: 18px;
     box-shadow: var(--shadow);
+    position: relative;
 }
 
 .profile-cover {
@@ -99,12 +100,15 @@ input {
     align-items: center;
     gap: 24px;
     padding: 0 34px 26px;
+    flex-direction: column;
+    margin-left: 4rem;
 }
 
 .avatar-wrap {
-    position: relative;
     flex-shrink: 0;
-    margin-top: -48px;
+    position: absolute;
+    top: 8rem;
+    left: 2rem;
 }
 
 .profile-avatar {
@@ -122,6 +126,8 @@ input {
     min-width: 0;
     flex: 1;
     padding-top: 20px;
+    margin-left: 8rem;
+    width: 100%;
 }
 
 .eyebrow {
@@ -177,6 +183,8 @@ input {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     border-top: 1px solid var(--border);
     background: #fffaf3;
+    height: 7rem;
+    margin-top: -1rem;
 }
 
 .stat {
@@ -599,6 +607,7 @@ input {
 
     .profile-stats {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding-top: 1rem;
     }
 
     .stat:nth-child(3) {
@@ -665,4 +674,41 @@ input {
         transition-duration: 0.01ms !important;
         animation-duration: 0.01ms !important;
     }
+}
+
+.btn-editar-bio {
+    border: 1px solid rgba(73, 53, 43, 0.15);
+    background-color: white;
+    padding: .3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: .3rem;
+    margin-bottom: 1rem;
+    height: 2.5rem;
+    cursor: pointer;
+    transition: .1s ease;
+}
+.btn-editar-bio:hover {
+    scale: 102%;
+}
+
+.form-bio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    border: 1px solid rgba(73, 53, 43, 0.07);
+    padding: 1rem;
+    padding-bottom: 0;
+}
+
+.bio-input {
+    margin-bottom: -.5rem;
+    height: 2.5rem;
+}
+
+.user-info {
+    display: flex;
+    width: 100%;
+    align-items: center;
 }

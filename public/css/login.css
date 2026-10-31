@@ -7,8 +7,8 @@
 
 :root {
     --primary-color: #725f50;
-    --primary-hover: #4c3d31;
-    --card-bg: #f2bd76;
+    --primary-hover: ##f2bd76;
+    --card-bg: #ffffff;
     --text-color: #1f2937;
     --text-muted: #6b7280;
     --border-color: #d1d5db;
@@ -17,37 +17,10 @@
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
-}
-
-header {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    padding: 20px;
-    display: flex;
-    justify-content: flex-end;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-}
-
-nav a {
-    text-decoration: none;
-    color: var(--primary-color);
-    font-weight: 600;
-    transition: color 0.2s ease;
-}
-
-nav a:hover {
-    color: var(--primary-hover);
 }
 
 /* Container principal de Login */
@@ -61,6 +34,10 @@ nav a:hover {
     overflow: hidden;
     max-width: 850px; 
     width: 100%;
+    position: absolute;
+    margin: auto;
+    right: 2rem;
+    top: 4rem;
 }
 
 .login-image {
@@ -78,7 +55,6 @@ nav a:hover {
     height: auto;
 }
 
-/* Card de formulário unificado */
 .card {
     flex: 1;
     padding: 40px 30px;
@@ -86,6 +62,7 @@ nav a:hover {
     border-radius: 12px;
     width: 100%;
     max-width: 400px;
+    
 }
 
 .card h2 {
@@ -118,7 +95,7 @@ nav a:hover {
 }
 
 .form-group input:focus {
-    border-color: var(--primary-color);
+    border-color: var(--primary-hover);
     box-shadow: 0 0 0 3px rgba(114, 95, 80, 0.2);
 }
 
@@ -263,13 +240,7 @@ nav a:hover {
 body {
     background-color: #050508;
     color: var(--text-color);
-    min-height: 100vh;
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-end;
-    padding: 40px 8%;
 }
 
 /* Formulário localizado à direita */

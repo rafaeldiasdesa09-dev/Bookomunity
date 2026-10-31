@@ -1,3 +1,17 @@
+:root {
+    --brown-dark: #49352b;
+    --brown: #6d4c3d;
+    --brown-light: #a17b63;
+    --cream: #f7f1e8;
+    --cream-dark: #eee3d5;
+    --paper: #fffdf9;
+    --text: #30251f;
+    --muted: #82746b;
+    --border: #e8dbcd;
+    --gold: #c28b37;
+    --shadow: 0 8px 28px rgba(73, 53, 43, 0.07);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +21,7 @@
 body {
     font-family: Arial, sans-serif;
     color: #1f2937;
-    background-color: #f7f4ef;
+    background-color: var(--cream);
     min-height: 100vh;
 }
 

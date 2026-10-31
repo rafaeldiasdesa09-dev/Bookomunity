@@ -22,8 +22,11 @@ document.addEventListener("DOMContentLoaded", () => {
     header_link.forEach(botao => {
         botao.addEventListener('click', () => {
             const rota = botao.getAttribute('data-url');
-            if (rota) {
-                window.location.href = `/${rota}`;
+            const userId = Number(botao.getAttribute('data-id'));
+            if (userId !== 0) {
+                window.location.href = `/${rota}/${userId}`
+            } else if (rota) {
+                window.location.href = `/${rota}`
             }
         });
     });

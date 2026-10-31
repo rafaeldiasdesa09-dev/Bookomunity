@@ -55,7 +55,7 @@ export const buscarUsuarioPorId = async (req: Request, res: Response): Promise<v
 
 // Atualizar informações (incluindo suporte a nome_usuario)
 export const atualizarBio = async (req: Request, res: Response) => {
-    const id = Number(req.params.id);
+    const id = Number(req.session.userId);
     const { nome, nome_usuario, email, foto, bio } = req.body;
 
     if (nome === undefined && nome_usuario === undefined && email === undefined && foto === undefined && bio === undefined) {

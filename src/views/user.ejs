@@ -22,8 +22,6 @@
                 <span class="cover-decoration decoration-two">❧</span>
                 <span class="cover-quote">“Entre páginas, encontramos novos mundos.”</span>
             </div>
-
-            <div class="profile-main">
                 <div class="avatar-wrap">
                     <img
                         class="profile-avatar"
@@ -33,41 +31,45 @@
                     >
                 </div>
 
+            <div class="profile-main">
+
+
                 <div class="profile-identity">
-                    <p class="eyebrow">CANTINHO LITERÁRIO</p>
+                    <div class="user-info">
+                        <h1 style="margin-bottom: 1rem;">
+                            <%= typeof nomeExibicao !== 'undefined' && nomeExibicao ? nomeExibicao : 'Leitor do Bookomunity' %>
+                        </h1>
+                        <p class="username" style="margin-bottom: .8rem; margin-left: 1rem;">@<%= nomeUsuario %></p>
+                    </div>
 
-                    <h1>
-                        <%= typeof nomeUsuario !== 'undefined' && nomeUsuario ? nomeUsuario : 'Leitor do Bookomunity' %>
-                    </h1>
-
-                    <p class="profile-handle">Membro da comunidade Bookomunity</p>
 
                     <div class="profile-bio-container">
 
                         <p class="profile-bio" id="bioTexto">
-                            <%= typeof bio !== 'undefined' && bio
-                                ? bio
-                                : 'Cada livro é uma nova aventura esperando para ser descoberta.' %>
+                            <% if (bio) {%><%= bio %><%}%>
                         </p>
-                    
-                        <button type="button" id="btnEditarBio">
+
+                        <% if (isOwner) { %>
+                        <button type="button" class="btn-editar-bio" id="btnEditarBio">
                             Editar biografia
                         </button>
-                    
-                        <form id="formBio" style="display: none;">
+                        <form class="form-bio" id="formBio" style="display: none;">
                             <textarea
+                                class="bio-input"
                                 name="bio"
                                 id="bioInput"
                                 maxlength="500"
                                 placeholder="Escreva sua biografia..."
-                                required
                             ><%= typeof bio !== 'undefined' && bio ? bio : '' %></textarea>
 
-                            <button type="submit">Salvar</button>
-                            <button type="button" id="btnCancelarBio">Cancelar</button>
+                            <button class="btn-editar-bio" type="submit">Salvar</button>
+                            <button class="btn-editar-bio" type="button" id="btnCancelarBio">Cancelar</button>
                         </form>
-                    
-
+                        <% } %>
+                </div>
+            </div>
+            </div>
+            <div style="margin-top: 1rem;"></div>
             <div class="profile-stats">
                 <div class="stat">
                     <strong><%= typeof livrosFavoritos !== 'undefined' && Array.isArray(livrosFavoritos) ? livrosFavoritos.length : 0 %></strong>

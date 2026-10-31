@@ -30,7 +30,7 @@
     </div>
 
 <div class="header-box">
-    <img src="/img/Bookomunity_Black.png" class="logo" alt="Bookomunity">
+    <img src="<%= (page == '/register' || page == '/login') ? '/img/Bookomunity_White.png' : '/img/Bookomunity_Black.png' %>" class="logo" alt="Bookomunity">
     <header>
         <button type="button" id="search-bar" class="header-btn">
             <img 
@@ -45,7 +45,8 @@
             src="/img/icon/explore.svg"
             alt="Explorar">
         </button>
-
+        
+        <% if (nome !== undefined && nome !== null) { %>
         <button type="button" data-url="friends" class="header-btn header-link">
             <img 
             class="header-btn-img" 
@@ -59,15 +60,17 @@
             src="/img/icon/config.svg"
             alt="Configurações">
         </button>
-        <% if (nome !== undefined) { %>
-            <button type="button" data-url="profile" class="header-btn header-link">
+        
+            <button type="button" data-url="profile" data-id="<%= userId %>" class="header-btn header-link">
                 <img 
                 class="header-btn-img" 
                 src="<%= typeof foto !== 'undefined' && foto ? foto : '/img/avatar-padrao.png' %>"
                 alt="Seu Perfil">
             </button>
             <% if (isOwner) { %>
-            <button type="button" data-url="login" class="header-login header-link">Sair</button>
+            <form action="/auth/logoff" method="POST" style="display: inline;">
+                <button type="submit" class="header-login header-link">Sair</button>
+            </form>
             <% } %>
         <% } else { %>
             <button type="button" data-url="login" class="header-login header-link">Entrar</button>

@@ -21,7 +21,7 @@ async function criarAdmin() {
 
     } catch(e) {
         const [admin]: any = await pool.query(`SELECT nome_usuario, email, senha FROM usuarios WHERE perms='ADMIN'`)
-        console.log("Administrador presente:", admin, `\n \n \n ${e}`)
+        console.log("Administrador presente:", admin, "\n")
     }
 }
 

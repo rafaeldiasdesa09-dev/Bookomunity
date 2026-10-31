@@ -4,9 +4,10 @@ import pool from "../config/database";
 
 // Página inicial
 export const startPage = (req: Request, res: Response): void => {
+    const userId = req.session.userId
     try {
         const logado: boolean = (req.session.userId !== undefined);
-        res.render("index", { logado: logado });
+        res.render("index", { logado: logado, page: req.path, isOwner: undefined, userId });
     } catch (error) {
         console.error("Erro ao carregar a página inicial:", error);
         res.status(500).send("Erro interno no servidor.");
@@ -17,8 +18,9 @@ export const startPage = (req: Request, res: Response): void => {
 
 // Página de login
 export const loginPage = (req: Request, res: Response): void => {
+    const userId = req.session.userId
     try {
-        res.status(200).render("login");
+        res.status(200).render("login", {nome: undefined, isOwner: undefined, page: req.path, userId});
     } catch (error) {
         console.error("Erro ao carregar a página de login:", error);
         res.status(500).send("Erro interno no servidor.");
@@ -29,8 +31,9 @@ export const loginPage = (req: Request, res: Response): void => {
 
 // Página de registro
 export const registerPage = (req: Request, res: Response): void => {
+    const userId = req.session.userId
     try {
-        res.status(200).render("registro");
+        res.status(200).render("registro", {nome: undefined, isOwner: undefined, page: req.path, userId});
     } catch (error) {
         console.error("Erro ao carregar a página de registro:", error);
         res.status(500).send("Erro interno no servidor.");
@@ -47,6 +50,7 @@ export const registerPage = (req: Request, res: Response): void => {
 ): Promise<void> => {
     const foto = req.session.photo;
     const nome = req.session.userName;
+    const userId = req.session.userId;
 
     try {
         // Busca os livros cadastrados no banco
@@ -61,7 +65,10 @@ export const registerPage = (req: Request, res: Response): void => {
         res.status(200).render("explore", {
             nome,
             foto,
-            livros
+            livros,
+            page: req.path,
+            isOwner: undefined,
+            userId
         });
 
     } catch (error) {
@@ -77,8 +84,9 @@ export const registerPage = (req: Request, res: Response): void => {
 
 // Página 404
 export const pageNotFound = (req: Request, res: Response): void => {
+    const userId = req.session.userId
     try {
-        res.status(404).render("naoEncontrada");
+        res.status(404).render("naoEncontrada", {page: req.path, isOwner: undefined, userId});
     } catch (error) {
         console.error("Erro ao carregar a página 404:", error);
         res.status(500).send("Erro interno no servidor.");
@@ -91,9 +99,10 @@ export const pageNotFound = (req: Request, res: Response): void => {
 export const friendsPage = (req: Request, res: Response): void => {
     const foto = req.session.photo;
     const nome = req.session.userName;
+    const userId = req.session.userId;
 
     try {
-        res.status(200).render("amizades", { nome, foto });
+        res.status(200).render("amizades", { nome, foto, page: req.path, isOwner: undefined, userId});
     } catch (error) {
         console.error("Erro ao carregar a página de amizades:", error);
         res.status(500).send("Erro interno ao carregar a página de amizades.");
@@ -102,17 +111,17 @@ export const friendsPage = (req: Request, res: Response): void => {
 
 // Página de perfil do usuário
 export const profilePage = async (req: Request, res: Response): Promise<void> => {
-    const usuarioLogadoId = req.session.userId;
+    const userId = req.session.userId;
     const nome = req.session.userName
     const foto = req.session.photo
 
-    const perfilId = req.params.id ? Number(req.params.id) : usuarioLogadoId;
+    const perfilId = req.params.id ? Number(req.params.id) : userId;
 
-    const isOwner = perfilId === usuarioLogadoId;
+    const isOwner = perfilId === userId;
 
     try {
         const [usuarioResult]: any = await pool.query(
-            `SELECT nome, email, foto_perfil, bio FROM usuarios WHERE id = ?`, 
+            `SELECT nome, nome_usuario, email, foto_perfil, bio FROM usuarios WHERE id = ?`, 
             [perfilId]
         );
 
@@ -137,11 +146,12 @@ export const profilePage = async (req: Request, res: Response): Promise<void> =>
         res.render("user", {
             nome: nome,
             foto: foto,
-            nomeUsuario: usuarioPerfil.nome,
+            nomeExibicao: usuarioPerfil.nome,
             fotoUsuario: usuarioPerfil.foto_perfil,
+            nomeUsuario: usuarioPerfil.nome_usuario,
             bio: usuarioPerfil.bio || "",
             
-            usuarioLogadoId: usuarioLogadoId,
+            userId: userId,
 
             
             isOwner: isOwner,
@@ -149,7 +159,8 @@ export const profilePage = async (req: Request, res: Response): Promise<void> =>
             livrosFavoritos: [],
             minhasPostagens: postagens,
             amigos: [],
-            clubes: []
+            clubes: [],
+            page: req.path
         });
 
     } catch (error) {
@@ -162,9 +173,10 @@ export const profilePage = async (req: Request, res: Response): Promise<void> =>
 export const optionsPage = (req: Request, res: Response): void => {
     const foto = req.session.photo
     const nome = req.session.userName
+    const userId = req.session.userId
 
     try {
-        res.render("explore", {nome: nome, foto: foto});
+        res.render("explore", {nome: nome, foto: foto, page: req.path, isOwner: undefined, userId});
         res.status(200)
     } catch (error) {
         console.error("Erro ao carregar a página de perfil:", error);
@@ -173,22 +185,23 @@ export const optionsPage = (req: Request, res: Response): void => {
 };
 
 // Buscar Livros Cadastrados para o Usuario Colocar no Formulario
-export const createPostPage = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  try {
-    const [livros] = await pool.query(
-      "SELECT id, titulo, autor FROM livros ORDER BY titulo ASC"
-    );
+export const createPostPage = async (req: Request, res: Response): Promise<void> => {
+    const userId = req.session.userId
+    try {
+        const [livros] = await pool.query(
+        "SELECT id, titulo, autor FROM livros ORDER BY titulo ASC"
+        );
 
-    res.render("createPost", {
-      nome: req.session.userName,
-      foto: req.session.photo,
-      livros
-    });
-  } catch (error) {
-    console.error("Erro ao carregar a página de criação:", error);
-    res.status(500).send("Erro ao carregar a página de criação.");
-  }
+        res.render("createPost", {
+        nome: req.session.userName,
+        foto: req.session.photo,
+        livros,
+        page: req.path,
+        isOwner: undefined,
+        userId
+        });
+    } catch (error) {
+        console.error("Erro ao carregar a página de criação:", error);
+        res.status(500).send("Erro ao carregar a página de criação.");
+    }
 };

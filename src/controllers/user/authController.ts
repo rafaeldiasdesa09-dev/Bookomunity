@@ -167,7 +167,6 @@ export const sairDoUsuario = async (req: Request, res: Response): Promise<void> 
                 return res.status(500).json({ mensagem: "Erro ao realizar logoff." });
             }
         });
-        console.log("Sessão limpa");
 
         res.clearCookie('connect.sid');
         return res.redirect('/explore');
