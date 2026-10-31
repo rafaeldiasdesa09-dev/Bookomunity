@@ -19,6 +19,7 @@ const API = Router();
 // --- Usuários ---
 API.get("/usuarios", users.listarUsuarios);
 API.get("/usuarios/:id", users.buscarUsuarioPorId);
+API.put("/usuarios/:id/bio", users.atualizarBio)
 
 // --- livross ---
 API.get("/livros", livros.listarLivros);

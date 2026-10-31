@@ -62,8 +62,7 @@
                             Editar biografia
                         </button>
                     
-                        <form action="/profile/editar-bio" method="PUT" id="formBio" style="display: none;">
-                    
+                        <form id="formBio" style="display: none;">
                             <textarea
                                 name="bio"
                                 id="bioInput"
@@ -71,13 +70,9 @@
                                 placeholder="Escreva sua biografia..."
                                 required
                             ><%= typeof bio !== 'undefined' && bio ? bio : '' %></textarea>
-                    
+
                             <button type="submit">Salvar</button>
-                    
-                            <button type="button" id="btnCancelarBio">
-                                Cancelar
-                            </button>
-                    
+                            <button type="button" id="btnCancelarBio">Cancelar</button>
                         </form>
                     
 

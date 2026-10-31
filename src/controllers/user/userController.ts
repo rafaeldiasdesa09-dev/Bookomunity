@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import pool from "../../config/database";
+import { ResultSetHeader } from "mysql2";
 
 // Listar tudo
 export const listarUsuarios = async (req: Request, res: Response): Promise<void> => {
@@ -44,3 +45,33 @@ export const buscarUsuarioPorId = async (req: Request, res: Response): Promise<v
         res.status(500).json({ erro: "Erro ao buscar usuário." });
     }
 };
+
+export const atualizarBio = async (req: Request, res: Response) => {
+    const id = Number(req.params.id)
+    const { nome, email, foto, bio } = req.body
+
+    if (nome === undefined && email === undefined && foto === undefined && bio === undefined) {
+        return res.status(400).json({ success: false, message: 'Nenhum campo foi fornecido para atualização.' })
+    }
+
+    try {
+        const [update] = await pool.query<ResultSetHeader>(`
+            UPDATE usuarios 
+            SET nome = COALESCE(?, nome),
+                email = COALESCE(?, email),
+                foto_perfil = COALESCE(?, foto_perfil),
+                bio = COALESCE(?, bio)
+            WHERE id = ?
+        `, [nome ?? null, email ?? null, foto ?? null, bio ?? null, id])
+
+        if (update.affectedRows === 0) {
+            return res.status(404).json({ success: false, message: 'Usuário não encontrado.' })
+        }
+
+        return res.json({ success: true, message: 'Usuário atualizado com sucesso!' })
+
+    } catch (erro) {
+        console.error("Erro ao buscar usuário:", erro);
+        res.status(500).json({ erro: "Erro ao atualizar usuário." });
+    }
+}
