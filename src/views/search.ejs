@@ -8,86 +8,12 @@
     <title>Explore - Bookomunity</title>
 
     <link rel="stylesheet" href="/css/search.css">
+    <link rel="stylesheet" href="/css/partial/header.css">
 </head>
 
 <body>
-
-
-<div class="dimming" id="dimming"></div>
-<div id="search-box-parent" style="position: absolute; display: none; align-items: center; justify-content: center; width: 100vw; height: 100vh;">
-    <div class="search-box" id="search-box">
-        <form action="/search" method="get">
-            <div class="search-bar">
-                <input class="search-bar-text" name="q" type="text" placeholder="Pesquise aqui por livros, pessoas, postagens, etc.">
-                <button class="search-bar-btn" type="submit">
-                    <img style="height: 1.5rem; opacity: .3;" src="/img/icon/search-icon.svg">
-                </button>
-            </div>
-            
-            <div class="search-categories">             
-                <div class="opcao">
-                    <input type="radio" id="usuario" name="filter" value="usuario" checked>
-                    <label for="usuario">Usuário</label>
-                </div>
-
-                <div class="opcao">
-                    <input type="radio" id="livro" name="filter" value="livro">
-                    <label for="livro">Livro</label>
-                </div>
-
-                <div class="opcao">
-                    <input type="radio" id="postagem" name="filter" value="postagem">
-                    <label for="postagem">Postagem</label>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-
-
-    <header>
-        <div class="logo">
-            <a href="/">
-                <img src="/img/logoBookomunity2.png" alt="Logo Bookomunity">
-            </a>
-        </div>
-
-        <nav>
-            <a id="search-bar" style="cursor: pointer;">Pesquisar</a>
-            <a href="/explore">Explorar</a>
-
-            <% if (nome !== undefined) { %>
-
-                <a href="/friends">Amizades</a>
-                <a href="/options">Configurações</a>
-                
-                <div class="user-info">
-                    <a href="/profile" class="user">
-                        <%= nome %>
-                    </a>
-
-                    <img
-                        id="avatar-header"
-                        class="user-avatar"
-                        src="<%= typeof foto !== 'undefined' && foto ? foto : '/img/avatar-padrao.png' %>"
-                        alt="Foto de perfil de <%= nome %>"
-                    >
-
-                    <form action="/auth/logoff" method="POST" style="display: inline;">
-                        <button type="submit" class="logout" style="background: none; border: none; padding: 0; font: inherit; cursor: pointer;">
-                            Sair
-                        </button>
-                    </form>
-                </div>
-
-            <% } else { %>
-
-                <a href="/login">Entrar</a>
-                <a href="/registro">Cadastrar</a>
-
-            <% } %>
-        </nav>
-    </header>
+    <%- include('partial/header') %>
+    <script src="/js/header.js"></script>
 
     <main>
     <% if (type === 'livro') { %>

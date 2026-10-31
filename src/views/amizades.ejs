@@ -8,33 +8,12 @@
     <title>Bookomunity - Amizades</title>
 
     <link rel="stylesheet" href="/css/amizades.css">
+    <link rel="stylesheet" href="/css/partial/header.css">
 </head>
 
 <body>
-
-    <!-- Cabeçalho -->
-    <header class="top-header">
-
-        <a href="/explore" class="logo">Bookomunity</a>
-
-        <nav class="nav-icons">
-            <a href="/explore">Início</a>
-            <a href="/search">Pesquisar</a>
-            <a href="/friends" class="active">Amizades</a>
-            <a href="/profile">Perfil</a>
-        </nav>
-
-        <a href="/profile" class="user-avatar">
-            <% if (foto) { %>
-                <img src="<%= foto %>" alt="Foto do usuário">
-            <% } else { %>
-                <div class="avatar-placeholder">
-                    <%= nome ? nome.charAt(0).toUpperCase() : "U" %>
-                </div>
-            <% } %>
-        </a>
-
-    </header>
+    <%- include('partial/header') %>
+    <script src="/js/header.js"></script>
 
     <main class="main-container">
 

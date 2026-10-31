@@ -5,17 +5,22 @@ import pool from "../../config/database";
 export const registrarUsuario = async (req: Request, res: Response): Promise<void> => {
     try {
         const nome = String(req.body.nome || "").trim();
+        const nomeUsuario = String(req.body.nome_usuario || "")
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, "");
+            
         const email = String(req.body.email || "")
             .trim()
             .toLowerCase();
         const senha = String(req.body.senha || "");
 
-        if (!nome || !email || !senha) {
+        if (!nome || !nomeUsuario || !email || !senha) {
             res.redirect("/registro?erro=dados");
             return;
         }
 
-        if (nome.length > 100 || email.length > 254) {
+        if (nome.length > 100 || nomeUsuario.length > 50 || email.length > 254) {
             res.redirect("/registro?erro=dados");
             return;
         }
@@ -31,14 +36,14 @@ export const registrarUsuario = async (req: Request, res: Response): Promise<voi
         }
 
         const [resultado] = await pool.query(
-            "SELECT id FROM usuarios WHERE email = ? LIMIT 1",
-            [email]
+            "SELECT id FROM usuarios WHERE email = ? OR nome_usuario = ? LIMIT 1",
+            [email, nomeUsuario]
         );
 
         const usuarios = resultado as Array<{ id: number }>;
 
         if (usuarios.length > 0) {
-            res.redirect("/registro?erro=email");
+            res.redirect("/registro?erro=email_ou_usuario");
             return;
         }
 
@@ -50,9 +55,9 @@ export const registrarUsuario = async (req: Request, res: Response): Promise<voi
 
         await pool.query(
             `INSERT INTO usuarios
-                (nome, email, senha, foto_perfil, bio, perms, data_criacao)
-             VALUES (?, ?, ?, ?, NULL, 'USER', CURRENT_TIMESTAMP)`,
-            [nome, email, senhaHash, fotoPerfil]
+                (nome, nome_usuario, email, senha, foto_perfil, bio, perms, data_criacao)
+             VALUES (?, ?, ?, ?, ?, NULL, 'USER', CURRENT_TIMESTAMP)`,
+            [nome, nomeUsuario, email, senhaHash, fotoPerfil]
         );
 
         res.redirect("/login?sucesso=registro");
@@ -65,7 +70,7 @@ export const registrarUsuario = async (req: Request, res: Response): Promise<voi
             "code" in erro &&
             (erro as { code: string }).code === "ER_DUP_ENTRY"
         ) {
-            res.redirect("/registro?erro=email");
+            res.redirect("/registro?erro=email_ou_usuario");
             return;
         }
 
@@ -91,7 +96,7 @@ export const loginUsuario = async (req: Request, res: Response): Promise<void> =
         }
 
         const [resultado] = await pool.query(
-            `SELECT id, nome, email, senha, perms, foto_perfil
+            `SELECT id, nome, nome_usuario, email, senha, perms, foto_perfil
              FROM usuarios
              WHERE email = ?
              LIMIT 1`,
@@ -101,6 +106,7 @@ export const loginUsuario = async (req: Request, res: Response): Promise<void> =
         const usuarios = resultado as Array<{
             id: number;
             nome: string;
+            nome_usuario: string;
             email: string;
             senha: string;
             perms: string;
@@ -160,16 +166,16 @@ export const sairDoUsuario = async (req: Request, res: Response): Promise<void> 
                 console.log("Erro ao sair da sessão:", err);
                 return res.status(500).json({ mensagem: "Erro ao realizar logoff." });
             }
-        })
-        console.log("Sessão limpa")
+        });
+        console.log("Sessão limpa");
 
-        res.clearCookie('connect.sid')
-        return res.redirect('/explore')
+        res.clearCookie('connect.sid');
+        return res.redirect('/explore');
     } catch (erro) {
-        console.error("Erro no login:", erro);
+        console.error("Erro no logoff:", erro);
 
         res.status(500).json({
             mensagem: "Erro interno ao realizar logoff."
         });
     }
-}
+};

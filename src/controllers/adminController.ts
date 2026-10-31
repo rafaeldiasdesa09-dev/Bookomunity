@@ -4,22 +4,24 @@ import { ResultSetHeader } from "mysql2";
 import bcrypt from "bcrypt";
 import { consoleContent } from "../types/variables";
 import { criarClubeGenerico } from "./entity/clubController";
+import fs from "node:fs/promises";
+import path from "node:path";
 
 async function criarAdmin() {
     try {
         const senha = await bcrypt.hash("admin123", 10)
 
-        const [usuario] = await pool.query<ResultSetHeader>(`
-            INSERT INTO usuarios (nome, email, senha, perms)
-            VALUES (?, ?, ?, ?)`, ['admin', 'admin@bookomunity.com', senha, 'ADMIN'])
+        await pool.query<ResultSetHeader>(`
+            INSERT INTO usuarios (nome, nome_usuario, email, senha, perms)
+            VALUES (?, ?, ?, ?, ?)`, ['Administrador', 'admin', 'admin@bookomunity.com', senha, 'ADMIN'])
         
-        const [admin]: any = await pool.query(`SELECT email, senha FROM usuarios WHERE perms='ADMIN'`)
+        const [admin]: any = await pool.query(`SELECT nome_usuario, email, senha FROM usuarios WHERE perms='ADMIN'`)
 
         console.log("Administrador criado, informações:", admin)
 
-    } catch {
-        const [admin]: any = await pool.query(`SELECT email, senha FROM usuarios WHERE perms='ADMIN'`)
-        console.log("Administrador presente:", admin)
+    } catch(e) {
+        const [admin]: any = await pool.query(`SELECT nome_usuario, email, senha FROM usuarios WHERE perms='ADMIN'`)
+        console.log("Administrador presente:", admin, `\n \n \n ${e}`)
     }
 }
 
@@ -163,10 +165,35 @@ export const atualizarPermissaoUsuario = async (req: Request, res: Response): Pr
 };
 
 
-// funciona no início do código
+
+// só quando não tiver nenhum usuário cadastrado
+async function deletarUploads() {
+    try {
+        const [resultado]: any = await pool.query(`SELECT COUNT(id) as total FROM usuarios WHERE perms <> 'ADMIN'`);
+        const totalUsuarios = resultado[0].total;
+
+        if (totalUsuarios === 0) {
+            const uploadDir = path.join(process.cwd(), 'uploads', '.gitkeep');
+            
+            await fs.rm(uploadDir, { recursive: true, force: true });
+            await fs.mkdir(path.dirname(uploadDir), { recursive: true });
+            await fs.writeFile(uploadDir, '');
+            
+            console.log('Nenhum usuário presente: pasta uploads reiniciada');
+        } else {
+            console.log(`Existem ${totalUsuarios} usuários no banco. Pasta uploads mantida.`);
+        }
+    } catch (erro) {
+        console.error('Erro ao verificar usuários ou limpar a pasta uploads:', erro);
+    }
+}
+
 async function startup() {
+
+    await deletarUploads();
+    
     await criarAdmin();
-    await criarClubeGenerico()
+    await criarClubeGenerico();
 }
 
 startup()

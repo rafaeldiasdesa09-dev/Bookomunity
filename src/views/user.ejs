@@ -7,21 +7,13 @@
     <meta name="theme-color" content="#49352b">
     <title>Meu perfil | Bookomunity</title>
     <link rel="stylesheet" href="/css/user.css">
+    <link rel="stylesheet" href="/css/partial/header.css">
 
 </head>
 <body>
-    <header class="site-header">
-        <a class="brand" href="/" aria-label="Bookomunity - Início">
-            <img src="/img/logoBookomunity2.png" alt="Bookomunity">
-        </a>
+<%- include('partial/header') %>
 
-        <nav class="main-nav" aria-label="Navegação principal">
-            <a href="/">Início</a>
-            <a href="/explore">Explorar</a>
-            <a href="/friends">Amizades</a>
-            <a href="/profile" class="active">Meu perfil</a>
-        </nav>
-    </header>
+<script src="/js/header.js"></script>
 
     <main class="page-container">
         <section class="profile-card">
@@ -35,7 +27,7 @@
                 <div class="avatar-wrap">
                     <img
                         class="profile-avatar"
-                        src="<%= typeof foto !== 'undefined' && foto ? foto : '/img/avatar-padrao.png' %>"
+                        src="<%= typeof fotoUsuario !== 'undefined' && fotoUsuario ? fotoUsuario : '/img/avatar-padrao.png' %>"
                         alt="Foto de perfil"
                         onerror="this.onerror=null;this.src='/img/logoBookomunity2.png';"
                     >
@@ -45,7 +37,7 @@
                     <p class="eyebrow">CANTINHO LITERÁRIO</p>
 
                     <h1>
-                        <%= typeof nome !== 'undefined' && nome ? nome : 'Leitor do Bookomunity' %>
+                        <%= typeof nomeUsuario !== 'undefined' && nomeUsuario ? nomeUsuario : 'Leitor do Bookomunity' %>
                     </h1>
 
                     <p class="profile-handle">Membro da comunidade Bookomunity</p>

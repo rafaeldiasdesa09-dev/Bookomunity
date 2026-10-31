@@ -102,16 +102,27 @@ export const friendsPage = (req: Request, res: Response): void => {
 
 // Página de perfil do usuário
 export const profilePage = async (req: Request, res: Response): Promise<void> => {
-    const foto = req.session.photo;
-    const nome = req.session.userName;
-    const usuarioId = req.session.userId;
+    const usuarioLogadoId = req.session.userId;
+    const nome = req.session.userName
+    const foto = req.session.photo
 
-    if (!usuarioId) {
-        res.redirect("/login");
-        return;
-    }
+    const perfilId = req.params.id ? Number(req.params.id) : usuarioLogadoId;
+
+    const isOwner = perfilId === usuarioLogadoId;
 
     try {
+        const [usuarioResult]: any = await pool.query(
+            `SELECT nome, email, foto_perfil, bio FROM usuarios WHERE id = ?`, 
+            [perfilId]
+        );
+
+        if (usuarioResult.length === 0) {
+            res.status(404).send("Usuário não encontrado.");
+            return;
+        }
+
+        const usuarioPerfil = usuarioResult[0];
+
         const [postagens] = await pool.query(
             `SELECT
                 p.*,
@@ -120,18 +131,27 @@ export const profilePage = async (req: Request, res: Response): Promise<void> =>
              LEFT JOIN livros l ON p.livro_id = l.id
              WHERE p.usuario_id = ?
              ORDER BY p.data_criacao DESC`,
-            [usuarioId]
+            [perfilId]
         );
 
         res.render("user", {
             nome: nome,
             foto: foto,
-            bio: "",
+            nomeUsuario: usuarioPerfil.nome,
+            fotoUsuario: usuarioPerfil.foto_perfil,
+            bio: usuarioPerfil.bio || "",
+            
+            usuarioLogadoId: usuarioLogadoId,
+
+            
+            isOwner: isOwner,
+
             livrosFavoritos: [],
             minhasPostagens: postagens,
             amigos: [],
             clubes: []
         });
+
     } catch (error) {
         console.error("Erro ao carregar o perfil:", error);
         res.status(500).send("Erro interno ao carregar o perfil.");

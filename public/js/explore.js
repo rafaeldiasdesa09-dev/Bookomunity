@@ -2,6 +2,7 @@ const screen_dimming = document.getElementById('dimming');
 const search_bar = document.getElementById('search-bar')
 const search_box = document.getElementById('search-box')
 const search_box_parent = document.getElementById('search-box-parent')
+const header_link = document.querySelectorAll('.header-link')
 
 search_bar.addEventListener('click', () => {
         screen_dimming.style.display = 'initial'
@@ -14,3 +15,10 @@ screen_dimming.addEventListener('click', () => {
         screen_dimming.style.display = 'none'
         search_box_parent.style.display = 'none'
 })
+
+header_link.forEach(botao => {
+        botao.addEventListener('click', () => {
+                const rota = botao.getAttribute('data-url')
+                window.location.href=`/${rota}`
+        })
+})      

@@ -23,7 +23,7 @@ export async function criarClubeGenerico() {
         return clube_og;
 
     } catch (e) {
-        console.error("Erro ao gerenciar o clube genérico:", e);
+        console.error("\n Erro ao gerenciar o clube genérico: \n", e);
     }
 }
 

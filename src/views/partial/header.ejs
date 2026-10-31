@@ -1,0 +1,79 @@
+    <div class="dimming" id="dimming"></div>
+    <div id="search-box-parent" style="position: absolute; display: none; align-items: center; justify-content: center; width: 100vw; height: 100vh;">
+        <div class="search-box" id="search-box">
+            <form action="/search" method="get">
+                <div class="search-bar">
+                    <input class="search-bar-text" name="q" type="text" placeholder="Pesquise aqui por livros, pessoas, postagens, etc.">
+                    <button class="search-bar-btn" type="submit">
+                        <img style="height: 1.5rem; opacity: .3;" src="/img/icon/search.svg">
+                    </button>
+                </div>
+                
+                <div class="search-categories">             
+                    <div class="opcao">
+                        <input type="radio" id="usuario" name="filter" value="usuario" checked>
+                        <label for="usuario">Usuário</label>
+                    </div>
+
+                    <div class="opcao">
+                        <input type="radio" id="livro" name="filter" value="livro">
+                        <label for="livro">Livro</label>
+                    </div>
+
+                    <div class="opcao">
+                        <input type="radio" id="postagem" name="filter" value="postagem">
+                        <label for="postagem">Postagem</label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<div class="header-box">
+    <img src="/img/Bookomunity_Black.png" class="logo" alt="Bookomunity">
+    <header>
+        <button type="button" id="search-bar" class="header-btn">
+            <img 
+            class="header-btn-img" 
+            src="/img/icon/search.svg"
+            alt="Pesquisar">
+        </button>
+
+        <button type="button" data-url="explore" class="header-btn header-link">
+            <img 
+            class="header-btn-img" 
+            src="/img/icon/explore.svg"
+            alt="Explorar">
+        </button>
+
+        <button type="button" data-url="friends" class="header-btn header-link">
+            <img 
+            class="header-btn-img" 
+            src="/img/icon/friends.svg"
+            alt="Amizades">
+        </button>
+
+        <button type="button" data-url="options" class="header-btn header-link">
+            <img 
+            class="header-btn-img" 
+            src="/img/icon/config.svg"
+            alt="Configurações">
+        </button>
+        <% if (nome !== undefined) { %>
+            <button type="button" data-url="profile" class="header-btn header-link">
+                <img 
+                class="header-btn-img" 
+                src="<%= typeof foto !== 'undefined' && foto ? foto : '/img/avatar-padrao.png' %>"
+                alt="Seu Perfil">
+            </button>
+            <% if (isOwner) { %>
+            <button type="button" data-url="login" class="header-login header-link">Sair</button>
+            <% } %>
+        <% } else { %>
+            <button type="button" data-url="login" class="header-login header-link">Entrar</button>
+        <% } %>
+    </header>
+</div>
+
+<div class="blur">
+</div>

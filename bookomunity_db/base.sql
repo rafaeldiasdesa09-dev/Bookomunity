@@ -7,9 +7,10 @@ USE bookomunity_db;
 -- 1. Tabela de usuarios
 CREATE TABLE IF NOT EXISTS usuarios (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100),
-    email VARCHAR(254) UNIQUE,
-    senha VARCHAR(255),
+    nome VARCHAR(100) NOT NULL,
+    nome_usuario VARCHAR(100) UNIQUE NOT NULL,
+    email VARCHAR(254) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL,
     foto_perfil TEXT,
     bio TEXT,
     perms VARCHAR(20),
