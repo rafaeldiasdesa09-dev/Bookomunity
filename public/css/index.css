@@ -14,13 +14,18 @@ body {
 header {
       width: 100%;
     height: 80px;
-    background-color: #4c3d31;
+    background-color: rgba(255,255,255,.8);
 
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    padding: 0 55px;
+    padding: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid white;
 }
 
 .logo {
@@ -47,13 +52,14 @@ nav {
 
 nav a {
      text-decoration: none;
-    color: #ffff;
+    color: #000;
     font-weight: bold;
     transition: 0.3s;
 }
 
 nav a:hover {
     color: #f2bd76;
+    scale: 105%;
 }
 
 /* HERO */
@@ -64,7 +70,7 @@ nav a:hover {
 .hero {
     width: 100%;
     min-height: 500px;
-background-color: #d5dfec;
+background-color: #ece3d5;
     display: flex;
     align-items: stretch;
 

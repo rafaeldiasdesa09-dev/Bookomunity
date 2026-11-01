@@ -20,7 +20,6 @@
 }
 
 body {
-    margin: 0;
     background: var(--cream);
     color: var(--text);
     font-family: "Segoe UI", Arial, sans-serif;
@@ -102,6 +101,7 @@ input {
     padding: 0 34px 26px;
     flex-direction: column;
     margin-left: 4rem;
+    padding: 1rem;
 }
 
 .avatar-wrap {
@@ -128,6 +128,7 @@ input {
     padding-top: 20px;
     margin-left: 8rem;
     width: 100%;
+    padding: 1rem;
 }
 
 .eyebrow {
@@ -145,6 +146,7 @@ input {
     font-family: Georgia, "Times New Roman", serif;
     font-size: clamp(1.6rem, 3vw, 2.15rem);
     line-height: 1.2;
+    padding: 1rem;
 }
 
 .profile-handle {
@@ -154,11 +156,13 @@ input {
 }
 
 .profile-bio {
-    max-width: 640px;
+    width: 100%;
     margin: 0;
     color: #5c4d43;
     font-size: 0.95rem;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
+    margin-bottom: 1rem;
+    white-space: pre-wrap;
 }
 
 .edit-profile {
@@ -543,23 +547,6 @@ input {
 }
 
 @media (max-width: 560px) {
-    .site-header {
-        padding: 15px 4%;
-    }
-
-    .brand img {
-        width: 165px;
-    }
-
-    .main-nav {
-        gap: 3px;
-    }
-
-    .main-nav a {
-        padding: 8px;
-        font-size: 0.82rem;
-    }
-
     .page-container {
         width: 94%;
         margin: 20px auto;
@@ -696,19 +683,44 @@ input {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: fit-content;
-    border: 1px solid rgba(73, 53, 43, 0.07);
     padding: 1rem;
     padding-bottom: 0;
 }
 
 .bio-input {
-    margin-bottom: -.5rem;
-    height: 2.5rem;
+    margin-bottom: 2rem;
+    height: 15rem;
+    width: 100%;
 }
 
 .user-info {
     display: flex;
     width: 100%;
     align-items: center;
+}
+
+.profile-bio-container {
+    gap: 1rem;
+    margin-right: 2rem;
+    margin-left: -9rem;
+    padding: 1rem;
+}
+
+.add-btn {
+    overflow: hidden;
+    width: 2rem;
+    height: 2rem;
+    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: .8rem;
+    background-color: white;
+    border: none;
+    border-radius: 100%;
+    cursor: pointer;
+}
+.add-btn:hover {
+    scale: 105%;
+    border: 2px solid rgba(73, 53, 43, 0.2);
 }

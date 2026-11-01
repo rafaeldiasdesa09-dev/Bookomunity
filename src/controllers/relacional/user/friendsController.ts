@@ -70,12 +70,7 @@ export const enviarPedidoAmizade = async (req: Request, res: Response): Promise<
     try {
         const { usuario_id, amigo_id } = req.body;
 
-        if (!Number.isInteger(usuario_id) || usuario_id <= 0 || !Number.isInteger(amigo_id) || amigo_id <= 0) {
-            res.status(400).json({ erro: "IDs inválidos." });
-            return;
-        }
-
-        if (usuario_id === amigo_id) {
+        if (Number(usuario_id) == Number(amigo_id)) {
             res.status(400).json({ erro: "Você não pode enviar um pedido de amizade para si mesmo." });
             return;
         }
@@ -83,16 +78,15 @@ export const enviarPedidoAmizade = async (req: Request, res: Response): Promise<
         const [resultado] = await pool.query<ResultSetHeader>(
             `INSERT INTO amizades (usuario_id, amigo_id, status) 
              VALUES (?, ?, 'pendente')`,
-            [usuario_id, amigo_id]
+            [Number(usuario_id), Number(amigo_id)]
         );
 
-        res.status(201).json({
-            mensagem: "Pedido de amizade enviado com sucesso!",
-            id: resultado.insertId
-        });
+        const [user]: any = await pool.query(`SELECT nome_usuario FROM usuarios WHERE id = ?`, [Number(amigo_id)])
+
+        res.status(201).redirect(`/user/${user[0].nome_usuario}`)
     } catch (erro: any) {
         if (erro.code === 'ER_DUP_ENTRY') {
-            res.status(400).json({ erro: "Já existe um pedido ou amizade entre estes usuários." });
+            res.status(400).json({ erro: "Já existe um pedido de amizade pendente" });
             return;
         }
         console.error("Erro ao enviar pedido de amizade:", erro);

@@ -22,9 +22,9 @@ document.addEventListener("DOMContentLoaded", () => {
     header_link.forEach(botao => {
         botao.addEventListener('click', () => {
             const rota = botao.getAttribute('data-url');
-            const userId = Number(botao.getAttribute('data-id'));
-            if (userId !== 0) {
-                window.location.href = `/${rota}/${userId}`
+            const userName = botao.getAttribute('data-id');
+            if (userName !== null) {
+                window.location.href = `/${rota}/${userName}`
             } else if (rota) {
                 window.location.href = `/${rota}`
             }

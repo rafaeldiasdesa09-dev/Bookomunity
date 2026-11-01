@@ -139,7 +139,7 @@ export const loginUsuario = async (req: Request, res: Response): Promise<void> =
         if (usuario !== undefined) {
             req.session.admin = usuario.perms !== "USER";
             req.session.userId = usuario.id;
-            req.session.userName = usuario.nome;
+            req.session.userName = usuario.nome_usuario;
             req.session.email = usuario.email;
             req.session.photo = usuario.foto_perfil;
         }

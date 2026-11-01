@@ -16,7 +16,7 @@ PAGE.get("/explore", page.explorePage);
 PAGE.get("/create-post", userAuth, page.createPostPage);
 PAGE.get("/friends", userAuth, page.friendsPage);
 PAGE.get("/options", isAuth, page.optionsPage);
-PAGE.get("/profile/:id", page.profilePage);
+PAGE.get("/user/:username", page.profilePage);
 PAGE.get("/search", search.pesquisarDB);
 
 export default PAGE;

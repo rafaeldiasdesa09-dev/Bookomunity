@@ -5,10 +5,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const bioTexto = document.getElementById("bioTexto");
     const formBio = document.getElementById("formBio");
     const bioInput = document.getElementById("bioInput");
-
-    if (!btnEditar || !btnCancelar || !bioTexto || !formBio || !bioInput) {
-        return;
-    }
+    const enviarPedido = document.getElementById("submit-add-friend");
+    const formPedido = document.getElementById("form-add-friend");
+    const pedidoEnviado = document.getElementById("request-sent");
 
     btnEditar.addEventListener("click", () => {
         bioTexto.style.display = "none";
@@ -21,6 +20,11 @@ document.addEventListener("DOMContentLoaded", () => {
         btnEditar.style.display = "inline-block";
         formBio.style.display = "none";
     });
+
+    enviarPedido.addEventListener('click', () => {
+        formPedido.style.display = 'none';
+        pedidoEnviado.style.display = 'initial';
+    })
 
     formBio.addEventListener("submit", async (event) => {
         event.preventDefault();

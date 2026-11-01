@@ -11,9 +11,9 @@
 
 </head>
 <body>
-<%- include('partial/header') %>
-
-<script src="/js/header.js"></script>
+    <%- include('partial/header') %>
+    <script src="/js/header.js"></script>
+    <%- include('partial/dottedBg') %>
 
     <main class="page-container">
         <section class="profile-card">
@@ -39,28 +39,33 @@
                         <h1 style="margin-bottom: 1rem;">
                             <%= typeof nomeExibicao !== 'undefined' && nomeExibicao ? nomeExibicao : 'Leitor do Bookomunity' %>
                         </h1>
-                        <p class="username" style="margin-bottom: .8rem; margin-left: 1rem;">@<%= nomeUsuario %></p>
+                        <p class="username" style="margin-bottom: .8rem; margin-left: 0rem;">@<%= nomeUsuario %></p>
+                        <% if (!isOwner && nome) { %>
+                            <form id="form-add-friend" action="/api/amizades" method="post">
+                                <input style="display: none;" name="usuario_id" type="number" value="<%= sessionId %>">
+                                <input style="display: none;" name="amigo_id" type="number" value="<%= id %>">
+                                <button class="add-btn" id="submit-add-friend" type="submit">
+                                    <img style="max-width: 1rem; max-height: 1rem;" src="/img/icon/add.svg">
+                                </button>
+                            </form>
+                            <p id="request-sent" style="color: rgb(93, 197, 140); margin-bottom: 1rem; display: none;">Pedido enviado com sucesso!</p>
+                        <% } %>
                     </div>
 
 
                     <div class="profile-bio-container">
-
-                        <p class="profile-bio" id="bioTexto">
-                            <% if (bio) {%><%= bio %><%}%>
-                        </p>
-
                         <% if (isOwner) { %>
                         <button type="button" class="btn-editar-bio" id="btnEditarBio">
                             Editar biografia
                         </button>
+                        <p class="profile-bio" id="bioTexto"><% if (bio) {%><%= bio %><%}%></p>
                         <form class="form-bio" id="formBio" style="display: none;">
                             <textarea
                                 class="bio-input"
                                 name="bio"
                                 id="bioInput"
-                                maxlength="500"
-                                placeholder="Escreva sua biografia..."
-                            ><%= typeof bio !== 'undefined' && bio ? bio : '' %></textarea>
+                                maxlength="1000"
+                                placeholder="Escreva sua biografia..."></textarea>
 
                             <button class="btn-editar-bio" type="submit">Salvar</button>
                             <button class="btn-editar-bio" type="button" id="btnCancelarBio">Cancelar</button>
