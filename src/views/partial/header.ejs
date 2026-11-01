@@ -1,5 +1,5 @@
     <div class="dimming" id="dimming"></div>
-    <div id="search-box-parent" style="position: absolute; display: none; align-items: center; justify-content: center; width: 100vw; height: 100vh;">
+    <div id="search-box-parent" style="flex-direction: column; position: fixed; top: 0; left: 0; display: none; align-items: center; justify-content: center; width: 100vw; height: 100vh; z-index: 1231;">
         <div class="search-box" id="search-box">
             <form action="/search" method="get">
                 <div class="search-bar">
@@ -27,10 +27,13 @@
                 </div>
             </form>
         </div>
+        <p id="quit-search" style="cursor: pointer; color: white; margin-top: .5rem;">Clique aqui para sair.</p>
     </div>
 
 <div class="header-box">
-    <img src="<%= (page == '/register' || page == '/login') ? '/img/Bookomunity_White.png' : '/img/Bookomunity_Black.png' %>" class="logo" alt="Bookomunity">
+    <a href="/explore">
+        <img src="<%= (page == '/register' || page == '/login') ? '/img/Bookomunity_White.png' : '/img/Bookomunity_Black.png' %>" class="logo" alt="Bookomunity">
+    </a>
     <header>
         <button type="button" id="search-bar" class="header-btn">
             <img 

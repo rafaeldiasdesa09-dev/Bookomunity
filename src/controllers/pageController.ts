@@ -192,6 +192,7 @@ export const createPostPage = async (req: Request, res: Response): Promise<void>
 
         res.render("createPost", {
         nome: req.session.userName,
+        nome_exibicao: req.session.name,
         foto: req.session.photo,
         livros,
         page: req.path,

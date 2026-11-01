@@ -3,6 +3,7 @@ import "express-session";
 declare module "express-session" {
   interface SessionData {
     userId: number;
+    name: string;
     userName: string;
     admin: boolean;
     flash: string | undefined;

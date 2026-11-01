@@ -26,10 +26,39 @@
     position: absolute;
     right: 1.5rem;
     opacity: .4;
+    top: .5rem;
 }
 
 .post-title {
     margin-top: .5rem;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin-bottom: .5rem;
+}
+
+.post-book-title {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin-top: -.3rem;
+    margin-bottom: .5rem;
+}
+
+.post-header {
+    padding: 1rem;
+    padding-bottom: .5rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.userpfp {
+    width: 2.5rem;
+    height: 2.5rem;
+    image-rendering: optimizeQuality;
+    border-radius: 10rem;
+}
+
+.post-text {
+    white-space: pre-wrap;
 }
 
 
@@ -57,6 +86,7 @@
     background-color: #e4ffef;
     display: flex;
     justify-content: space-between;
+    padding: .5rem;
 }
 
 
@@ -82,6 +112,7 @@
     background-color: #e4f6ff;
     display: flex;
     justify-content: space-between;
+    padding: .5rem;
 }
 
 
@@ -101,10 +132,13 @@
     display: flex;
     gap: 1rem;
     position: relative;
+    min-height: fit-content;
 }
 
 .recomendation-post-bottom {
     background-color: #ffe4e4;
+    min-height: 6rem;
+    padding: .5rem;
 }
 
 .bookline {
@@ -133,7 +167,7 @@
 .resenha-post {
     background-color: #ffe9ba;
     width: 100%;
-    border: 2px dashed #95c5dd;
+    border: 2px dashed #ddca95;
     border-radius: .5rem;
     overflow: hidden;
 }
@@ -151,4 +185,17 @@
     background-color: #fff6e4;
     display: flex;
     justify-content: space-between;
+    padding: .5rem;
+}
+
+.post-rating {
+    text-align: left;
+    justify-self: baseline;
+    margin-left: -35rem;
+    padding-top: .5rem;
+}
+
+.post h1, .post h3, .post p, .post strong {
+    text-align: left;
+    color: black;
 }

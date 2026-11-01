@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -9,15 +8,16 @@
 
     <link rel="stylesheet" href="/css/search.css">
     <link rel="stylesheet" href="/css/partial/header.css">
+    <link rel="stylesheet" href="/css/partial/posts.css">
 </head>
 
 <body>
     <%- include('partial/header') %>
     <script src="/js/header.js"></script>
+    <%- include('partial/dottedBg') %>
 
     <main>
     <% if (type === 'livro') { %>
-        <!-- Postagens do usuário logado -->
         <section class="row">
             <h2 class="row-title">RESULTADOS</h2>
 
@@ -46,31 +46,164 @@
         </section>
         <% } %>
 
-    <% if (type === 'postagem') { %>
-        <!-- Postagens do usuário logado -->
+<% if (type === 'postagem') { %>
         <section class="row">
             <h2 class="row-title">RESULTADOS</h2>
 
             <div class="row-posts">
-                <forEach
+                <% if (dados.length === 0) { %>
                     <p class="empty-message">
                         Nenhuma postagem encontrada.
                     </p>
+                <% } else { %>
+                    <div class="post-card-area">
+                    <% dados.forEach(item => { %>
+
+                        <% if (item.tipo === 'DISCUSSAO') { %>
+                            <div class="post discussion-post">
+                                <div class="post-header">
+                                    <a href="/user/<%= item.nome %>" style="display: flex; align-items: center; gap: 1rem; text-decoration: none; color: inherit;">
+                                        <img src="<%= item.foto_perfil || item.foto %>" class="userpfp">
+                                        <strong class="user-name"><%= item.nome_exibicao %></strong>
+                                        <span class="user-username" style="margin-left: -.4rem;">@<%= item.nome %></span>
+                                    </a>
+                                    <p class="post-type">Discussão</p>
+                                </div>
+                                <div class="discussion-post-top">
+                                    <div class="photo">
+                                        <img src="<%= item.capa_livro %>" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                    <div class="post-content">
+                                        <h1 class="post-book-title"><%= item.titulo_livro %></h1>
+                                        <h3 class="post-title"><%= item.titulo %></h3>
+                                        <p class="post-text"><%= item.conteudo %></p>
+                                    </div>
+                                </div>
+                                <div class="discussion-post-bottom">
+                                    <div class="post-bottom-left">
+                                        <p><%= item.curtidas %> curtidas</p><p><%= item.comentarios %> comentários</p>
+                                    </div>
+                                    <div class="post-bottom-right">
+                                        <p>opções</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <% } else if (item.tipo === 'RESENHA') { %>
+                            <div class="post resenha-post">
+                                <div class="post-header">
+                                    <a href="/user/<%= item.nome %>" style="display: flex; align-items: center; gap: 1rem; text-decoration: none; color: inherit;">
+                                        <img src="<%= item.foto_perfil || item.foto %>" class="userpfp">
+                                        <strong class="user-name"><%= item.nome_exibicao %></strong>
+                                        <span class="user-username" style="margin-left: -.4rem;">@<%= item.nome %></span>
+                                    </a>
+                                    <p class="post-type">Resenha</p>
+                                </div>
+                                <div class="resenha-post-top">
+                                    <div class="photo">
+                                        <img src="<%= item.capa_livro %>" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                    <div class="post-content">
+                                        <h1 class="post-book-title"><%= item.titulo_livro %></h1>
+                                        <strong class="post-rating"><%= item.avaliacao %> estrelas</strong>
+                                        <h3 class="post-title"><%= item.titulo %></h3>
+                                        <p class="post-text"><%= item.conteudo %></p>
+                                    </div>
+                                </div>
+                                <div class="resenha-post-bottom">
+                                    <div class="post-bottom-left">
+                                        <p><%= item.curtidas %> curtidas</p><p><%= item.comentarios %> comentários</p>
+                                    </div>
+                                    <div class="post-bottom-right">
+                                        <p>opções</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <% } else if (item.tipo === 'RECOMENDACOES') { %>
+                            <div class="post recomendation-post">
+                                <div class="post-header">
+                                    <a href="/user/<%= item.nome %>" style="display: flex; align-items: center; gap: 1rem; text-decoration: none; color: inherit;">
+                                        <img src="<%= item.foto_perfil || item.foto %>" class="userpfp">
+                                        <strong class="user-name"><%= item.nome_exibicao %></strong>
+                                        <span class="user-username" style="margin-left: -.4rem;">@<%= item.nome %></span>
+                                    </a>
+                                    <p class="post-type">Recomendações</p>
+                                </div>
+                                <div class="recomendation-post-top">
+                                    <div class="post-content">
+                                        <h3 class="post-title"><%= item.titulo %></h3>
+                                        <p><%= item.conteudo %></p>
+                                    </div>
+                                </div>
+                                <div class="recomendation-post-bottom">
+                                    <div class="bookline">
+                                        <div class="block" id="add-block" style="cursor: pointer;">
+                                            <img src="/img/icon/add.svg" style="width: 1.5rem; opacity: .5; user-select: none;" alt="adicionar">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <% } else { %>
+                            <div class="post common-post">
+                                <div class="post-header">
+                                    <a href="/user/<%= item.nome %>" style="display: flex; align-items: center; gap: 1rem; text-decoration: none; color: inherit;">
+                                        <img src="<%= item.foto_perfil || item.foto %>" class="userpfp">
+                                        <strong class="user-name"><%= item.nome_exibicao %></strong>
+                                        <span class="user-username" style="margin-left: -.4rem;">@<%= item.nome %></span>
+                                    </a>
+                                </div>
+                                <div class="common-post-top">
+                                    <div class="post-content">
+                                        <h1 class="post-book-title"><%= item.titulo_livro %></h1>
+                                        <h3 class="post-title"><%= item.titulo %></h3>
+                                        <p class="post-text"><%= item.conteudo %></p>
+                                    </div>
+                                </div>
+                                <div class="common-post-bottom">
+                                    <div class="post-bottom-left">
+                                        <p><%= item.curtidas %> curtidas</p><p><%= item.comentarios %> comentários</p>
+                                    </div>
+                                    <div class="post-bottom-right">
+                                        <p>opções</p>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+
+                    <% }) %>
+                    </div>
+                <% } %>
 
             </div>
         </section>
     <% } %>
 
     <% if (type === 'usuario') { %>
-        <!-- Postagens do usuário logado -->
         <section class="row">
             <h2 class="row-title">RESULTADOS</h2>
 
             <div class="row-posts">
-                <forEach
+                <% if (dados.length === 0) { %>
                     <p class="empty-message">
                         Nenhum usuário encontrado.
                     </p>
+                <% } else { %>
+                    <div class="user-card-area">
+                    <% dados.forEach(item => { %>
+                            <a style="text-decoration: none; color: #777067" href="/user/<%= item.nome_usuario %>">
+                            <div class="user-card">
+                                <img class="user-card-avatar" src="<%= item.foto_perfil %>">
+                                <div class="user-content">
+                                    <h3 class="user-card-name"><%= item.nome %></h3>
+                                    <p class="user-card-bio"><%= item.bio %></p>
+                                </div>
+                            </div>
+                            </a>
+                    <% }) %>
+                    </div>
+                <% } %>
 
             </div>
         </section>

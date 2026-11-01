@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const search_bar = document.getElementById('search-bar');
     const search_box_parent = document.getElementById('search-box-parent');
     const header_link = document.querySelectorAll('.header-link');
+    const quit_search = document.getElementById('quit-search')
 
     if (!search_bar || !screen_dimming || !search_box_parent) {
         return; 
@@ -15,6 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     screen_dimming.addEventListener('click', () => {
+        screen_dimming.style.display = 'none';
+        search_box_parent.style.display = 'none';
+    });
+
+    quit_search.addEventListener('click', () => {
         screen_dimming.style.display = 'none';
         search_box_parent.style.display = 'none';
     });

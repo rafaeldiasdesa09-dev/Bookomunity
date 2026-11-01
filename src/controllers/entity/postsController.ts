@@ -63,20 +63,22 @@ export const atualizarPostagem = async (req: Request, res: Response) => {
 
 export const criarPostagem = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { tipo, titulo, conteudo, avaliacao } = req.body;
+        const { tipo, titulo, conteudo, avaliacao, clube_id } = req.body;
         const usuario_id = Number(req.session.userId);
         
+        const clube = clube_id ? clube_id : 1
+
         const livro_id = req.body.livro_id ? Number(req.body.livro_id) : null;
         
         const notaAvaliacao = (tipo === "REVIEW" && avaliacao) ? avaliacao : null;
-
-        await pool.query(
-            `INSERT INTO postagens (tipo, titulo, conteudo, avaliacao, usuario_id, livro_id)
-             VALUES (?, ?, ?, ?, ?, ?)`, 
-            [tipo, titulo, conteudo, notaAvaliacao, usuario_id, livro_id]
+        
+        await pool.query<ResultSetHeader>(
+            `INSERT INTO postagens (tipo, titulo, conteudo, avaliacao, usuario_id, clube_id, livro_id)
+             VALUES (?, ?, ?, ?, ?, ?, ?)`, 
+            [tipo, titulo, conteudo, notaAvaliacao, usuario_id, clube, livro_id]
         );
 
-        return res.redirect('/explore');
+        res.status(201).redirect('/explore')
 
     } catch (e) {
         console.error("Erro ao criar postagem:", e);

@@ -58,7 +58,9 @@
                         <button type="button" class="btn-editar-bio" id="btnEditarBio">
                             Editar biografia
                         </button>
+                        <% } %>
                         <p class="profile-bio" id="bioTexto"><% if (bio) {%><%= bio %><%}%></p>
+                        <% if (isOwner) { %>
                         <form class="form-bio" id="formBio" style="display: none;">
                             <textarea
                                 class="bio-input"
