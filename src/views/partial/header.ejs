@@ -35,18 +35,27 @@
         <img src="<%= (page == '/register' || page == '/login') ? '/img/Bookomunity_White.png' : '/img/Bookomunity_Black.png' %>" class="logo" alt="Bookomunity">
     </a>
     <header>
+        <% if (page !== '/create-post') { %>
         <button type="button" id="search-bar" class="header-btn">
             <img 
             class="header-btn-img" 
             src="/img/icon/search.svg"
             alt="Pesquisar">
         </button>
+        <% } %>
 
         <button type="button" data-url="explore" class="header-btn header-link">
             <img 
             class="header-btn-img" 
             src="/img/icon/explore.svg"
             alt="Explorar">
+        </button>
+
+        <button type="button" data-url="create-post" class="header-btn header-link">
+            <img 
+            class="header-btn-img" 
+            src="/img/icon/create.svg"
+            alt="Criar">
         </button>
         
         <% if (nome !== undefined && nome !== null) { %>
@@ -56,18 +65,11 @@
             src="/img/icon/friends.svg"
             alt="Amizades">
         </button>
-
-        <button type="button" data-url="options" class="header-btn header-link">
-            <img 
-            class="header-btn-img" 
-            src="/img/icon/config.svg"
-            alt="Configurações">
-        </button>
         
             <button type="button" data-url="user" data-id="<%= userName %>" class="header-btn header-link">
                 <img 
                 class="header-btn-img" 
-                src="<%= typeof foto !== 'undefined' && foto ? foto : '/img/avatar-padrao.png' %>"
+                src="<%= typeof foto !== 'undefined' && foto ? foto : '/img/icon/default-avatar.svg' %>"
                 alt="Seu Perfil">
             </button>
             <% if (isOwner) { %>

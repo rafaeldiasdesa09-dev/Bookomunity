@@ -39,65 +39,71 @@ document.addEventListener("DOMContentLoaded", () => {
     if (elementQuote) {
         elementQuote.innerHTML = `“${citacaoEscolhida.texto}” <br><small style="font-size: 0.6em; opacity: 0.85; display: block; margin-top: 6px;">— ${citacaoEscolhida.autor}</small>`;
     }
-});
 
-document.addEventListener("DOMContentLoaded", () => {
     const btnEditar = document.getElementById("btnEditarBio");
     const btnCancelar = document.getElementById("btnCancelarBio");
-
     const bioTexto = document.getElementById("bioTexto");
     const formBio = document.getElementById("formBio");
     const bioInput = document.getElementById("bioInput");
+
+    if (btnEditar && formBio && bioTexto) {
+        btnEditar.addEventListener("click", () => {
+            bioTexto.style.display = "none";
+            btnEditar.style.display = "none";
+            formBio.style.display = "block";
+            if (bioInput) bioInput.value = bioTexto.textContent.trim();
+        });
+    }
+
+    if (btnCancelar && formBio && bioTexto && btnEditar) {
+        btnCancelar.addEventListener("click", () => {
+            bioTexto.style.display = "block";
+            btnEditar.style.display = "inline-block";
+            formBio.style.display = "none";
+        });
+    }
+
+    if (formBio) {
+        formBio.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const novaBio = bioInput ? bioInput.value : '';
+
+            try {
+                const response = await fetch(`/api/usuarios/bio`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ bio: novaBio })
+                });
+
+                const resultado = await response.json();
+
+                if (response.ok && resultado.success) {
+                    bioTexto.textContent = novaBio;
+                    formBio.style.display = "none";
+                    bioTexto.style.display = "block";
+                    btnEditar.style.display = "inline-block";
+                } else {
+                    alert(resultado.message || 'Erro ao atualizar biografia.');
+                }
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+                alert('Erro de conexão com o servidor.');
+            }
+        });
+    }
+
     const enviarPedido = document.getElementById("submit-add-friend");
     const formPedido = document.getElementById("form-add-friend");
     const pedidoEnviado = document.getElementById("request-sent");
 
-    btnEditar.addEventListener("click", () => {
-        bioTexto.style.display = "none";
-        btnEditar.style.display = "none";
-        formBio.style.display = "block";
-    });
-
-    btnCancelar.addEventListener("click", () => {
-        bioTexto.style.display = "block";
-        btnEditar.style.display = "inline-block";
-        formBio.style.display = "none";
-    });
-
-    enviarPedido.addEventListener('click', () => {
-        formPedido.style.display = 'none';
-        pedidoEnviado.style.display = 'initial';
-    })
-
-    formBio.addEventListener("submit", async (event) => {
-        event.preventDefault();
-
-        const novaBio = bioInput.value;
-
-        try {
-            const response = await fetch(`/api/usuarios/bio`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ bio: novaBio })
-            });
-
-            const resultado = await response.json();
-
-            if (response.ok && resultado.success) {
-                bioTexto.textContent = novaBio;
-
-                formBio.style.display = "none";
-                bioTexto.style.display = "block";
-                btnEditar.style.display = "inline-block";
-
-            } else {
-                alert(resultado.message || 'Erro ao atualizar biografia.');
-            }
-        } catch (error) {
-            console.error('Erro na requisição:', error);
-            alert('Erro de conexão com o servidor.');
-        }
-    });
+    if (enviarPedido && formPedido && pedidoEnviado) {
+        enviarPedido.addEventListener('click', (event) => {
+            event.preventDefault();
+            formPedido.style.display = 'none';
+            pedidoEnviado.style.display = 'initial';
+        });
+    }
 });

@@ -48,6 +48,7 @@ API.get("/postagens/:id", postagens.buscarPostagemPorId);
 API.post("/postagens", postagens.criarPostagem);
 API.put("/postagens/:id", postagens.atualizarPostagem);
 API.delete("/postagens/:id", postagens.deletarPostagem);
+API.get('/postagens/usuario', postagens.getOwnerPosts)
 
 // --- Recomendações de livross ---
 API.get("/recomendacoes", recomendacoes.listarPedidos);

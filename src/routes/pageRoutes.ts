@@ -15,7 +15,6 @@ PAGE.get("/register", isAuth, page.registerPage);
 PAGE.get("/explore", page.explorePage);
 PAGE.get("/create-post", userAuth, page.createPostPage);
 PAGE.get("/friends", userAuth, page.friendsPage);
-PAGE.get("/options", isAuth, page.optionsPage);
 PAGE.get("/user/:username", page.profilePage);
 PAGE.get("/search", search.pesquisarDB);
 

@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="/css/explore.css">
     <link rel="stylesheet" href="/css/partial/header.css">
+    <link rel="stylesheet" href="/css/partial/posts.css">
 </head>
 
 <body>
@@ -17,18 +18,8 @@
     <%- include('partial/dottedBg') %>
 
     <main>
-        <!-- Postagens do usuário logado -->
-        <section class="row">
-            <h2 class="row-title">SUAS POSTAGENS</h2>
-
-            <div class="row-posts">
-                    <a href="/create-post" class="post-btn">Criar postagem</a>
-                    <p class="empty-message">
-                        Você ainda não tem postagens.
-                    </p>
-
-            </div>
-        </section>
+        <h1 style="margin-bottom: 2rem; width: calc(100vw-12rem); text-align: center; color: rgb(119, 119, 100); font-family: Georgia, 'Times New Roman', Times, serif;">Olá, bem-vindo ao Bookomunity.</h1>
+<% if (userName) { %>
 
         <!-- Postagens de outros usuários -->
         <section class="row">
@@ -57,7 +48,7 @@
 
             </div>
         </section>
-
+<% } %>
 
 <!-- Recomendação de livros -->
 <section class="row">

@@ -26,7 +26,7 @@
                 <div class="avatar-wrap">
                     <img
                         class="profile-avatar"
-                        src="<%= typeof fotoUsuario !== 'undefined' && fotoUsuario ? fotoUsuario : '/img/avatar-padrao.png' %>"
+                        src="<%= typeof fotoUsuario !== 'undefined' && fotoUsuario ? fotoUsuario : '/img/icon/default-avatar.svg' %>"
                         alt="Foto de perfil"
                         onerror="this.onerror=null;this.src='/img/logoBookomunity2.png';"
                     >
@@ -103,7 +103,7 @@
                 <div class="section-heading">
                     <div>
                         <p class="eyebrow">IDEIAS QUE COMPARTILHO</p>
-                        <h2>Publicações e resenhas</h2>
+                        <h2>Minhas publicações</h2>
                     </div>
                     <span class="section-symbol" aria-hidden="true">✎</span>
                 </div>
@@ -114,15 +114,17 @@
                             <% minhasPostagens.forEach(function(postagem) { %>
                                 <% 
                                     // Define os fallbacks para foto, nome de exibição e nome de usuário
-                                    const fallbackFoto = typeof fotoUsuario !== 'undefined' && fotoUsuario ? fotoUsuario : '/img/avatar-padrao.png';
+                                    const fallbackFoto = typeof fotoUsuario !== 'undefined' && fotoUsuario ? fotoUsuario : '/img/icon/default-avatar.svg';
                                     const fallbackNomeExibicao = typeof nomeExibicao !== 'undefined' && nomeExibicao ? nomeExibicao : 'Leitor do Bookomunity';
                                     const fallbackNomeUsuario = typeof nomeUsuario !== 'undefined' && nomeUsuario ? nomeUsuario : '';
+                                    const fallbackCapaLivro = typeof capa_livro !== 'undefined' && capa_livro ? capa_livro : '';
 
                                     const postItem = { 
                                         ...postagem, 
                                         foto_perfil: postagem.foto_perfil || postagem.foto || fallbackFoto,
                                         nome_exibicao: postagem.nome_exibicao || fallbackNomeExibicao,
-                                        nome: postagem.nome || fallbackNomeUsuario
+                                        nome: postagem.nome || fallbackNomeUsuario,
+                                        capa_livro: postagem.capa_livro || fallbackCapaLivro,
                                     }; 
                                 %>
 
@@ -162,7 +164,7 @@
                             <% amigos.forEach(function(amigo) { %>
                                 <article class="person-item">
                                     <img
-                                        src="<%= amigo.foto_perfil || amigo.foto || '/img/avatar-padrao.png' %>"
+                                        src="<%= amigo.foto_perfil || amigo.foto || '/img/icon/default-avatar.svg' %>"
                                         alt=""
                                         class="person-avatar"
                                         onerror="this.onerror=null;this.src='/img/logoBookomunity2.png';"

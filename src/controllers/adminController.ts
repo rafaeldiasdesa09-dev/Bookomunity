@@ -27,6 +27,26 @@ async function criarAdmin() {
 
 
 
+async function criarBibliotecario() {
+    try {
+        const senha = await bcrypt.hash("admin123", 10)
+
+        await pool.query<ResultSetHeader>(`
+            INSERT INTO usuarios (nome, nome_usuario, email, senha, perms)
+            VALUES (?, ?, ?, ?, ?)`, ['Bibliotecário', 'bibliotecario', 'librarian@bookomunity.com', senha, 'LIBRARIAN'])
+        
+        const [admin]: any = await pool.query(`SELECT nome_usuario, email, senha FROM usuarios WHERE perms='LIBRARIAN'`)
+
+        console.log("Bilbiotecário criado, informações:", admin)
+
+    } catch(e) {
+        const [admin]: any = await pool.query(`SELECT nome_usuario, email, senha FROM usuarios WHERE perms='LIBRARIAN'`)
+        console.log("Bilbiotecário presente:", admin, "\n")
+    }
+}
+
+
+
 type UsuarioAdmin = {
     id: number;
     nome: string;
@@ -193,6 +213,7 @@ async function startup() {
     await deletarUploads();
     
     await criarAdmin();
+    await criarBibliotecario();
     await criarClubeGenerico();
 }
 

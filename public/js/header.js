@@ -5,25 +5,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const header_link = document.querySelectorAll('.header-link');
     const quit_search = document.getElementById('quit-search')
 
-    if (!search_bar || !screen_dimming || !search_box_parent) {
-        return; 
+    if (search_bar && screen_dimming && search_box_parent) {
+        search_bar.addEventListener('click', () => {
+            screen_dimming.style.display = 'initial';
+            screen_dimming.style.background = 'rgba(0, 0, 0, 0.3)';
+            search_box_parent.style.display = 'flex';
+        });
+
+        screen_dimming.addEventListener('click', () => {
+            screen_dimming.style.display = 'none';
+            search_box_parent.style.display = 'none';
+        });
+
+        quit_search.addEventListener('click', () => {
+            screen_dimming.style.display = 'none';
+            search_box_parent.style.display = 'none';
+        });        
     }
-
-    search_bar.addEventListener('click', () => {
-        screen_dimming.style.display = 'initial';
-        screen_dimming.style.background = 'rgba(0, 0, 0, 0.3)';
-        search_box_parent.style.display = 'flex';
-    });
-
-    screen_dimming.addEventListener('click', () => {
-        screen_dimming.style.display = 'none';
-        search_box_parent.style.display = 'none';
-    });
-
-    quit_search.addEventListener('click', () => {
-        screen_dimming.style.display = 'none';
-        search_box_parent.style.display = 'none';
-    });
 
     header_link.forEach(botao => {
         botao.addEventListener('click', () => {

@@ -126,7 +126,7 @@ main {
     border-radius: 1rem;
     padding: 1.5rem;
     text-align: center;
-    width: 70vw;
+    width: 100%;
     align-self: center;
 }
 
@@ -196,6 +196,12 @@ main {
 
     text-align: left;
     align-self: stretch;
+    overflow: scroll;
+    scroll-behavior: smooth;
+    padding-bottom: 12px;
+    scrollbar-width: 1rem;
+    scrollbar-color: var(--brown-light) transparent;
+    scroll-margin-block-start: 16px;
 }
 
 /* CARTÃO INDIVIDUAL */

@@ -194,6 +194,10 @@
     padding-top: .5rem;
 }
 
+.post {
+    min-width: 600px;
+}
+
 .post h1, .post h3, .post p, .post strong {
     text-align: left;
     color: black;

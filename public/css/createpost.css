@@ -42,10 +42,10 @@ body {
 main {
   width: 70vw;
   height: 100vh;
-  align-items: center;
-  justify-content: center;
   position: relative;
   margin-left: 30vw;
+  display: flex;
+  justify-content: center;
 }
 
 .post {
@@ -164,6 +164,11 @@ textarea {
   background-color: #fff5e0;
 }
 
+.preview-title {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  margin-top: 5rem;
+  color: #969287;
+}
 
 
 

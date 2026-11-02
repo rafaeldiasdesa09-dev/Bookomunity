@@ -12,11 +12,13 @@ export async function criarClubeGenerico() {
         if (clubesExistentes.length > 0) {
             console.log("O clube 'all' já existe:", clubesExistentes[0]);
             return clubesExistentes[0];
-        }
+        }  
 
+        const [admin]: any = await pool.query('SELECT id FROM usuarios WHERE nome_usuario = "admin"')
+        
         const [clube_og] = await pool.query<ResultSetHeader>(
             `INSERT INTO clubes (nome, descricao, criador_id) VALUES (?, ?, ?)`, 
-            ["all", "grupo comum a todos", 1]
+            ["all", "grupo comum a todos", admin.id]
         );
 
         console.log("Clube 'all' criado com sucesso!");

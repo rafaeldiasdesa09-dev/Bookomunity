@@ -43,14 +43,15 @@ export const registerPage = (req: Request, res: Response): void => {
 
 
 
-	// Página Explore
-	export const explorePage = async (
+// Página Explore
+export const explorePage = async (
     req: Request,
     res: Response
 ): Promise<void> => {
     const foto = req.session.photo;
     const nome = req.session.userName;
     const userName = req.session.userName;
+    const userId = req.session.userId;
 
     try {
         const [livros] = await pool.query(
@@ -60,13 +61,41 @@ export const registerPage = (req: Request, res: Response): void => {
              LIMIT 20`
         );
 
+        let minhasPostagens = [];
+        if (userId) {
+            const queryPostagens = `
+                SELECT 
+                    p.*, 
+                    p.avaliacao AS avaliacao,
+                    u.nome AS nome_exibicao, 
+                    u.nome_usuario AS nome, 
+                    u.foto_perfil, 
+                    l.titulo AS titulo_livro, 
+                    l.capa AS capa_livro,
+                    (SELECT COUNT(*) FROM curtidas c WHERE c.postagem_id = p.id) AS curtidas,
+                    (SELECT COUNT(*) FROM comentarios com WHERE com.postagem_id = p.id) AS comentarios,
+                    (SELECT COUNT(*) FROM recomendacao_livros rec WHERE rec.postagem_id = p.id) AS livros_recomendados
+                FROM postagens p
+                LEFT JOIN usuarios u ON p.usuario_id = u.id
+                LEFT JOIN livros l ON p.livro_id = l.id
+                WHERE p.usuario_id = ? 
+                ORDER BY p.id DESC 
+                LIMIT 20
+            `;
+            const [rows]: any = await pool.query(queryPostagens, [userId]);
+            minhasPostagens = rows;
+        }
+
         res.status(200).render("explore", {
             nome,
             foto,
+            userName,
             livros,
+            minhasPostagens,
+            fotoUsuario: foto,
+            nomeExibicao: nome,
             page: req.path,
-            isOwner: undefined,
-            userName
+            isOwner: undefined
         });
 
     } catch (error) {
@@ -132,7 +161,7 @@ export const profilePage = async (req: Request, res: Response): Promise<void> =>
         const [postagens] = await pool.query(
             `SELECT
                 p.*,
-                l.titulo AS titulo_livro
+                l.*
              FROM postagens p
              LEFT JOIN livros l ON p.livro_id = l.id
              WHERE p.usuario_id = ?
@@ -167,20 +196,6 @@ export const profilePage = async (req: Request, res: Response): Promise<void> =>
     }
 };
 
-// Página de perfil do usuário
-export const optionsPage = (req: Request, res: Response): void => {
-    const foto = req.session.photo
-    const nome = req.session.userName
-    const userName = req.session.userName
-
-    try {
-        res.render("explore", {nome: nome, foto: foto, page: req.path, isOwner: undefined, userName});
-        res.status(200)
-    } catch (error) {
-        console.error("Erro ao carregar a página de perfil:", error);
-        res.status(500).send("Erro interno no servidor.");
-    }
-};
 
 // Buscar Livros Cadastrados para o Usuario Colocar no Formulario
 export const createPostPage = async (req: Request, res: Response): Promise<void> => {

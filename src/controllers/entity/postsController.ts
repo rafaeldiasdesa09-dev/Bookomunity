@@ -90,6 +90,48 @@ export const criarPostagem = async (req: Request, res: Response): Promise<void> 
 
 // -------------------- GET -------------------- //
 
+export const getOwnerPosts = async (req: Request, res: Response): Promise<void> => {
+    const userId = req.session.userId;
+
+    if (!userId) {
+        res.status(401).json({ success: false, message: "Usuário não autenticado." });
+        return;
+    }
+
+    try {
+        const query = `
+            SELECT 
+                p.*, 
+                p.avaliacao AS avaliacao,
+                u.nome AS nome_exibicao, 
+                u.nome_usuario AS nome, 
+                u.foto_perfil, 
+                l.titulo AS titulo_livro, 
+                l.capa AS capa_livro,
+                (SELECT COUNT(*) FROM curtidas c WHERE c.postagem_id = p.id) AS curtidas,
+                (SELECT COUNT(*) FROM comentarios com WHERE com.postagem_id = p.id) AS comentarios,
+                (SELECT COUNT(*) FROM recomendacao_livros rec WHERE rec.postagem_id = p.id) AS livros_recomendados
+            FROM postagens p
+            LEFT JOIN usuarios u ON p.usuario_id = u.id
+            LEFT JOIN livros l ON p.livro_id = l.id
+            WHERE p.usuario_id = ? 
+            ORDER BY p.id DESC 
+            LIMIT 20
+        `;
+
+        const [postagens]: any = await pool.query(query, [userId]);
+
+        res.status(200).json({
+            success: true,
+            postagens: postagens
+        });
+
+    } catch (e) {
+        console.error("Erro ao buscar postagens do usuário:", e);
+        res.status(500).json({ success: false, message: "Erro interno do servidor" });
+    }
+};
+
 // Listar tudo
 export const listarPostagens = async (_req: Request, res: Response): Promise<void> => {
     try {

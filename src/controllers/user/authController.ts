@@ -137,7 +137,7 @@ export const loginUsuario = async (req: Request, res: Response): Promise<void> =
         }
 
         if (usuario !== undefined) {
-            req.session.admin = usuario.perms !== "USER";
+            req.session.admin = usuario.perms == "ADMIN";
             req.session.userId = usuario.id;
             req.session.name = usuario.nome
             req.session.userName = usuario.nome_usuario;
