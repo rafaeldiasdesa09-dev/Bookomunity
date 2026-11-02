@@ -112,7 +112,7 @@ export const profilePage = async (req: Request, res: Response): Promise<void> =>
     const userId = req.session.userId;
     const nome = req.session.userName
     const foto = req.session.photo
-    const userName = req.params.username
+    const userName = req.params.username ? req.params.username : req.session.userName
 
     try {
         const [usuarioResult]: any = await pool.query(
@@ -191,14 +191,26 @@ export const createPostPage = async (req: Request, res: Response): Promise<void>
         );
 
         res.render("createPost", {
-        nome: req.session.userName,
-        nome_exibicao: req.session.name,
-        foto: req.session.photo,
-        livros,
-        page: req.path,
-        isOwner: undefined,
-        userName
+            nome: req.session.userName,
+            nome_exibicao: req.session.name,
+            foto: req.session.photo,
+            livros,
+            page: req.path,
+            isOwner: undefined,
+            userName,
+            item: {
+                nome: req.session.userName,
+                nome_exibicao: req.session.name,
+                foto_perfil: req.session.photo,
+                titulo_livro: 'Livro',
+                titulo: 'Título',
+                conteudo: 'Conteúdo da postagem',
+                curtidas: 0,
+                comentarios: 0,
+                avaliacao: 5
+            },
         });
+
     } catch (error) {
         console.error("Erro ao carregar a página de criação:", error);
         res.status(500).send("Erro ao carregar a página de criação.");

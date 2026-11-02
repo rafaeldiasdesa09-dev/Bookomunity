@@ -36,6 +36,7 @@ body {
   padding: 2rem;
   padding-top: 6rem;
   padding-bottom: 8.5rem;
+  box-shadow: .2rem 0 0 0 rgba(0,0,0,.1);
 }
 
 main {
@@ -63,13 +64,17 @@ main {
 }
 
 .common-button {
-  background-color: white;
+  background-color: rgb(240, 222, 255);
   padding: .8rem;
   width: 100%;
   border: 1px solid rgba(0,0,0,.3);
   outline: none;
   cursor: pointer;
   border-radius: .3rem;
+  transition: .2s ease;
+}
+.common-button:hover {
+  background-color: white;
 }
 
 form {
@@ -77,19 +82,157 @@ form {
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
-  background-color: white;
-  border: 1px solid rgba(73, 53, 43, 0.1);
+  background-color: rgb(217, 170, 255);
+  border: 2px dashed rgb(170, 121, 209);
   margin-top: 1rem;
   height: 100%;
   border-radius: .5rem;
+  box-shadow: .5rem .5rem 0px 0px rgba(0,0,0,.1);
+  overflow: scroll;
 }
 
 input[type="text"], textarea {
   height: 3rem;
-  padding: .8rem
+  padding: .8rem;
+  min-height: 3rem;
 }
 
 textarea {
   height: 100%;
   width: 100%;
+}
+
+.select-type {
+  transition: .2s ease;
+}
+
+.select-button-discussion {
+  background-color: #baffd7;
+  padding: .8rem;
+  width: 100%;
+  border: 2px dashed #95ddb3;
+  outline: none;
+  cursor: pointer;
+  border-radius: .3rem;
+}
+.select-button-discussion:hover {
+  background-color: #deffec;
+}
+
+
+
+.select-button-common {
+  background-color: #bae8ff;
+  padding: .8rem;
+  width: 100%;
+  border: 2px dashed #95c5dd;
+  outline: none;
+  cursor: pointer;
+  border-radius: .3rem;
+}
+.select-button-common:hover {
+  background-color: #d7f2ff;
+}
+
+
+
+.select-button-recomendation {
+  background-color: #ffbaba;
+  padding: .8rem;
+  width: 100%;
+  border: 2px dashed #dd9595;
+  outline: none;
+  cursor: pointer;
+  border-radius: .3rem;
+}
+.select-button-recomendation:hover {
+  background-color: #ffdbdb;
+}
+
+
+
+.select-button-resenha {
+  background-color: #ffe9ba;
+  padding: .8rem;
+  width: 100%;
+  border: 2px dashed #ddca95;
+  outline: none;
+  cursor: pointer;
+  border-radius: .3rem;
+}
+.select-button-resenha:hover {
+  background-color: #fff5e0;
+}
+
+
+
+
+.modal-busca-livro {
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 15px;
+    z-index: 1000;
+    width: 320px;
+    border-radius: 8px;
+    margin-top: 15px;
+    margin-left: -1.3rem;
+}
+
+.busca-container input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.resultados-lista {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.item-resultado-livro {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.item-resultado-livro:hover {
+    background-color: #f5f5f5;
+}
+
+.item-resultado-livro img {
+    width: 30px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 3px;
+}
+
+.livro-info {
+    font-size: 0.85rem;
+}
+
+.livro-info strong {
+    display: block;
+    color: #333;
+}
+
+.livro-info small {
+    color: #666;
+}
+
+.livro-selecionado-preview {
+    margin: 8px 0;
+    font-size: 0.85rem;
+    color: #444;
+    font-weight: 500;
 }

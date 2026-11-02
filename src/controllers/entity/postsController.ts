@@ -70,7 +70,7 @@ export const criarPostagem = async (req: Request, res: Response): Promise<void> 
 
         const livro_id = req.body.livro_id ? Number(req.body.livro_id) : null;
         
-        const notaAvaliacao = (tipo === "REVIEW" && avaliacao) ? avaliacao : null;
+        const notaAvaliacao = (tipo === "RESENHA" && avaliacao) ? avaliacao : null;
         
         await pool.query<ResultSetHeader>(
             `INSERT INTO postagens (tipo, titulo, conteudo, avaliacao, usuario_id, clube_id, livro_id)

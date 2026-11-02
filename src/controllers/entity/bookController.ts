@@ -52,6 +52,33 @@ export const buscarLivroPorId = async (req: Request, res: Response): Promise<voi
 
 
 
+//
+export const buscarLivrosParaCriarPost = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const q = (req.query.q as string)?.trim() || '';
+        let livros;
+
+        if (q) {
+            const termo_consult = `%${q}%`;
+            [livros] = await pool.query(
+                "SELECT id, titulo, autor, capa FROM livros WHERE titulo LIKE ? ORDER BY id LIMIT 20", 
+                [termo_consult]
+            );
+        } else {
+            [livros] = await pool.query(
+                "SELECT id, titulo, autor, capa FROM livros ORDER BY id LIMIT 20"
+            );
+        }
+
+        res.status(200).json(livros);
+    } catch (erro) {
+        console.error("Erro ao buscar livros para o modal:", erro);
+        res.status(500).json({ erro: "Erro ao buscar livros." });
+    }
+};
+
+
+
 // -------------------- POST -------------------- //
 
 // Criar novo livro (POST)

@@ -1,0 +1,48 @@
+<!-- recomendações -->
+<div class="post recomendation-post" id="recomendation-post">
+  <div class="post-header">
+    <a href="/user/<%= item.nome || '' %>" style="display: flex; align-items: center; gap: 1rem; text-decoration: none; color: inherit;">
+      <img src="<%= item.foto_perfil || item.foto || '/img/default-avatar.png' %>" class="userpfp">
+      <strong class="user-name"><%= item.nome_exibicao || 'Usuário' %></strong>
+      <% if (item.nome) { %>
+        <span class="user-username" style="margin-left: -.4rem;">@<%= item.nome %></span>
+      <% } %>
+    </a>
+    <p class="post-type">Recomendações</p>
+  </div>
+  
+  <div class="recomendation-post-top">
+    <div class="post-content">
+      <% if (item.titulo) { %>
+        <h3 class="post-title"><%= item.titulo %></h3>
+      <% } %>
+      
+      <% if (item.conteudo) { %>
+        <p><%= item.conteudo %></p>
+      <% } %>
+    </div>
+  </div>
+  
+  <div class="recomendation-post-bottom">
+    <div class="recomendation-post-bottom-header">
+      <p>
+        <%= item.comentarios !== undefined ? item.comentarios : 0 %> respostas, 
+        <%= item.livros_recomendados !== undefined ? item.livros_recomendados : 0 %> livros recomendados
+      </p>
+    </div>
+    
+    <div class="bookline">
+      <% if (item.livros_adicionados && item.livros_adicionados.length > 0) { %>
+        <% item.livros_adicionados.forEach(livro => { %>
+          <div class="block" title="<%= livro.titulo %>">
+            <img src="<%= livro.capa %>" style="width: 100%; height: 100%; object-fit: cover;" alt="<%= livro.titulo %>">
+          </div>
+        <% }) %>
+      <% } %>
+
+      <div class="block" id="add-block" style="cursor: pointer;">
+        <img src="/img/icon/add.svg" style="width: 1.5rem; opacity: .5; user-select: none;" alt="adicionar">
+      </div>
+    </div>
+  </div>
+</div>

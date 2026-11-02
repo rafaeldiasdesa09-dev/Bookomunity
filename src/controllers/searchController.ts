@@ -29,7 +29,8 @@ export const pesquisarDB = async (req: Request, res: Response): Promise<void> =>
                 const termo_consult = `%${q}%`;
                 [pesquisa] = await pool.query(`
                     SELECT 
-                        p.*, 
+                        p.*,
+                        p.avaliacao AS avaliacao,
                         u.nome AS nome_exibicao, 
                         u.nome_usuario AS nome, 
                         u.foto_perfil, 

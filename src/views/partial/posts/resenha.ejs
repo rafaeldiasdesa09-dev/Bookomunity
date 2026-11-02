@@ -1,0 +1,52 @@
+<!-- resenha -->
+<div class="post resenha-post" id="resenha-post">
+  <div class="post-header">
+    <a href="/user/<%= item.nome || '' %>" style="display: flex; align-items: center; gap: 1rem; text-decoration: none; color: inherit;">
+      <img src="<%= item.foto_perfil || item.foto || '/img/default-avatar.png' %>" class="userpfp">
+      <strong class="user-name"><%= item.nome_exibicao || 'Usuário' %></strong>
+      <% if (item.nome) { %>
+        <span class="user-username" style="margin-left: -.4rem;">@<%= item.nome %></span>
+      <% } %>
+    </a>
+    <p class="post-type">Resenha</p>
+  </div>
+  
+  <div class="resenha-post-top">
+    <div class="photo">
+      <% if (item.capa_livro) { %>
+        <img src="<%= item.capa_livro %>" style="width: 100%; height: 100%; object-fit: cover;">
+      <% } %>
+    </div>
+
+    <div class="post-content">
+      <% if (item.titulo_livro) { %>
+        <h1 class="post-book-title"><%= item.titulo_livro %></h1>
+      <% } %>
+
+      <% if (item.avaliacao !== undefined && item.avaliacao !== null) { %>
+        <strong class="post-rating"><%= item.avaliacao %> estrelas</strong>
+      <% } else { %>
+        <strong class="post-rating">?</strong>
+      <% } %>
+
+      <% if (item.titulo) { %>
+        <h3 class="post-title"><%= item.titulo %></h3>
+      <% } %>
+
+      <% if (item.conteudo) { %>
+        <p class="post-text"><%= item.conteudo %></p>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="resenha-post-bottom">
+    <div class="post-bottom-left">
+      <p><%= item.curtidas !== undefined ? item.curtidas : 0 %> curtidas</p>
+      <p><%= item.comentarios !== undefined ? item.comentarios : 0 %> comentários</p>
+    </div>
+    
+    <div class="post-bottom-right">
+      <p>opções</p>
+    </div>
+  </div>
+</div>

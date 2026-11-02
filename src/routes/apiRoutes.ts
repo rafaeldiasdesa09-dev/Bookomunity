@@ -12,7 +12,6 @@ import * as comentarios from "../controllers/relacional/postagem/commentControll
 import * as likes from "../controllers/relacional/postagem/likeController";
 import * as amizades from "../controllers/relacional/user/friendsController";
 import * as mensagens from "../controllers/relacional/user/messageController";
-import * as search from "../controllers/searchController"
 
 const API = Router();
 
@@ -22,11 +21,13 @@ API.get("/usuarios/:id", users.buscarUsuarioPorId);
 API.put("/usuarios/bio", users.atualizarBio)
 
 // --- livross ---
+API.get('/livros/buscar', livros.buscarLivrosParaCriarPost)
 API.get("/livros", livros.listarLivros);
 API.get("/livros/:id", livros.buscarLivroPorId);
 API.post("/livros", livros.criarLivro);
 API.put("/livros/:id", livros.atualizarLivro);
 API.delete("/livros/:id", livros.deletarLivro);
+
 
 // --- Clubes ---
 API.get("/clubes", clubes.listarClubes);

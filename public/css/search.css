@@ -322,6 +322,10 @@ main {
     margin-bottom: 1rem;
 }
 
+.post-rating {
+    margin-left: -17.5rem;
+}
+
 .post-card-area {
     gap: 1rem;
 }
