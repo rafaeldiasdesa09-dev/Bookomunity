@@ -51,21 +51,31 @@
             alt="Explorar">
         </button>
 
-        <button type="button" data-url="create-post" class="header-btn header-link">
+        <% if (nome === 'bibliotecario') { %>
+        <button type="button" data-url="create-book" class="header-btn header-link">
             <img 
             class="header-btn-img" 
             src="/img/icon/create.svg"
             alt="Criar">
         </button>
+        <% } else { %>
+            <button type="button" data-url="create-post" class="header-btn header-link">
+                <img 
+                class="header-btn-img" 
+                src="/img/icon/create.svg"
+                alt="Criar">
+            </button>
+        <% } %>
         
         <% if (nome !== undefined && nome !== null) { %>
+        <% if (nome !== 'bibliotecario') { %>
         <button type="button" data-url="friends" class="header-btn header-link">
             <img 
             class="header-btn-img" 
             src="/img/icon/friends.svg"
             alt="Amizades">
         </button>
-        
+        <% } %>
             <button type="button" data-url="user" data-id="<%= userName %>" class="header-btn header-link">
                 <img 
                 class="header-btn-img" 
