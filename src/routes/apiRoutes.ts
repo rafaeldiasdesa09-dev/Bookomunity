@@ -70,8 +70,9 @@ API.post("/postagens/:id/curtidas", likes.curtirPostagem);
 API.delete("/postagens/:id/curtidas/:usuarioId", likes.descurtirPostagem);
 
 // --- Amizades ---
-API.get("/usuarios/:id/amigos", userAuth, amizades.listarAmigos);
-API.get("/usuarios/:id/amigos/pedidos", userAuth, amizades.listarPedidosAmizadePendentes);
+API.get("/usuarios/amigos", userAuth, amizades.listarAmigos);
+API.get("/usuarios/amigos/pedidos", userAuth, amizades.listarPedidosAmizadePendentes);
+
 API.post("/amizades", userAuth, amizades.enviarPedidoAmizade);
 API.put("/amizades/:id", userAuth, amizades.aceitarPedidoAmizade);
 API.delete("/amizades/:id", userAuth, amizades.removerAmizade);
