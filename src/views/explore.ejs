@@ -94,6 +94,49 @@
     </div>
 </section>
 
+<!-- Recomendação de livros -->
+<section class="row">
+    <h2 class="row-title">CLUBES PARA VOCÊ</h2>
+
+    <div class="row-posts">
+
+        <% if (typeof clubes !== 'undefined' && clubes.length > 0) { %>
+
+            <% clubes.forEach(clube => { %>
+
+                <article class="post-card">
+
+                    <% if (livro.capa) { %>
+                        <img
+                            src="<%= clube.capa %>"
+                            alt="Capa de <%= clube.titulo %>"
+                        >
+                    <% } %>
+
+                    <h3><%= clube.titulo %></h3>
+
+                    <p>
+                        Autor: <%= clube.autor || 'Não informado' %>
+                    </p>
+
+                    <% if (clube.descricao) { %>
+                        <p><%= clube.descricao %></p>
+                    <% } %>
+
+                </article>
+
+            <% }); %>
+
+        <% } else { %>
+
+            <p class="empty-message">
+                Nenhum clube registrado até agora
+            </p>
+
+        <% } %>
+
+    </div>
+</section>
 
     </main>
     <script src="/js/explore.js"></script>
