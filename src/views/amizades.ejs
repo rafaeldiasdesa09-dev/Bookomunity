@@ -53,22 +53,24 @@
 
         </section>
 
-        <!-- Navegação das abas -->
         <nav class="tabs-nav">
 
             <button class="tab-btn active" data-tab="amigos">
                 Meus amigos
             </button>
-
+        
             <button class="tab-btn" data-tab="solicitacoes">
                 Solicitações
             </button>
-
+        
             <button class="tab-btn" data-tab="encontrar">
                 Encontrar leitores
             </button>
-
-        </nav>
+        
+            <button class="tab-btn" data-tab="clubes">
+                Encontrar clubes
+            </button>
+               </nav>
 
         <!-- Meus amigos -->
         <section class="content-section active" id="amigos">
@@ -142,6 +144,89 @@
             </div>
 
         </section>
+
+<!-- Encontrar clubes -->
+<section class="content-section" id="clubes">
+
+    <div class="section-header">
+        <div>
+            <h2>Clubes de leitura</h2>
+            <p>Encontre comunidades de leitores ou crie seu próprio clube.</p>
+        </div>
+
+        <button class="primary-btn" id="btnAbrirFormulario">
+            + Criar clube
+        </button>
+    </div>
+
+    <!-- Formulário de criação -->
+    <div id="formularioClube" style="display: none;">
+
+        <h3>Criar novo clube</h3>
+
+        <form id="formCriarClube">
+
+            <div class="campo">
+                <label for="nomeClube">Nome do clube</label>
+
+                <input
+                    type="text"
+                    id="nomeClube"
+                    name="nome"
+                    placeholder="Nome do seu clube"
+                    maxlength="100"
+                    required
+                >
+            </div>
+
+            <div class="campo">
+                <label for="descricaoClube">Descrição</label>
+
+                <textarea
+                    id="descricaoClube"
+                    name="descricao"
+                    placeholder="Conte um pouco sobre seu clube..."
+                ></textarea>
+            </div>
+
+            <div class="campo">
+                <label for="imagemClube">Imagem do clube (URL)</label>
+
+                <input
+                    type="url"
+                    id="imagemClube"
+                    name="imagem"
+                    placeholder="https://exemplo.com/imagem.jpg"
+                >
+            </div>
+
+            <button type="submit" class="primary-btn">
+                Criar clube
+            </button>
+
+            <button type="button" id="btnCancelarClube">
+                Cancelar
+            </button>
+
+            <p id="mensagemClube"></p>
+
+        </form>
+
+    </div>
+
+    <!-- Lista de clubes -->
+    <div id="listaClubes">
+
+        <div class="empty-state">
+            <div class="empty-icon">♧</div>
+
+            <h3>Carregando clubes...</h3>
+
+        </div>
+
+    </div>
+
+</section>
 
     </main>
 
