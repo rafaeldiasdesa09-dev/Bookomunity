@@ -84,7 +84,8 @@ export const buscarLivrosParaCriarPost = async (req: Request, res: Response): Pr
 // Criar novo livro (POST)
 export const criarLivro = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { titulo, autor, isbn, descricao, genero, ano_publicacao, capa } = req.body;
+        const { titulo, autor, isbn, descricao, genero, ano_publicacao, } = req.body;
+        const capa = req.body.foto
 
         // Validação básica dos campos obrigatórios
         if (!titulo || !autor) {

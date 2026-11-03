@@ -12,6 +12,7 @@ import * as comentarios from "../controllers/relacional/postagem/commentControll
 import * as likes from "../controllers/relacional/postagem/likeController";
 import * as amizades from "../controllers/relacional/user/friendsController";
 import * as mensagens from "../controllers/relacional/user/messageController";
+import { upload } from "../middlewares/upload";
 
 const API = Router();
 
@@ -24,7 +25,7 @@ API.put("/usuarios/bio", users.atualizarBio)
 API.get('/livros/buscar', livros.buscarLivrosParaCriarPost)
 API.get("/livros", livros.listarLivros);
 API.get("/livros/:id", livros.buscarLivroPorId);
-API.post("/livros", livros.criarLivro);
+API.post("/livros", upload.single('foto'), livros.criarLivro);
 API.put("/livros/:id", livros.atualizarLivro);
 API.delete("/livros/:id", livros.deletarLivro);
 
@@ -69,8 +70,9 @@ API.post("/postagens/:id/curtidas", likes.curtirPostagem);
 API.delete("/postagens/:id/curtidas/:usuarioId", likes.descurtirPostagem);
 
 // --- Amizades ---
-API.get("/usuarios/:id/amigos", userAuth, amizades.listarAmigos);
-API.get("/usuarios/:id/amigos/pedidos", userAuth, amizades.listarPedidosAmizadePendentes);
+API.get("/usuarios/amigos", userAuth, amizades.listarAmigos);
+API.get("/usuarios/amigos/pedidos", userAuth, amizades.listarPedidosAmizadePendentes);
+
 API.post("/amizades", userAuth, amizades.enviarPedidoAmizade);
 API.put("/amizades/:id", userAuth, amizades.aceitarPedidoAmizade);
 API.delete("/amizades/:id", userAuth, amizades.removerAmizade);

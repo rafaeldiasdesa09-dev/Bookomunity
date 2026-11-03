@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar postagem</title>
+  <link href="/css/createbook.css" rel="stylesheet">
+  <link href="/css/partial/posts.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/partial/header.css">
+</head>
+<body>
+    <%- include('partial/header') %>
+    <script src="/js/header.js"></script>
+    <%- include('partial/dottedBg') %>
+
+  <div class="main">
+    <div class="sidebar">
+
+        <form action="/api/livros" method="post" enctype="multipart/form-data">
+            <input style="display: none;" name="tipo" value="DISCUSSAO">
+        
+            <label for="titulo">Título do livro *</label>
+            <input name="titulo" type="text" placeholder="Título do livro" maxlength="100" required>
+        
+            <label for="autor">Autor do livro *</label>
+            <input name="autor" type="text" placeholder="Autor do livro" maxlength="100" required>
+        
+            <label for="isbn">ISBN *</label>
+            <input name="isbn" type="text" placeholder="ISBN" maxlength="17">
+
+            <label for="ano_publicacao">Ano de publicação *</label>
+            <input name="ano_publicacao" type="number" placeholder="Ano de publicação" maxlength="2026">            
+
+            <label for="descricao">Sinopse *</label>
+            <textarea name="descricao" placeholder="Sinopse do livro" maxlength="1000"></textarea>
+        
+            <label for="select-genero">Gênero literário *</label>
+            <button type="button" id="btn-selecionar-genero" class="common-button">Selecionar Gênero</button>
+        
+            <input type="hidden" name="genero" id="input-genero-hidden">
+        
+            <div id="modal-busca-genero" class="modal-busca-livro" style="display: none;">
+                <div class="busca-container">
+                    <input type="text" id="input-pesquisa-genero" placeholder="Pesquisar gênero..." autocomplete="off">
+                    
+                    <div class="resultados-lista" id="lista-generos">
+                        <!-- Ficção e Romances -->
+                        <div class="item-resultado-livro" data-genero="FICCAO" data-label="Ficção Geral">Ficção Geral</div>
+                        <div class="item-resultado-livro" data-genero="ROMANCE" data-label="Romance">Romance</div>
+                        <div class="item-resultado-livro" data-genero="ROMANCE_CONTEMPORANEO" data-label="Romance Contemporâneo">Romance Contemporâneo</div>
+                        <div class="item-resultado-livro" data-genero="COMEDIA_ROMANTICA" data-label="Comédia Romântica (Chick-lit)">Comédia Romântica</div>
+                        <div class="item-resultado-livro" data-genero="DRAMA" data-label="Drama">Drama</div>
+                        <div class="item-resultado-livro" data-genero="CLASSICOS" data-label="Clássicos da Literatura">Clássicos da Literatura</div>
+                    
+                        <!-- Fantasia, Ficção Científica e Terror -->
+                        <div class="item-resultado-livro" data-genero="FANTASIA" data-label="Fantasia">Fantasia</div>
+                        <div class="item-resultado-livro" data-genero="ALTA_FANTASIA" data-label="Alta Fantasia (Epic Fantasy)">Alta Fantasia</div>
+                        <div class="item-resultado-livro" data-genero="FANTASIA_URBANA" data-label="Fantasia Urbana">Fantasia Urbana</div>
+                        <div class="item-resultado-livro" data-genero="FICCAO_CIENTIFICA" data-label="Ficção Científica (Sci-Fi)">Ficção Científica (Sci-Fi)</div>
+                        <div class="item-resultado-livro" data-genero="DISTOPIA" data-label="Distopia">Distopia</div>
+                        <div class="item-resultado-livro" data-genero="TERROR" data-label="Terror / Horror">Terror / Horror</div>
+                        <div class="item-resultado-livro" data-genero="SUSPENSE" data-label="Suspense / Thriller">Suspense / Thriller</div>
+                        <div class="item-resultado-livro" data-genero="MISTERIO" data-label="Mistério / Investigação">Mistério / Investigação</div>
+                    
+                        <!-- Não-Ficção, Biografias e História -->
+                        <div class="item-resultado-livro" data-genero="NAO_FICCAO" data-label="Não-Ficção">Não-Ficção</div>
+                        <div class="item-resultado-livro" data-genero="BIOGRAFIA" data-label="Biografia / Autobiografia">Biografia / Autobiografia</div>
+                        <div class="item-resultado-livro" data-genero="MEMORIAS" data-label="Memórias">Memórias</div>
+                        <div class="item-resultado-livro" data-genero="HISTORIA" data-label="História / Geopolítica">História / Geopolítica</div>
+                        <div class="item-resultado-livro" data-genero="FILOSOFIA" data-label="Filosofia">Filosofia</div>
+                        <div class="item-resultado-livro" data-genero="PSICOLOGIA" data-label="Psicologia / Psicanálise">Psicologia / Psicanálise</div>
+                        <div class="item-resultado-livro" data-genero="AUTAJUDA" data-label="Desenvolvimento Pessoal / Autoajuda">Desenvolvimento Pessoal / Autoajuda</div>
+                    
+                        <!-- Ciência, Tecnologia e Negócios -->
+                        <div class="item-resultado-livro" data-genero="CIENCIA" data-label="Ciência & Tecnologia">Ciência & Tecnologia</div>
+                        <div class="item-resultado-livro" data-genero="PROGRAMACAO" data-label="Programação & Computação">Programação & Computação</div>
+                        <div class="item-resultado-livro" data-genero="NEGOCIOS" data-label="Negócios, Empreendedorismo & Economia">Negócios, Empreendedorismo & Economia</div>
+                        <div class="item-resultado-livro" data-genero="MARKETING" data-label="Marketing & Vendas">Marketing & Vendas</div>
+                    
+                        <!-- Outros Estilos e Formatos -->
+                        <div class="item-resultado-livro" data-genero="POESIA" data-label="Poesia / Versos">Poesia / Versos</div>
+                        <div class="item-resultado-livro" data-genero="CONTOS" data-label="Contos / Crônicas">Contos / Crônicas</div>
+                        <div class="item-resultado-livro" data-genero="HQ_MANGA" data-label="HQ, Mangá & Quadrinhos">HQ, Mangá & Quadrinhos</div>
+                        <div class="item-resultado-livro" data-genero="INFANTIL" data-label="Literatura Infantil & Infantojuvenil">Literatura Infantil & Infantojuvenil</div>
+                        <div class="item-resultado-livro" data-genero="ESPIRITUALIDADE" data-label="Espiritualidade / Religião">Espiritualidade / Religião</div>
+                        <div class="item-resultado-livro" data-genero="CULINARIA" data-label="Culinária & Gastronomia">Culinária & Gastronomia</div>
+                        <div class="item-resultado-livro" data-genero="ARTE" data-label="Arte, Fotografia & Arquitetura">Arte, Fotografia & Arquitetura</div>
+                        <div class="item-resultado-livro" data-genero="VIAGEM" data-label="Guias de Viagem & Aventura">Guias de Viagem & Aventura</div>
+                    </div>
+                    
+                    <button type="button" id="btn-fechar-genero" class="common-button" style="margin-top: 10px; width: 100%;">Fechar</button>
+                </div>
+            </div>
+        
+            <div class="file-input-div">
+                <label style="width: 100%; height: 2rem; text-align: center; line-height: 2rem; margin-bottom: 0; background-color: rgba(255,255,255,0); cursor: pointer;" for="foto">Adicione uma capa aqui</label>
+                <input style="-webkit-appearance: none; appearance: none;" type="file" id="foto" name="foto" accept="image/*">
+            </div>
+            
+            <button type="submit" class="common-button">Cadastrar Livro</button>
+        </form>
+    </div>
+
+    <main>
+    </main>
+  </div>
+  <script src="/js/createBook.js"></script>
+</body>
+</html>

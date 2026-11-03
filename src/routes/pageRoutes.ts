@@ -14,8 +14,10 @@ PAGE.get("/register", isAuth, page.registerPage);
 // --- Navegação / Outras Páginas ---
 PAGE.get("/explore", page.explorePage);
 PAGE.get("/create-post", userAuth, page.createPostPage);
+PAGE.get("/create-book", userAuth, page.createBookPage);
 PAGE.get("/friends", userAuth, page.friendsPage);
 PAGE.get("/user/:username", page.profilePage);
+PAGE.get("/67", page.pageNotFound);
 PAGE.get("/search", search.pesquisarDB);
 
 export default PAGE;
