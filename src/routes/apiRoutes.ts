@@ -1,4 +1,5 @@
-import { Router }  from "express";
+
+import { Router } from "express";
 import { isAuth, userAuth } from "../middlewares/auth";
 
 // Controllers
