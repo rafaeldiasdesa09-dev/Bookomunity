@@ -26,7 +26,7 @@ API.put("/usuarios/bio", users.atualizarBio)
 API.get('/livros/buscar', livros.buscarLivrosParaCriarPost)
 API.get("/livros", livros.listarLivros);
 API.get("/livros/:id", livros.buscarLivroPorId);
-API.post("/livros", upload.single('foto'), livros.criarLivro);
+API.post("/livros", upload.single("foto"), livros.criarLivro);
 API.put("/livros/:id", livros.atualizarLivro);
 API.delete("/livros/:id", livros.deletarLivro);
 

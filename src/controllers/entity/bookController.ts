@@ -84,26 +84,25 @@ export const buscarLivrosParaCriarPost = async (req: Request, res: Response): Pr
 // Criar novo livro (POST)
 export const criarLivro = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { titulo, autor, isbn, descricao, genero, ano_publicacao, } = req.body;
-        const capa = req.body.foto
-
-        // Validação básica dos campos obrigatórios
-        if (!titulo || !autor) {
-            res.status(400).json({ erro: "Os campos 'titulo' e 'autor' são obrigatórios." });
-            return;
-        }
+        const { titulo, autor, isbn, descricao, genero, ano_publicacao } = req.body;
+        const foto = req.file ? `/uploads/${req.file.filename}` : null;
 
         const [resultado] = await pool.query<ResultSetHeader>(
             `INSERT INTO livros (titulo, autor, isbn, descricao, genero, ano_publicacao, capa) 
              VALUES (?, ?, ?, ?, ?, ?, ?)`,
-            [titulo, autor, isbn || null, descricao || null, genero || null, ano_publicacao || null, capa || null]
+            [titulo, autor, isbn, descricao, genero, ano_publicacao, foto]
         );
 
         res.status(201).json({
             mensagem: "Livro cadastrado com sucesso!",
             id: resultado.insertId,
             titulo,
-            autor
+            autor,
+            isbn,
+            descricao,
+            genero,
+            ano_publicacao,
+            foto
         });
     } catch (erro) {
         console.error("Erro ao criar livro:", erro);
