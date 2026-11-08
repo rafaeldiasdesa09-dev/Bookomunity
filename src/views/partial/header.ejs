@@ -76,7 +76,7 @@
             alt="Amizades">
         </button>
         <% } %>
-            <button type="button" data-url="user" data-id="<%= userName %>" class="header-btn header-link">
+            <button type="button" data-url="user" data-id="<%= sessionUserName %>" class="header-btn header-link">
                 <img 
                 class="header-btn-img" 
                 src="<%= typeof foto !== 'undefined' && foto ? foto : '/img/icon/default-avatar.svg' %>"

@@ -83,6 +83,32 @@ export const buscarClubePorId = async (req: Request, res: Response): Promise<voi
     }
 };
 
+// Listar apenas os clubes onde o usuário logado participa
+export const listarClubesOndeParticipo = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const usuarioId = Number(req.session.userId);
+
+        if (!Number.isInteger(usuarioId) || usuarioId <= 0) {
+            res.status(401).json({ erro: "Usuário não autenticado." });
+            return;
+        }
+
+        const [clubes] = await pool.query(
+            `SELECT c.*, u.nome AS nome_criador
+             FROM clubes c
+             INNER JOIN membros_clube m ON c.id = m.clube_id
+             LEFT JOIN usuarios u ON c.criador_id = u.id
+             WHERE m.usuario_id = ?`,
+            [usuarioId]
+        );
+
+        res.status(200).json(clubes);
+    } catch (erro) {
+        console.error("Erro ao listar os clubes do usuário:", erro);
+        res.status(500).json({ erro: "Erro ao buscar seus clubes." });
+    }
+};
+
 
 
 // -------------------- POST -------------------- //
@@ -90,15 +116,17 @@ export const buscarClubePorId = async (req: Request, res: Response): Promise<voi
 // Criar novo clube (POST)
 export const criarClube = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { nome, descricao, imagem, criador_id } = req.body;
+        const criadorId = Number(req.session.userId);
+        const { nome, descricao } = req.body;
+        const foto = req.file ? `/uploads/${req.file.filename}` : null;
 
-        if (!nome || !criador_id) {
-            res.status(400).json({ erro: "Os campos 'nome' e 'criador_id' são obrigatórios." });
+        if (!Number.isInteger(criadorId) || criadorId <= 0) {
+            res.status(401).json({ erro: "Usuário não autenticado." });
             return;
         }
 
-        if (!Number.isInteger(criador_id) || criador_id <= 0) {
-            res.status(400).json({ erro: "ID do criador inválido." });
+        if (!nome) {
+            res.status(400).json({ erro: "O campo 'nome' é obrigatório." });
             return;
         }
 
@@ -107,14 +135,19 @@ export const criarClube = async (req: Request, res: Response): Promise<void> => 
         const [resultado] = await pool.query<ResultSetHeader>(
             `INSERT INTO clubes (nome, descricao, imagem, criador_id, data_criacao) 
              VALUES (?, ?, ?, ?, ?)`,
-            [nome, descricao || null, imagem || null, criador_id, data_criacao]
+            [nome, descricao, foto, criadorId, data_criacao]
         );
+
+        await pool.query(
+            `INSERT INTO membros_clube (clube_id, usuario_id, papel) VALUES (?, ?, 'admin')`,
+            [resultado.insertId, criadorId]
+        ).catch(() => {});
 
         res.status(201).json({
             mensagem: "Clube cadastrado com sucesso!",
             id: resultado.insertId,
             nome,
-            criador_id,
+            criador_id: criadorId,
             data_criacao
         });
     } catch (erro) {
@@ -193,3 +226,4 @@ export const deletarClube = async (req: Request, res: Response): Promise<void> =
         res.status(500).json({ erro: "Erro ao deletar clube." });
     }
 };
+

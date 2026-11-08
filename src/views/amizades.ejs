@@ -1,234 +1,143 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Bookomunity - Amizades</title>
-
     <link rel="stylesheet" href="/css/amizades.css">
     <link rel="stylesheet" href="/css/partial/header.css">
 </head>
 
 <body>
     <%- include('partial/header') %>
-    <script src="/js/amizades.js"></script>
     <%- include('partial/dottedBg') %>
 
     <main class="main-container">
 
         <!-- Apresentação -->
         <section class="welcome-section">
-
             <div>
                 <span class="section-tag">COMUNIDADE BOOKOMUNITY</span>
-
-                <h1>Suas amizades</h1>
-
+                <h1>Suas amizades e clubes</h1>
                 <p>
-                    Conheça novos leitores, compartilhe experiências
-                    e encontre pessoas que gostam dos mesmos livros que você.
+                    Conecte-se com outros leitores, gerencie suas solicitações
+                    e acompanhe os clubes de leitura dos quais você faz parte.
                 </p>
             </div>
-
             <div class="welcome-icon">
                 <span>♧</span>
             </div>
-
         </section>
 
-        <!-- Pesquisa -->
-        <section class="search-section">
-
-            <div class="search-box">
-                <span class="search-icon">⌕</span>
-
-                <input
-                    type="text"
-                    id="pesquisaUsuario"
-                    placeholder="Pesquise pelo nome de um leitor..."
-                >
-            </div>
-
-        </section>
-
+        <!-- Navegação por Abas -->
         <nav class="tabs-nav">
-
             <button class="tab-btn active" data-tab="amigos">
                 Meus amigos
             </button>
-        
             <button class="tab-btn" data-tab="solicitacoes">
                 Solicitações
             </button>
-        
-            <button class="tab-btn" data-tab="encontrar">
-                Encontrar leitores
-            </button>
-        
             <button class="tab-btn" data-tab="clubes">
-                Encontrar clubes
+                Meus clubes
             </button>
-               </nav>
+        </nav>
 
         <!-- Meus amigos -->
         <section class="content-section active" id="amigos">
-
             <div class="section-header">
                 <div>
                     <h2>Meus amigos</h2>
                     <p>Leitores com quem você já está conectado.</p>
                 </div>
             </div>
-
-            <div class="empty-state" id="listaAmigos">
-                <div class="empty-icon">♧</div>
-
-                <h3>Suas amizades começam aqui!</h3>
-
-                <p>
-                    Você ainda não possui amigos.
-                    Explore a comunidade e conheça novos leitores.
-                </p>
-
-                <button class="primary-btn" data-go-tab="encontrar">
-                    Encontrar leitores
-                </button>
+            <div class="cards-container" id="listaAmigos">
+                <div class="empty-state">
+                    <div class="empty-icon">♧</div>
+                    <h3>Carregando amigos...</h3>
+                </div>
             </div>
-
         </section>
 
         <!-- Solicitações -->
         <section class="content-section" id="solicitacoes">
-
             <div class="section-header">
                 <div>
                     <h2>Solicitações de amizade</h2>
                     <p>Veja quem deseja se conectar com você.</p>
                 </div>
             </div>
-
-            <div class="empty-state" id="listaSolicitacoes">
-                <div class="empty-icon">✉</div>
-
-                <h3>Nenhuma solicitação por enquanto</h3>
-
-                <p>
-                    Quando alguém enviar um pedido de amizade,
-                    ele aparecerá nesta seção.
-                </p>
-            </div>
-
-        </section>
-
-        <!-- Encontrar leitores -->
-        <section class="content-section" id="encontrar">
-
-            <div class="section-header">
-                <div>
-                    <h2>Encontrar leitores</h2>
-                    <p>Descubra outros membros da comunidade.</p>
+            <div class="cards-container" id="listaSolicitacoes">
+                <div class="empty-state">
+                    <div class="empty-icon">✉</div>
+                    <h3>Carregando solicitações...</h3>
                 </div>
             </div>
-
-            <div class="empty-state" id="resultadosUsuarios">
-                <div class="empty-icon">⌕</div>
-
-                <h3>Conheça novos leitores</h3>
-
-                <p>
-                    Utilize a barra de pesquisa acima para
-                    encontrar pessoas na comunidade.
-                </p>
-            </div>
-
         </section>
 
-<!-- Encontrar clubes -->
-<section class="content-section" id="clubes">
-
-    <div class="section-header">
-        <div>
-            <h2>Clubes de leitura</h2>
-            <p>Encontre comunidades de leitores ou crie seu próprio clube.</p>
-        </div>
-
-        <button class="primary-btn" id="btnAbrirFormulario">
-            + Criar clube
-        </button>
-    </div>
-
-    <!-- Formulário de criação -->
-    <div id="formularioClube" style="display: none;">
-
-        <h3>Criar novo clube</h3>
-
-        <form id="formCriarClube">
-
-            <div class="campo">
-                <label for="nomeClube">Nome do clube</label>
-
-                <input
-                    type="text"
-                    id="nomeClube"
-                    name="nome"
-                    placeholder="Nome do seu clube"
-                    maxlength="100"
-                    required
-                >
+        <!-- Meus Clubes -->
+        <section class="content-section" id="clubes">
+            <div class="section-header">
+                <div>
+                    <h2>Meus clubes de leitura</h2>
+                    <p>Veja os clubes dos quais você participa ou crie um novo grupo.</p>
+                </div>
+                <button style="margin-top: 1rem;" class="primary-btn" id="btnAbrirFormulario">
+                    Criar clube
+                </button>
             </div>
 
-            <div class="campo">
-                <label for="descricaoClube">Descrição</label>
+            <!-- Formulário de criação -->
+            <div id="formularioClube" style="display: none;">
+                <form class="formCriarClube" id="formCriarClube">
+                    <div class="campo">
+                        <label for="nomeClube">Nome do clube</label>
+                        <input
+                            type="text"
+                            id="nomeClube"
+                            name="nome"
+                            placeholder="Nome do seu clube"
+                            maxlength="100"
+                            required>
 
-                <textarea
-                    id="descricaoClube"
-                    name="descricao"
-                    placeholder="Conte um pouco sobre seu clube..."
-                ></textarea>
+                        <label for="descricaoClube">Descrição</label>
+                        <textarea
+                            id="descricaoClube"
+                            name="descricao"
+                            placeholder="Conte um pouco sobre seu clube...">
+                        </textarea>
+
+                        <label class="imagemClube primary-btn" for="fotoClube">Imagem do clube</label>
+                        <input
+                            type="file"
+                            id="fotoClube"
+                            name="foto"
+                            accept="image/*"
+                            style="display: none;"
+                        >
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="primary-btn">Criar clube</button>
+                        <button type="button" id="btnCancelarClube" class="reject-btn primary-btn">Cancelar</button>
+                    </div>
+
+                    <p id="mensagemClube"></p>
+                </form>
             </div>
 
-            <div class="campo">
-                <label for="imagemClube">Imagem do clube (URL)</label>
-
-                <input
-                    type="url"
-                    id="imagemClube"
-                    name="imagem"
-                    placeholder="https://exemplo.com/imagem.jpg"
-                >
+            <!-- Lista de clubes -->
+            <div class="cards-container" id="listaMeusClubes">
+                <div class="empty-state">
+                    <div class="empty-icon">📚</div>
+                    <h3>Carregando seus clubes...</h3>
+                </div>
             </div>
-
-            <button type="submit" class="primary-btn">
-                Criar clube
-            </button>
-
-            <button type="button" id="btnCancelarClube">
-                Cancelar
-            </button>
-
-            <p id="mensagemClube"></p>
-
-        </form>
-
-    </div>
-
-    <!-- Lista de clubes -->
-    <div id="listaClubes">
-
-        <div class="empty-state">
-            <div class="empty-icon">♧</div>
-
-            <h3>Carregando clubes...</h3>
-
-        </div>
-
-    </div>
-
-</section>
+        </section>
 
     </main>
 
+    <!-- Script do Frontend -->
+    <script src="/js/amizades.js"></script>
+    <script src="/js/header.js"></script>
 </body>
 </html>

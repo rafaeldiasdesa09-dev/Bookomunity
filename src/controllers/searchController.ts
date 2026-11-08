@@ -10,6 +10,7 @@ export const pesquisarDB = async (req: Request, res: Response): Promise<void> =>
     const foto = req.session.photo;
     const userId = req.session.userId;
     const userName = req.session.userName
+    const sessionUserName = req.session.userName
 
     try {
         let pesquisa: any;
@@ -87,7 +88,8 @@ export const pesquisarDB = async (req: Request, res: Response): Promise<void> =>
             userId, 
             isOwner: undefined, 
             page: req.path,
-            userName
+            userName,
+            sessionUserName
         });
 
     } catch(e) {

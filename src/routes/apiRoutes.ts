@@ -12,7 +12,6 @@ import * as recomendacoes from "../controllers/relacional/postagem/recomendation
 import * as comentarios from "../controllers/relacional/postagem/commentController";
 import * as likes from "../controllers/relacional/postagem/likeController";
 import * as amizades from "../controllers/relacional/user/friendsController";
-import * as mensagens from "../controllers/relacional/user/messageController";
 import { upload } from "../middlewares/upload";
 
 const API = Router();
@@ -33,8 +32,9 @@ API.delete("/livros/:id", livros.deletarLivro);
 
 // --- Clubes ---
 API.get("/clubes", clubes.listarClubes);
+API.get("/clubes/meus", clubes.listarClubesOndeParticipo);
 API.get("/clubes/:id", clubes.buscarClubePorId);
-API.post("/clubes", clubes.criarClube);
+API.post("/clubes", upload.single("foto"), clubes.criarClube);
 API.put("/clubes/:id", clubes.atualizarClube);
 API.delete("/clubes/:id", clubes.deletarClube);
 
@@ -71,17 +71,12 @@ API.post("/postagens/:id/curtidas", likes.curtirPostagem);
 API.delete("/postagens/:id/curtidas/:usuarioId", likes.descurtirPostagem);
 
 // --- Amizades ---
-API.get("/usuarios/amigos", userAuth, amizades.listarAmigos);
+API.get("/amigos", userAuth, amizades.listarAmigos);
 API.get("/usuarios/amigos/pedidos", userAuth, amizades.listarPedidosAmizadePendentes);
+API.get("/usuarios/pesquisar", userAuth, amizades.listarPedidosAmizadePendentes);
 
 API.post("/amizades", userAuth, amizades.enviarPedidoAmizade);
 API.put("/amizades/:id", userAuth, amizades.aceitarPedidoAmizade);
 API.delete("/amizades/:id", userAuth, amizades.removerAmizade);
-
-// --- Mensagens Diretas ---
-API.get("/mensagens/:usuario1/:usuario2", mensagens.listarMensagensEntreUsuarios);
-API.post("/mensagens", mensagens.enviarMensagem);
-API.put("/mensagens/:id/lida", mensagens.marcarMensagemComoLida);
-API.delete("/mensagens/:id", mensagens.deletarMensagem);
 
 export default API;

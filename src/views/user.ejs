@@ -40,17 +40,25 @@
                         <h1 style="margin-bottom: 1rem;">
                             <%= typeof nomeExibicao !== 'undefined' && nomeExibicao ? nomeExibicao : 'Leitor do Bookomunity' %>
                         </h1>
-                        <p class="username" style="margin-bottom: .8rem; margin-left: 0rem;">@<%= nomeUsuario %></p>
-                        <% if (!isOwner && nome) { %>
-                            <form id="form-add-friend" action="/api/amizades" method="post">
-                                <input style="display: none;" name="usuario_id" type="number" value="<%= sessionId %>">
-                                <input style="display: none;" name="amigo_id" type="number" value="<%= id %>">
-                                <button class="add-btn" id="submit-add-friend" type="submit">
-                                    <img style="max-width: 1rem; max-height: 1rem;" src="/img/icon/add.svg">
-                                </button>
-                            </form>
-                            <p id="request-sent" style="color: rgb(93, 197, 140); margin-bottom: 1rem; display: none;">Pedido enviado com sucesso!</p>
-                        <% } %>
+                        <p class="username" style="margin-bottom: .8rem; margin-right: 1rem;">@<%= nomeUsuario %></p>
+                            <% if (!isOwner && nome) { %>
+                                <div class="friend-action-container" style="margin-bottom: 1rem;">
+                                    <% if (statusAmizade === 'aceito') { %>
+                                        <span style="color: rgb(93, 197, 140); font-weight: 500;">✓ Vocês já são amigos</span>
+                                    <% } else if (statusAmizade === 'pendente') { %>
+                                        <span style="color: #d97706; font-weight: 500;">Solicitação pendente</span>
+                                    <% } else { %>
+                                        <form id="form-add-friend">
+                                            <input style="display: none;" name="usuario_id" type="number" value="<%= sessionId %>">
+                                            <input style="display: none;" name="amigo_id" type="number" value="<%= id %>">
+                                            <button class="add-btn" id="submit-add-friend" type="submit" title="Adicionar amigo">
+                                                <img style="max-width: 1rem; max-height: 1rem;" src="/img/icon/add.svg" alt="Adicionar">
+                                            </button>
+                                        </form>
+                                        <p id="request-sent" style="color: rgb(93, 197, 140); margin-bottom: 1rem; display: none;">Pedido enviado com sucesso!</p>
+                                    <% } %>
+                                </div>
+                            <% } %>
                     </div>
 
 
@@ -86,12 +94,12 @@
                 </div>
 
                 <div class="stat">
-                    <strong><%= typeof amigos !== 'undefined' && Array.isArray(amigos) ? amigos.length : 0 %></strong>
+                    <strong><%= amigos %></strong>
                     <span>Amigos</span>
                 </div>
 
                 <div class="stat">
-                    <strong><%= typeof clubes !== 'undefined' && Array.isArray(clubes) ? clubes.length : 0 %></strong>
+                    <strong><%= clubes %></strong>
                     <span>Clubes</span>
                 </div>
             </div>

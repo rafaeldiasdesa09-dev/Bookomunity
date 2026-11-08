@@ -112,15 +112,3 @@ CREATE TABLE IF NOT EXISTS amizades (
     CONSTRAINT fk_amizades_amigo FOREIGN KEY (amigo_id) REFERENCES usuarios(id),
     CONSTRAINT uc_usuarios_amigos UNIQUE (usuario_id, amigo_id)
 );
-
--- 10. Tabela de mensagens diretas
-CREATE TABLE IF NOT EXISTS mensagens_diretas (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    remetente_id INT,
-    destinatario_id INT,
-    conteudo TEXT NOT NULL,
-    lida BOOLEAN DEFAULT FALSE,
-    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP(),
-    CONSTRAINT fk_mensagens_remetente FOREIGN KEY (remetente_id) REFERENCES usuarios(id),
-    CONSTRAINT fk_mensagens_destinatario FOREIGN KEY (destinatario_id) REFERENCES usuarios(id)
-);

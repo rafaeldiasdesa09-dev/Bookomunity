@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { texto: "Entre páginas, encontramos novos mundos.", autor: "Domínio Público" }
     ];
 
+    // Sorteio de Citação
     const indiceAleatorio = Math.floor(Math.random() * citacoes.length);
     const citacaoEscolhida = citacoes[indiceAleatorio];
 
@@ -40,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         elementQuote.innerHTML = `“${citacaoEscolhida.texto}” <br><small style="font-size: 0.6em; opacity: 0.85; display: block; margin-top: 6px;">— ${citacaoEscolhida.autor}</small>`;
     }
 
+    // Edição de Biografia
     const btnEditar = document.getElementById("btnEditarBio");
     const btnCancelar = document.getElementById("btnCancelarBio");
     const bioTexto = document.getElementById("bioTexto");
@@ -80,13 +82,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const resultado = await response.json();
 
-                if (response.ok && resultado.success) {
+                if (response.ok && (resultado.success || response.status === 200)) {
                     bioTexto.textContent = novaBio;
                     formBio.style.display = "none";
                     bioTexto.style.display = "block";
                     btnEditar.style.display = "inline-block";
                 } else {
-                    alert(resultado.message || 'Erro ao atualizar biografia.');
+                    alert(resultado.message || resultado.erro || 'Erro ao atualizar biografia.');
                 }
             } catch (error) {
                 console.error('Erro na requisição:', error);
@@ -95,15 +97,43 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    const enviarPedido = document.getElementById("submit-add-friend");
+    // --- Envio de Pedido de Amizade Funcional ---
     const formPedido = document.getElementById("form-add-friend");
     const pedidoEnviado = document.getElementById("request-sent");
 
-    if (enviarPedido && formPedido && pedidoEnviado) {
-        enviarPedido.addEventListener('click', (event) => {
+    if (formPedido) {
+        formPedido.addEventListener('submit', async (event) => {
             event.preventDefault();
-            formPedido.style.display = 'none';
-            pedidoEnviado.style.display = 'initial';
+
+            // Pega o input hidden do amigo_id dentro do formulário
+            const amigoIdInput = formPedido.querySelector('input[name="amigo_id"]');
+            if (!amigoIdInput) return;
+
+            const amigoId = Number(amigoIdInput.value);
+
+            try {
+                const response = await fetch('/api/amizades', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ amigo_id: amigoId })
+                });
+
+                const resultado = await response.json();
+
+                if (response.ok) {
+                    formPedido.style.display = 'none';
+                    if (pedidoEnviado) {
+                        pedidoEnviado.style.display = 'initial';
+                    }
+                } else {
+                    alert(resultado.erro || resultado.message || 'Não foi possível enviar a solicitação.');
+                }
+            } catch (error) {
+                console.error('Erro ao enviar pedido de amizade:', error);
+                alert('Erro de conexão com o servidor.');
+            }
         });
     }
 });

@@ -1,4 +1,3 @@
-
 import { Request, Response } from "express";
 import pool from "../../../config/database";
 import { ResultSetHeader } from "mysql2";
@@ -20,6 +19,7 @@ export const listarAmigos = async (req: Request, res: Response): Promise<void> =
                 a.id AS amizade_id,
                 a.data_criacao,
                 u.id AS usuario_id,
+                u.nome_usuario,
                 u.nome,
                 u.email,
                 u.foto_perfil,
@@ -42,7 +42,7 @@ export const listarAmigos = async (req: Request, res: Response): Promise<void> =
     }
 };
 
-// Listar solicitações recebidas
+// Listar solicitações recebidas (onde o usuário logado é o destinatário/amigo_id)
 export const listarPedidosAmizadePendentes = async (
     req: Request,
     res: Response
@@ -60,8 +60,10 @@ export const listarPedidosAmizadePendentes = async (
                 a.id AS amizade_id,
                 a.data_criacao,
                 u.id AS remetente_id,
+                u.nome_usuario,
                 u.nome,
-                u.foto_perfil
+                u.foto_perfil,
+                u.bio
             FROM amizades a
             INNER JOIN usuarios u ON a.usuario_id = u.id
             WHERE a.amigo_id = ?
@@ -79,10 +81,7 @@ export const listarPedidosAmizadePendentes = async (
 // -------------------- POST -------------------- //
 
 // Enviar pedido de amizade
-export const enviarPedidoAmizade = async (
-    req: Request,
-    res: Response
-): Promise<void> => {
+export const enviarPedidoAmizade = async (req: Request, res: Response): Promise<void> => {
     try {
         const usuarioId = Number(req.session.userId);
         const amigoId = Number(req.body.amigo_id);
@@ -98,45 +97,50 @@ export const enviarPedidoAmizade = async (
         }
 
         if (usuarioId === amigoId) {
-            res.status(400).json({
-                erro: "Você não pode enviar um pedido para si mesmo."
-            });
+            res.status(400).json({ erro: "Você não pode enviar um pedido para si mesmo." });
             return;
         }
 
-        const [usuario] = await pool.query<any[]>(
-            "SELECT id FROM usuarios WHERE id = ?",
-            [amigoId]
-        );
-
+        const [usuario] = await pool.query<any[]>("SELECT id FROM usuarios WHERE id = ?", [amigoId]);
         if (usuario.length === 0) {
             res.status(404).json({ erro: "Usuário não encontrado." });
             return;
         }
 
         const [existente] = await pool.query<any[]>(
-            `SELECT id, status FROM amizades
+            `SELECT id, usuario_id, amigo_id, status FROM amizades
              WHERE (usuario_id = ? AND amigo_id = ?)
              OR (usuario_id = ? AND amigo_id = ?)`,
             [usuarioId, amigoId, amigoId, usuarioId]
         );
 
         if (existente.length > 0) {
-            res.status(400).json({
-                erro: "Já existe uma solicitação ou amizade entre esses usuários."
-            });
+            const relacao = existente[0];
+
+            if (relacao.status === 'aceito') {
+                res.status(400).json({ erro: "Vocês já são amigos." });
+                return;
+            }
+
+            if (relacao.status === 'pendente' && relacao.usuario_id === amigoId) {
+                await pool.query<ResultSetHeader>(
+                    `UPDATE amizades SET status = 'aceito' WHERE id = ?`,
+                    [relacao.id]
+                );
+                res.status(200).json({ mensagem: "Solicitação aceita automaticamente! Agora vocês são amigos." });
+                return;
+            }
+
+            res.status(400).json({ erro: "Já existe uma solicitação pendente entre vocês." });
             return;
         }
 
         await pool.query<ResultSetHeader>(
-            `INSERT INTO amizades (usuario_id, amigo_id, status)
-             VALUES (?, ?, 'pendente')`,
+            `INSERT INTO amizades (usuario_id, amigo_id, status) VALUES (?, ?, 'pendente')`,
             [usuarioId, amigoId]
         );
 
-        res.status(201).json({
-            mensagem: "Solicitação de amizade enviada!"
-        });
+        res.status(201).json({ mensagem: "Solicitação de amizade enviada!" });
     } catch (erro) {
         console.error("Erro ao enviar pedido:", erro);
         res.status(500).json({ erro: "Erro ao enviar solicitação." });
@@ -175,7 +179,7 @@ export const aceitarPedidoAmizade = async (
 
         if (resultado.affectedRows === 0) {
             res.status(404).json({
-                erro: "Solicitação não encontrada."
+                erro: "Solicitação não encontrada ou você não tem permissão para aceitá-la."
             });
             return;
         }
@@ -225,7 +229,7 @@ export const removerAmizade = async (
         }
 
         res.status(200).json({
-            mensagem: "Amizade removida com sucesso!"
+            mensagem: "Operação realizada com sucesso!"
         });
     } catch (erro) {
         console.error("Erro ao remover amizade:", erro);

@@ -9,7 +9,6 @@ TRUNCATE TABLE livros;
 TRUNCATE TABLE clubes;
 TRUNCATE TABLE comentarios;
 TRUNCATE TABLE membros_clube;
-TRUNCATE TABLE mensagens_diretas;
 TRUNCATE TABLE postagens;
 TRUNCATE TABLE recomendacao_livros;
 TRUNCATE TABLE curtidas;

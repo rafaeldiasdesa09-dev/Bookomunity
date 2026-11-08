@@ -4,7 +4,6 @@ SELECT * FROM comentarios;
 SELECT * FROM curtidas;
 SELECT * FROM livros;
 SELECT * FROM membros_clube;
-SELECT * FROM mensagens_diretas;
 SELECT * FROM postagens;
 SELECT * FROM recomendacao_livros;
 SELECT * FROM usuarios;
