@@ -62,7 +62,7 @@ export const explorePage = async (
             `SELECT id, titulo, autor, descricao, capa
              FROM livros
              ORDER BY titulo ASC
-             LIMIT 20`
+             LIMIT 10`
         );
 
         let minhasPostagens = [];
@@ -181,15 +181,18 @@ export const profilePage = async (req: Request, res: Response): Promise<void> =>
         }
 
         const [postagens] = await pool.query(
-            `SELECT
-                p.*,
-                l.*
-             FROM postagens p
-             LEFT JOIN livros l ON p.livro_id = l.id
-             WHERE p.usuario_id = ?
-             ORDER BY p.data_criacao DESC`,
-            [usuarioPerfil.id]
-        );
+                    `SELECT 
+                        p.*,
+                        l.id AS livro_id_real,
+                        l.titulo AS titulo_livro,
+                        l.autor AS autor_livro,
+                        l.capa AS capa_livro
+                    FROM postagens p
+                    LEFT JOIN livros l ON p.livro_id = l.id
+                    WHERE p.usuario_id = ?
+                    ORDER BY p.data_criacao DESC`,
+                    [usuarioPerfil.id]
+                );
 
         const [clubes]: any = await pool.query(
             `SELECT COUNT(usuario_id) AS total from membros_clube WHERE usuario_id = ?`,
@@ -263,20 +266,35 @@ export const createBookPage = async (req: Request, res: Response): Promise<void>
     }
 };
 
-// Buscar Livros Cadastrados para o Usuario Colocar no Formulario
+// Buscar Livros Cadastrados e Clube Opcional para o Usuario Colocar no Formulario
 export const createPostPage = async (req: Request, res: Response): Promise<void> => {
     const userName = req.session.userName;
     const sessionUserName = req.session.userName;
+    const clubeIdSelecionado = req.query.clube_id ? Number(req.query.clube_id) : null;
+
     try {
         const [livros] = await pool.query(
-        "SELECT id, titulo, autor FROM livros ORDER BY titulo ASC"
+            "SELECT id, titulo, autor FROM livros ORDER BY titulo ASC"
         );
+
+        let clubeNome = null;
+        if (clubeIdSelecionado) {
+            const [clubeResult]: any = await pool.query(
+                "SELECT nome FROM clubes WHERE id = ?", 
+                [clubeIdSelecionado]
+            );
+            if (clubeResult.length > 0) {
+                clubeNome = clubeResult[0].nome;
+            }
+        }
 
         res.render("createPost", {
             nome: req.session.userName,
             nome_exibicao: req.session.name,
             foto: req.session.photo,
             livros,
+            clubeIdSelecionado,
+            clubeNome,
             page: req.path,
             isOwner: undefined,
             userName,
@@ -299,3 +317,44 @@ export const createPostPage = async (req: Request, res: Response): Promise<void>
         res.status(500).send("Erro ao carregar a página de criação.");
     }
 };
+
+export const viewClubPage = async (req: Request, res: Response): Promise<void> => {
+    const userName = req.session.userName;
+    const sessionUserName = req.session.userName;
+    const userId = req.session.userId;
+    const clubeId = req.params.id;
+
+    try {
+        const [clubeResult]: any = await pool.query(
+            `SELECT * FROM clubes WHERE id = ?`, 
+            [clubeId]
+        );
+
+        const [postagens] = await pool.query(
+            `SELECT
+                p.*,
+                l.*
+             FROM postagens p
+             LEFT JOIN livros l ON p.livro_id = l.id
+             WHERE p.clube_id = ?
+             ORDER BY p.data_criacao DESC`,
+            [clubeId]
+        );
+
+        res.render("clube", {
+            nome: req.session.userName,
+            nome_exibicao: req.session.name,
+            foto: req.session.photo,
+            clube: clubeResult[0],
+            postagens,
+            page: req.path,
+            isOwner: undefined,
+            userName,
+            sessionUserName
+        });
+
+    } catch (error) {
+        console.error("Erro ao carregar a página do clube:", error);
+        res.status(500).send("Erro interno ao carregar a página do clube.");
+    }
+}

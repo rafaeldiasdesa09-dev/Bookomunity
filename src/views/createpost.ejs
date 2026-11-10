@@ -19,6 +19,15 @@
       <button name="common-button" style="margin-top: 1rem;" type="button" id="common-button" class="select-button-discussion select-type">Discussão</button>
 
       <form action="/api/postagens" method="post">
+        <input type="hidden" name="clube_id" id="clube_id_input" value="<%= typeof clubeIdSelecionado !== 'undefined' && clubeIdSelecionado ? clubeIdSelecionado : '' %>">
+
+        <% if (typeof clubeIdSelecionado !== 'undefined' && clubeIdSelecionado) { %>
+            <div id="clube-badge-info" style="background: #fdf6ec; border: 1px solid var(--gold); padding: 8px 10px; border-radius: 6px; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center;">
+                <span>Clube: <strong><%= typeof clubeNome !== 'undefined' && clubeNome ? clubeNome : ('#' + clubeIdSelecionado) %></strong></span>
+                <button type="button" id="btn-remover-clube" style="background: none; border: none; color: #a94442; cursor: pointer; font-weight: bold; font-size: 0.8rem;">(Remover)</button>
+            </div>
+        <% } %>
+
         <input style="display: none;" name="tipo" value="DISCUSSAO">
         
         <label for="select-book">Referenciar livro *</label>

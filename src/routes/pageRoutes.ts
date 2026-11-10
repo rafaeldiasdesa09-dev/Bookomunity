@@ -19,5 +19,6 @@ PAGE.get("/friends", userAuth, page.friendsPage);
 PAGE.get("/user/:username", page.profilePage);
 PAGE.get("/67", page.pageNotFound);
 PAGE.get("/search", search.pesquisarDB);
+PAGE.get("/clubes/:id", page.viewClubPage);
 
 export default PAGE;

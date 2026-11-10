@@ -17,11 +17,19 @@ async function criarAdmin() {
         
         const [admin]: any = await pool.query(`SELECT nome_usuario, email, senha FROM usuarios WHERE perms='ADMIN'`)
 
-        console.log("Administrador criado, informações:", admin)
+        console.log(`Administrador criado, informações: \n
+            Nome de usuário: ${admin[0].nome_usuario} \n
+            Email: ${admin[0].email} \n
+            Senha: admin123 \n
+            `)
 
     } catch(e) {
         const [admin]: any = await pool.query(`SELECT nome_usuario, email, senha FROM usuarios WHERE perms='ADMIN'`)
-        console.log("Administrador presente:", admin, "\n")
+        console.log(`Administrador presente: \n
+            Nome de usuário: ${admin[0].nome_usuario} \n
+            Email: ${admin[0].email} \n
+            Senha: admin123 \n
+            `)
     }
 }
 
@@ -37,11 +45,19 @@ async function criarBibliotecario() {
         
         const [admin]: any = await pool.query(`SELECT nome_usuario, email, senha FROM usuarios WHERE perms='LIBRARIAN'`)
 
-        console.log("Bilbiotecário criado, informações:", admin)
+        console.log(`Bibliotecário criado, informações: \n
+            Nome de usuário: ${admin[0].nome_usuario} \n
+            Email: ${admin[0].email} \n
+            Senha: admin123 \n
+            `)
 
     } catch(e) {
         const [admin]: any = await pool.query(`SELECT nome_usuario, email, senha FROM usuarios WHERE perms='LIBRARIAN'`)
-        console.log("Bilbiotecário presente:", admin, "\n")
+        console.log(`Bibliotecário presente: \n
+            Nome de usuário: ${admin[0].nome_usuario} \n
+            Email: ${admin[0].email} \n
+            Senha: admin123 \n
+            `)
     }
 }
 

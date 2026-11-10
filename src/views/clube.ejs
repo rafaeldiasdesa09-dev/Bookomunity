@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title><%= clube ? clube.nome : 'Clube' %> - Bookomunity</title>
+
+    <link rel="stylesheet" href="/css/clube.css">
+    <link rel="stylesheet" href="/css/search.css">
+    <link rel="stylesheet" href="/css/partial/header.css">
+    <link rel="stylesheet" href="/css/partial/posts.css">
+</head>
+
+<body>
+    <%- include('partial/header') %>
+    <script src="/js/header.js"></script>
+    <%- include('partial/dottedBg') %>
+
+    <main>
+        <% if (clube) { %>
+            <section class="row">
+                <div class="row-posts" style="display: flex; flex-direction: column; align-items: center; text-align: center; background: transparent; border: none; backdrop-filter: blur(0px);">
+                    
+                    <% if (clube.imagem) { %>
+                        <img 
+                            src="<%= clube.imagem %>" 
+                            alt="Imagem de <%= clube.nome %>" 
+                            style="width: 100%; max-width: 100px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;"
+                        >
+                    <% } %>
+
+                    <h1 style="color: #6b4934; font-family: Georgia, 'Times New Roman', serif; margin-bottom: 0.5rem;">
+                        <%= clube.nome %>
+                    </h1>
+
+                    <% if (clube.descricao) { %>
+                        <p style="color: #55504b; max-width: 600px; font-size: 15px; line-height: 1.6; margin-bottom: 1.2rem;">
+                            <%= clube.descricao %>
+                        </p>
+                    <% } %>
+
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem;">
+                        <a href="/create-post?clube_id=<%= clube.id %>" class="common-button" style="text-decoration: none; display: inline-block; text-align: center; background-color: var(--gold); color: white; font-weight: bold; width: auto; padding: 10px 20px; border-radius: 6px;">
+                            Criar postagem neste clube
+                        </a>
+
+                        <% if (isOwner) { %>
+                            <a href="/clube/<%= clube.id %>/editar" class="common-button" style="text-decoration: none; display: inline-block; text-align: center; background-color: #fff; color: var(--brown); border: 1px solid var(--gold); width: auto; padding: 10px 20px; border-radius: 6px;">
+                                Editar Clube
+                            </a>
+                        <% } %>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="row">
+                <h2 class="row-title">POSTAGENS DO CLUBE</h2>
+
+                <div class="row-posts">
+                    <% if (typeof postagens === 'undefined' || postagens.length === 0) { %>
+                        <p class="empty-message">
+                            Nenhuma postagem encontrada neste clube ainda.
+                        </p>
+                    <% } else { %>
+                        <div class="post-card-area">
+                            <% postagens.forEach(item => { %>
+
+                                <% if (item.tipo === 'DISCUSSAO') { %>
+                                    <%- include('partial/posts/discussion', { item }) %>
+
+                                <% } else if (item.tipo === 'RESENHA') { %>
+                                    <%- include('partial/posts/resenha', { item }) %>
+
+                                <% } else if (item.tipo === 'RECOMENDACOES') { %>
+                                    <%- include('partial/posts/recomendations', { item }) %>
+
+                                <% } else { %>
+                                    <%- include('partial/posts/common', { item }) %>
+                                <% } %>
+
+                            <% }) %>
+                        </div>
+                    <% } %>
+                </div>
+            </section>
+        <% } else { %>
+            <section class="row">
+                <p class="empty-message">
+                    Clube não encontrado.
+                </p>
+            </section>
+        <% } %>
+    </main>
+    <script src="/js/explore.js"></script>
+</body>
+</html>

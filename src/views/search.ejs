@@ -80,35 +80,63 @@
                 </section>
             <% } %>
 
-    <% if (type === 'usuario') { %>
-        <section class="row">
-            <h2 class="row-title">RESULTADOS</h2>
+        <% if (type === 'usuario') { %>
+            <section class="row">
+                <h2 class="row-title">RESULTADOS</h2>
 
-            <div class="row-posts">
-                <% if (dados.length === 0) { %>
-                    <p class="empty-message">
-                        Nenhum usuário encontrado.
-                    </p>
-                <% } else { %>
-                    <div class="user-card-area">
-                    <% dados.forEach(item => { %>
-                            <a style="text-decoration: none; color: #777067" href="/user/<%= item.nome_usuario %>">
-                            <div class="user-card">
-                                <img class="user-card-avatar" src="<%= item.foto_perfil %>">
-                                <div class="user-content">
-                                    <h3 class="user-card-name"><%= item.nome %></h3>
-                                    <p class="user-card-bio"><%= item.bio %></p>
+                <div class="row-posts">
+                    <% if (dados.length === 0) { %>
+                        <p class="empty-message">
+                            Nenhum usuário encontrado.
+                        </p>
+                    <% } else { %>
+                        <div class="user-card-area">
+                        <% dados.forEach(item => { %>
+                                <a style="text-decoration: none; color: #777067" href="/user/<%= item.nome_usuario %>">
+                                <div class="user-card">
+                                    <img class="user-card-avatar" src="<%= item.foto_perfil %>">
+                                    <div class="user-content">
+                                        <h3 class="user-card-name"><%= item.nome %></h3>
+                                        <p class="user-card-bio"><%= item.bio %></p>
+                                    </div>
                                 </div>
-                            </div>
-                            </a>
-                    <% }) %>
-                    </div>
-                <% } %>
+                                </a>
+                        <% }) %>
+                        </div>
+                    <% } %>
+            
+                </div>
+            </section>
+        <% } %>
 
-            </div>
-        </section>
-    <% } %>
+        <% if (type === 'clube') { %>
+            <section class="row">
+                <h2 class="row-title">RESULTADOS</h2>
 
+                <div class="row-posts">
+                    <% if (dados.length === 0) { %>
+                        <p class="empty-message">
+                            Nenhum clube encontrado.
+                        </p>
+                    <% } else { %>
+                        <div class="user-card-area">
+                        <% dados.forEach(item => { %>
+                                <a style="text-decoration: none; color: #777067" href="/clubes/<%= item.id %>">
+                                <div class="user-card">
+                                    <img class="user-card-avatar" src="<%= item.imagem %>">
+                                    <div class="user-content">
+                                        <h3 class="user-card-name"><%= item.nome %></h3>
+                                        <p class="user-card-description"><%= item.descricao %></p>
+                                    </div>
+                                </div>
+                                </a>
+                        <% }) %>
+                        </div>
+                    <% } %>
+            
+                </div>
+            </section>
+        <% } %>
     </main>
     <script src="/js/explore.js"></script>
 </body>

@@ -157,71 +157,7 @@
                         </div>
                     <% } %>
                 </div>
-            </section>            <div class="community-grid">
-                <section class="content-section">
-                    <div class="section-heading">
-                        <div>
-                            <p class="eyebrow">COMPANHIA DE LEITURA</p>
-                            <h2>Meus amigos</h2>
-                        </div>
-                        <span class="section-symbol" aria-hidden="true">♡</span>
-                    </div>
-
-                    <div class="community-list">
-                        <% if (typeof amigos !== 'undefined' && Array.isArray(amigos) && amigos.length > 0) { %>
-                            <% amigos.forEach(function(amigo) { %>
-                                <article class="person-item">
-                                    <img
-                                        src="<%= amigo.foto_perfil || amigo.foto || '/img/icon/default-avatar.svg' %>"
-                                        alt=""
-                                        class="person-avatar"
-                                        onerror="this.onerror=null;this.src='/img/logoBookomunity2.png';"
-                                    >
-
-                                    <div>
-                                        <h3><%= amigo.nome || 'Leitor' %></h3>
-                                        <p>Leitor da comunidade</p>
-                                    </div>
-                                </article>
-                            <% }) %>
-                        <% } else { %>
-                            <div class="mini-empty">
-                                <p>Seus amigos leitores aparecerão aqui.</p>
-                                <a class="text-link" href="/friends">Conhecer a área de amizades</a>
-                            </div>
-                        <% } %>
-                    </div>
-                </section>
-
-                <section class="content-section">
-                    <div class="section-heading">
-                        <div>
-                            <p class="eyebrow">LEITURA EM GRUPO</p>
-                            <h2>Meus clubes</h2>
-                        </div>
-                        <span class="section-symbol" aria-hidden="true">⌂</span>
-                    </div>
-
-                    <div class="community-list">
-                        <% if (typeof clubes !== 'undefined' && Array.isArray(clubes) && clubes.length > 0) { %>
-                            <% clubes.forEach(function(clube) { %>
-                                <article class="club-item">
-
-                                    <div>
-                                        <h3><%= clube.nome || 'Clube de leitura' %></h3>
-                                        <p><%= clube.descricao || 'Um espaço para compartilhar leituras.' %></p>
-                                    </div>
-                                </article>
-                            <% }) %>
-                        <% } else { %>
-                            <div class="mini-empty">
-                                <p>Os clubes dos quais você participa aparecerão aqui.</p>
-                                <a class="text-link" href="/friends">Explorar a comunidade</a>
-                            </div>
-                        <% } %>
-                    </div>
-                </section>
-            </div>
+            </section>
         </div>
 
         <footer class="page-footer">

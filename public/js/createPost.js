@@ -8,6 +8,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (recomendation_post) recomendation_post.style.display = 'none';
     if (common_post) common_post.style.display = 'none';
 
+    const btnRemoverClube = document.getElementById('btn-remover-clube');
+    const inputClubeId = document.getElementById('clube_id_input');
+    const badgeClubeInfo = document.getElementById('clube-badge-info');
+
+    if (btnRemoverClube && inputClubeId) {
+        btnRemoverClube.addEventListener('click', () => {
+            inputClubeId.value = '';
+            if (badgeClubeInfo) {
+                badgeClubeInfo.style.display = 'none';
+            }
+        });
+    }
+
     const formPostagem = document.querySelector('form[action="/api/postagens"]');
     const inputTitulo = document.querySelector('input[name="titulo"]');
     const textareaConteudo = document.querySelector('textarea[name="conteudo"]');
@@ -142,7 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const atualizarCamposFormulario = (tipoValor) => {
-        if (formPostagem) formPostagem.reset();
         if (inputTipoHidden) inputTipoHidden.value = tipoValor;
         if (previewLivro) previewLivro.textContent = 'Nenhum livro selecionado.';
 

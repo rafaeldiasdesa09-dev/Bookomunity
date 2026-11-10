@@ -76,7 +76,17 @@ export const pesquisarDB = async (req: Request, res: Response): Promise<void> =>
                     SELECT * FROM livros ORDER BY id LIMIT 20`);
             }
 
-        } else {
+        } else if (filter === 'clube') {
+            if (q) {
+                const termo_consult = `%${q}%`;
+                [pesquisa] = await pool.query(`
+                    SELECT * FROM clubes WHERE nome LIKE ? AND id <> 1 ORDER BY id LIMIT 20`, [termo_consult]);
+            } else {
+                [pesquisa] = await pool.query(`
+                    SELECT * FROM clubes WHERE id <> 1 ORDER BY id LIMIT 20`);
+            }
+        } 
+        else {
             res.status(400).json({'success': false, 'message': 'Filtro enviado desconhecido:', filter});
         }
 
